@@ -1,5 +1,29 @@
 # Changelog
 
+## 4.0.0 · 2026-10-23
+
+### Product
+- Real moments, no data entry. A Node server with SQLite adds accounts, sync across devices, and delivery when the app is closed.
+- Near you: live air quality, heat, UV, rain, humidity and pollen from Open-Meteo, with the region set automatically. It replaces the daily insight when it has a tip, and never shows beside it.
+- Share: paste a link (the page is read), an order email or text, or add a photo or document. Wellwise is installable and appears in the phone's share menu.
+- Scan: live barcode scanning with the camera, or a photo, looked up in Open Food, Beauty and Products Facts.
+- Calendar: connect an .ics feed. Flights, appointments, blood tests, packed meeting days and late nights bring a tip the day before.
+- WhatsApp: link a number with a code, send links, photos, documents or a few words, and get a tip back. Tips can also be sent to WhatsApp.
+- Your agent: a personal key for a REST API and an MCP server, so any agent can send moments.
+- Email: a personal address for forwarding order confirmations, bookings and results.
+- One tap, one more useful tip: ten options, and the tip shows in place.
+- Explore has a region filter again (my region, region-specific, all, or one country) and a lesser-known / well-known filter.
+- Every tip is labelled "Well known" or "Lesser known". Well-known tips say why they are repeated.
+- No safety classes, "Check first" tags or clinician notices. One medical disclaimer in the footer. Medicine and test tips can come from moments.
+- Adding tips, stats and test tools moved to an admin console at /admin. "Prototype tools", the sample-data feedback page and demo sponsor slots are gone.
+
+### Content
+- 48 new sourced tips (ww-204 to ww-251), mostly lesser known, in five new categories: Clothing & textiles, Ingredients & labels, Gut, kidneys & metabolism, Eyes, ears & teeth, and Sexual & reproductive health; plus mental wellbeing (including Tele MANAS, 988 and NHS Talking Therapies), lead in cookware and kajal, mercury in skin creams, air fresheners and laundry pods.
+- 21 new moments and 27 new products. Every live tip (251 of 251) can now come from a moment, up from 173.
+- Moments have keywords, so text, calendar entries, messages and documents can find them.
+- The sample pack is merged.
+
+
 ## 3.0.0 · 2026-10-23
 
 ### Product

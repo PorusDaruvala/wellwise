@@ -1,14 +1,21 @@
 {
   "name": "wellwise",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "private": true,
   "description": "Wellwise: useful health insights, sparked by everyday moments",
   "scripts": {
     "build": "python3 scripts/build.py",
-    "test": "node tests/app.test.js",
-    "check": "python3 scripts/build.py && node tests/app.test.js"
+    "start": "node --env-file-if-exists=.env server/index.js",
+    "test": "node tests/app.test.js && node tests/server.test.js",
+    "check": "python3 scripts/build.py && npm test"
   },
   "devDependencies": {
     "jsdom": "^24.0.0"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.2.0"
+  },
+  "engines": {
+    "node": ">=22.9"
   }
 }

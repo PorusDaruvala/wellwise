@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Wellwise admin</title>
+<style>
+:root{--bg:#f5f7f2;--ink:#172a22;--muted:#5f7166;--green:#146c4b;--line:#e0e8df;--amberbg:#fff4e5;--amberline:#f0ddc2;--redbg:#fdecea;--redline:#f2cfc9}
+*{box-sizing:border-box}body{margin:0;font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink)}
+.wrap{max-width:1100px;margin:auto;padding:24px 16px 60px}h1{margin:0 0 4px;font-size:26px}h2{font-size:18px;margin:0 0 10px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.metric{font-size:26px;font-weight:800}.muted{color:var(--muted)}.small{font-size:12.5px}
+.btn{border:1px solid var(--green);background:var(--green);color:#fff;border-radius:9px;padding:8px 12px;font-weight:650;cursor:pointer}.btn.ghost{background:#fff;color:var(--green)}
+.field{width:100%;padding:9px 11px;border:1px solid #cedfd1;border-radius:9px;font:inherit}textarea.field{min-height:90px}
+table{width:100%;border-collapse:collapse;font-size:13px}td,th{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.notice{border-radius:10px;padding:12px;background:#f0f6ee;border:1px solid #dfeada;margin-top:10px}.notice.warn{background:var(--amberbg);border-color:var(--amberline)}.notice.danger{background:var(--redbg);border-color:var(--redline)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.ok{color:#146c4b;font-weight:700}.off{color:#8a2a1f;font-weight:700}
+pre{background:#f2f6f1;border-radius:9px;padding:10px;font-size:12px;overflow:auto;max-height:360px}
+</style>
+</head>
+<body><div class="wrap" id="app"></div>
+<script>
+const $=id=>document.getElementById(id);
+const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let TOKEN=sessionStorage.getItem('ww-admin')||'',STATUS=null,REPORT=null,PACK=null,TRY=null;
+async function api(path,opts={}){const r=await fetch(path,{method:opts.method||'GET',headers:{authorization:'Bearer '+TOKEN,...(opts.body?{'content-type':'application/json'}:{})},body:opts.body?JSON.stringify(opts.body):undefined});const j=await r.json().catch(()=>({}));if(!r.ok&&!(r.status===400&&j.errors))throw new Error(j.error||r.status);return j}
+async function load(){try{STATUS=await api('/api/admin/status');render()}catch(e){STATUS=null;render(e.message)}}
+function login(){TOKEN=$('tok').value.trim();sessionStorage.setItem('ww-admin',TOKEN);load()}
+function readPack(input){const f=input.files[0];if(!f)return;const r=new FileReader();r.onload=async()=>{try{PACK=JSON.parse(r.result);REPORT={name:f.name,...await api('/api/admin/packs/check',{method:'POST',body:PACK})}}catch(e){REPORT={name:f.name,tips:[],edges:[],errors:['This is not valid JSON, or the check failed: '+e.message],warnings:[]}}render()};r.readAsText(f)}
+async function addPack(){const r=await api('/api/admin/packs',{method:'POST',body:PACK});if(r.ok){REPORT=null;PACK=null;await load();alert(`Added ${r.added} tips. They are live now.`)}else{REPORT={...REPORT,...r};render()}}
+async function removePack(id){if(!confirm('Remove this pack from the live library? Tips people already saved keep their history.'))return;await api('/api/admin/packs/'+id,{method:'DELETE'});load()}
+async function tryIt(){TRY=await api('/api/admin/try',{method:'POST',body:{text:$('tryText').value}}).catch(e=>({error:e.message}));render()}
+async function tick(){await api('/api/admin/tick',{method:'POST',body:{}});alert('Scheduled deliveries ran.');load()}
+async function download(){const r=await fetch('/api/admin/content',{headers:{authorization:'Bearer '+TOKEN}});const b=await r.blob();const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='wellwise-content.json';a.click()}
+function template(){const t={pack:'My new tips',tips:[{title:'Short title, verb first',category:'Food & nutrition',action:'One clear thing to do',why:'Why it helps, in one sentence, no stronger than the source',caution:'Who should take care, or when not to do it',sources:['https://example.org/page-that-backs-this-tip'],familiarity:'lesser-known',triggerKeys:['prompt:grocery'],notes:{IN:'Optional local note'}}],edges:[{a:'ww-201',b:'ww-003',type:'complements',why:'How the two tips relate'}],_help:{familiarity:['common','lesser-known'],grades:['Strong','Moderate','Limited','Safety practice'],linkTypes:['complements','reinforces','shared-goal','depends-on','potential-conflict'],optional:'id, scope, regions, grade, timeline, status (draft|live|retired), tags, hi'}};const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(t,null,2)],{type:'application/json'}));a.download='wellwise-tip-pack-template.json';a.click()}
+const yes=(v,label)=>v?`<span class="ok">✓ ${esc(label||'On')}</span>`:`<span class="off">✗ Off</span>`;
+function render(err){
+ if(!STATUS){$('app').innerHTML=`<h1>Wellwise admin</h1><p class="muted">For the people who run Wellwise. Not linked from the app.</p><div class="panel"><label>Admin token<input id="tok" class="field" type="password" value="${esc(TOKEN)}"></label><div class="row" style="margin-top:10px"><button class="btn" onclick="login()">Sign in</button></div>${err?`<div class="notice danger">${esc(err)}</div>`:''}</div>`;return}
+ const s=STATUS,st=s.stats,i=s.integrations,r=s.reach,R=REPORT;
+ $('app').innerHTML=`<div class="row" style="justify-content:space-between"><div><h1>Wellwise admin</h1><span class="muted small">Library version ${esc(s.contentVersion)}</span></div><div class="row"><button class="btn ghost" onclick="tick()">Run scheduled deliveries now</button><button class="btn ghost" onclick="sessionStorage.removeItem('ww-admin');TOKEN='';STATUS=null;render()">Sign out</button></div></div>
+ <div class="grid" style="margin-top:14px">${[['People',st.users],['Active this week',st.active7],['WhatsApp linked',st.whatsapp],['Calendars',st.calendars],['Agent keys',st.agents]].map(([l,n])=>`<div class="panel" style="margin:0"><div class="muted small">${l}</div><div class="metric">${n}</div></div>`).join('')}</div>
+ <div class="panel"><h2>Integrations</h2><table><tr><td>Photos and documents (Claude)</td><td>${yes(i.claude,i.claude)}</td><td class="small muted">Set ANTHROPIC_API_KEY. Without it, Wellwise reads barcodes, links and text only.</td></tr><tr><td>WhatsApp sending</td><td>${yes(i.whatsapp)}</td><td class="small muted">WHATSAPP_TOKEN, WHATSAPP_PHONE_NUMBER_ID, WHATSAPP_DISPLAY_NUMBER</td></tr><tr><td>WhatsApp webhook</td><td>${yes(i.whatsappWebhook)}</td><td class="small muted">WHATSAPP_VERIFY_TOKEN, WHATSAPP_APP_SECRET. Callback: ${esc(i.publicUrl)}/webhooks/whatsapp</td></tr><tr><td>WhatsApp template for tips after 24 h</td><td>${yes(i.whatsappTemplate,i.whatsappTemplate)}</td><td class="small muted">WHATSAPP_TEMPLATE (3 body parameters: title, action, link)</td></tr><tr><td>Inbound email</td><td>${yes(i.email)}</td><td class="small muted">WELLWISE_INBOUND_DOMAIN, WELLWISE_INBOUND_SECRET. Webhook: ${esc(i.publicUrl)}/webhooks/email?secret=…</td></tr><tr><td>Live weather and air</td><td>${yes(true,'Open-Meteo')}</td><td class="small muted">No key needed.</td></tr><tr><td>Barcode lookup</td><td>${yes(true,'Open Food Facts family')}</td><td class="small muted">No key needed.</td></tr></table></div>
+ <div class="panel"><h2>Activity this week</h2><div class="grid"><div><b>Tips delivered</b><table>${st.deliveries7.map(x=>`<tr><td>${esc(x.source)}</td><td>${x.n}</td></tr>`).join('')||'<tr><td class="muted">None yet</td></tr>'}</table></div><div><b>Things people sent in</b><table>${st.intakes7.map(x=>`<tr><td>${esc(x.source)} · ${esc(x.kind)}</td><td>${x.n}</td></tr>`).join('')||'<tr><td class="muted">None yet</td></tr>'}</table></div><div><b>Rated useful, by where the tip came from</b><table>${s.feedback.bySource.map(x=>`<tr><td>${esc(x.source)}</td><td>${Math.round(100*x.useful/x.total)}% of ${x.total}</td></tr>`).join('')||'<tr><td class="muted">No ratings yet</td></tr>'}</table></div></div></div>
+ <div class="panel"><h2>Library reach</h2><p>${r.reachable} of ${r.live} live tips can come from a moment.${r.unreachable.length?` <b>Not reachable:</b> ${r.unreachable.map(t=>esc(t.id+' '+t.title)).join(', ')}`:''}</p><table><tr><th>Category</th><th>Tips</th><th>Well known</th></tr>${r.byCategory.map(c=>`<tr><td>${esc(c.name)}</td><td>${c.tips}</td><td>${c.common}</td></tr>`).join('')}</table></div>
+ <div class="panel"><h2>Add tips</h2><p class="small muted">Upload a tip pack (.json). The server checks it with the same rules as the build script and adds it to the live library. To make it permanent in the repository, download the merged library or run the pack through <code>scripts/build.py --merge</code>.</p>
+ <div class="row"><label class="btn" style="display:inline-block">Choose a tip pack<input type="file" accept=".json,application/json" onchange="readPack(this)" style="display:none"></label><button class="btn ghost" onclick="template()">Download a blank pack</button><button class="btn ghost" onclick="download()">Download the merged library</button></div>
+ ${R?`<div class="notice ${R.errors.length?'danger':'warn'}"><b>${esc(R.name)}: ${R.tips.length} tips, ${R.edges.length} links</b>${R.errors.length?`<p><b>Fix these first:</b></p><ul>${R.errors.map(e=>`<li>${esc(e)}</li>`).join('')}</ul>`:''}${R.warnings.length?`<p><b>Worth a look:</b></p><ul>${R.warnings.map(e=>`<li>${esc(e)}</li>`).join('')}</ul>`:''}${R.errors.length?'':`<button class="btn" onclick="addPack()">Add ${R.tips.length} tips to the live library</button>`}</div>`:''}
+ ${s.packs.length?`<table style="margin-top:12px"><tr><th>Pack</th><th>Tips</th><th>Added</th><th></th></tr>${s.packs.map(p=>`<tr><td>${esc(p.name)}</td><td>${p.tips}</td><td>${new Date(p.at).toLocaleString()}</td><td><button class="btn ghost" onclick="removePack('${p.id}')">Remove</button></td></tr>`).join('')}</table>`:''}</div>
+ <div class="panel"><h2>Try the reader</h2><p class="small muted">Paste a link, an order email or a calendar line to see what Wellwise picks up.</p><textarea id="tryText" class="field" placeholder="https://… or text"></textarea><div class="row" style="margin-top:8px"><button class="btn" onclick="tryIt()">Read it</button></div>${TRY?`<pre>${esc(JSON.stringify(TRY,null,2))}</pre>`:''}</div>
+ <div class="panel"><h2>Most-rated tips</h2><table>${s.feedback.byTip.map(x=>`<tr><td>${esc(x.tip)}</td><td>${esc(x.title)}</td><td>${Math.round(100*x.useful/x.total)}% useful of ${x.total}</td></tr>`).join('')||'<tr><td class="muted">No ratings yet</td></tr>'}</table></div>`}
+load();
+</script>
+</body>
+</html>

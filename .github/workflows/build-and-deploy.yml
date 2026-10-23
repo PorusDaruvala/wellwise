@@ -25,7 +25,7 @@ jobs:
           python-version: '3.12'
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
       - name: Check content and build
         run: python3 scripts/build.py
       - name: Install test tools

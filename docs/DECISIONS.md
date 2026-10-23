@@ -40,3 +40,34 @@ One entry per product or technical decision. Add new entries at the bottom. Do n
 ### D-009 · Retire, never delete · 2026-10-23
 **Decision:** Removed tips get `"status": "retired"`. Ids are never reused.
 **Why:** Users' journeys and links refer to tip ids. Deleting a tip would break their history.
+
+### D-010 · No safety classes; one disclaimer · 2026-10-23
+**Decision:** Supersedes D-003. The `general` / `check` / `clinician` classes are gone. Every tip can come from a moment, including tips about medicines, tests and results. One general disclaimer sits in the footer: Wellwise is not a substitute for medical advice; always check with a certified healthcare provider. No "Check first" tags, clinician notices or "not yet reviewed" lines.
+**Why:** Well-sourced health, medicine and testing tips are among the most valuable and least known. Holding them back, or wrapping them in warnings, made the product less useful without making it safer. Each tip still carries its own "Keep in mind" line from its source.
+**Effect:** The build rejects a `safety` field. The crisis-line notice on the "I feel stressed or low" moment stays: it is a resource, not a caution.
+
+### D-011 · A server, and data off the device · 2026-10-23
+**Decision:** Supersedes D-008. Wellwise runs on a small Node server with a SQLite database. Each browser gets an account (a private cookie) that holds settings, the journey and linked services, so integrations can deliver tips when the app is closed. Accounts can be joined across devices with a one-time code, exported, and deleted.
+**Why:** Real moments (calendar, WhatsApp, agents, email, near-you alerts) arrive when the app is not open. They need somewhere to land.
+**Effect:** The single HTML file still works on its own with keyword matching and a local daily tip; online features switch on when it is served by the server. No analytics or trackers.
+
+### D-012 · Retrieval, not data entry · 2026-10-23
+**Decision:** Moments come from integrations, links, photos, documents and barcodes. People do not fill in forms about their day. Simulated moment lists (sample products, scan labels, agent scenarios) are removed.
+**Why:** The product promise is a tip at the right moment, without effort.
+**Effect:** One intake pipeline (`server/intake.js`) serves share, scan, photos, documents, WhatsApp, email and agents. Quick check-in taps stay as the one-tap fallback.
+
+### D-013 · Claude reads, but only into known events · 2026-10-23
+**Decision:** Photos, PDFs and text that keywords cannot place go to Claude, which may only answer with event keys that already exist in the library (a JSON-schema enum). Matching to a tip stays rule-based.
+**Why:** Keeps D-002: Wellwise never invents a health link, even when a model reads the input.
+
+### D-014 · Near you replaces the daily insight · 2026-10-23
+**Decision:** When live air or weather near the person brings a tip, Discover shows it in place of the daily insight. When nothing stands out, or location is off, the daily insight shows. Never both.
+**Why:** Two hero tips compete. A live, local tip is the better one when it exists.
+
+### D-015 · Familiarity labels · 2026-10-23
+**Decision:** Every tip is `common` (widely known) or `lesser-known`. Common tips show a "Well known" badge and a note that they are repeated because they do a lot of good and link to other tips. Discover's "Keep exploring" lists lesser-known tips first. Explore can filter by either.
+**Why:** People notice when an app tells them what they already know. Saying so, and showing the bigger picture, keeps trust. New content goes mainly into lesser-known areas: products and materials, ingredients, clothing, the inner body, eyes and ears, sexual and reproductive health, and mental wellbeing.
+
+### D-016 · Admin tools leave the app · 2026-10-23
+**Decision:** Adding tips, reach reports, feedback numbers and test tools move to a separate admin console (`/admin`, behind `WELLWISE_ADMIN_TOKEN`). The "Prototype tools", "Add tips" and "How your feedback helps" sample-data page are removed from the app. Demo sponsor slots are removed until a real sponsor exists (D-006 still applies then).
+**Why:** These are operator jobs, not user features.

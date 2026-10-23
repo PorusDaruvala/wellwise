@@ -7,6 +7,7 @@ Usage (from the repository root):
   python3 scripts/build.py --check FILE    # only check one pack, build nothing
 
 The app (src/template.html) never changes when you add tips. Only content changes.
+The server (server/) serves dist/ and adds live data, integrations and the admin console.
 Exit code is 1 if any pack has errors, so CI can block a bad pull request.
 """
 import json, re, sys, glob, os, datetime, shutil
@@ -17,8 +18,10 @@ TEMPLATE = os.path.join(ROOT, 'src', 'template.html')
 DIST = os.path.join(ROOT, 'dist')
 OUTPUT = os.path.join(DIST, 'index.html')
 PACK_DIR = os.path.join(ROOT, 'content', 'packs')
+ENGINE = os.path.join(ROOT, 'src', 'engine.js')
+STATIC = ['admin.html', 'manifest.webmanifest', 'sw.js', 'icon.svg']
 
-SAFETY = {'general', 'check', 'clinician'}
+FAMILIARITY = {'common', 'lesser-known'}
 GRADES = {'Strong', 'Moderate', 'Limited', 'Safety practice'}
 EDGE_TYPES = {'complements', 'reinforces', 'shared-goal', 'depends-on', 'potential-conflict'}
 STATUS = {'draft', 'live', 'retired'}
@@ -41,7 +44,7 @@ def normalize_tip(raw, content, used_ids, today):
         t['id'] = next_id(used_ids)
     t.setdefault('scope', 'GLOBAL')
     t.setdefault('regions', list(regions) if t['scope'] == 'GLOBAL' else [t['scope']])
-    t.setdefault('safety', 'general')
+    t.setdefault('familiarity', 'lesser-known')
     t.setdefault('status', 'live')
     t.setdefault('added', today)
     t.setdefault('triggerKeys', [])
@@ -63,8 +66,7 @@ def validate(tips, edges, content, existing_ids):
     errors, warnings = [], []
     cats = {c['name'] for c in content['CATEGORIES']}
     regions = set(content['REGIONS'])
-    events = ({m['event'] for m in content['MOMENTS']} | {p['event'] for p in content['PRODUCTS']}
-              | {a['event'] for a in content['AGENT_SCENARIOS']})
+    events = {m['event'] for m in content['MOMENTS']} | {p['event'] for p in content['PRODUCTS']}
     seen = set(existing_ids)
     titles = {}
     for t in content['TIPS']:
@@ -81,8 +83,10 @@ def validate(tips, edges, content, existing_ids):
         seen.add(tid)
         if t.get('category') not in cats:
             errors.append(f'{tid}: unknown category "{t.get("category")}". Add it to CATEGORIES first.')
-        if t.get('safety') not in SAFETY:
-            errors.append(f'{tid}: safety must be one of {sorted(SAFETY)}')
+        if 'safety' in t:
+            errors.append(f'{tid}: safety classes are gone. Remove "safety" (see D-010).')
+        if t.get('familiarity') not in FAMILIARITY:
+            errors.append(f'{tid}: familiarity must be one of {sorted(FAMILIARITY)}')
         if t.get('grade') not in GRADES:
             errors.append(f'{tid}: grade must be one of {sorted(GRADES)}')
         if t.get('status') not in STATUS:
@@ -101,12 +105,11 @@ def validate(tips, edges, content, existing_ids):
         titles[key] = tid
         if len(t.get('title', '')) > 70:
             warnings.append(f'{tid}: title is long ({len(t["title"])} characters)')
-        if t.get('safety') != 'clinician':
-            unknown = [k for k in t.get('triggerKeys', []) if k not in events]
-            if unknown:
-                warnings.append(f'{tid}: no moment uses {unknown} yet, so these keys do nothing')
-            if not any(k in events for k in t.get('triggerKeys', [])):
-                warnings.append(f'{tid}: no moment can bring this tip. It shows in the library and daily tip only.')
+        unknown = [k for k in t.get('triggerKeys', []) if k not in events]
+        if unknown:
+            warnings.append(f'{tid}: no moment uses {unknown} yet, so these keys do nothing')
+        if t.get('status') == 'live' and not any(k in events for k in t.get('triggerKeys', [])):
+            warnings.append(f'{tid}: no moment can bring this tip. It shows in the library and daily tip only.')
         if 'hi' not in t:
             warnings.append(f'{tid}: no Hindi text yet (shows in English)')
     all_ids = seen
@@ -134,9 +137,12 @@ def load_pack(path, content, today):
 
 def build_html(content):
     js = 'const WW=' + json.dumps(content, ensure_ascii=False).replace('</', '<\\/') + ';'
-    html = open(TEMPLATE, encoding='utf-8').read().replace('/*__DATA__*/', js)
+    engine = open(ENGINE, encoding='utf-8').read().replace('</', '<\\/')
+    html = open(TEMPLATE, encoding='utf-8').read().replace('/*__DATA__*/', js).replace('/*__ENGINE__*/', engine)
     os.makedirs(DIST, exist_ok=True)
     open(OUTPUT, 'w', encoding='utf-8').write(html)
+    for name in STATIC:
+        shutil.copyfile(os.path.join(ROOT, 'src', name), os.path.join(DIST, name))
     # Published next to the app so a live site can pick up new tips without a rebuild.
     json.dump(content, open(os.path.join(DIST, 'wellwise-content.json'), 'w', encoding='utf-8'), ensure_ascii=False)
     return len(html)
@@ -172,7 +178,9 @@ def main():
     merged['contentVersion'] = int(datetime.datetime.now().strftime('%Y%m%d%H%M'))
     size = build_html(merged)
     live = sum(t.get('status') == 'live' for t in merged['TIPS'])
-    print(f'\nBuilt {os.path.relpath(OUTPUT, ROOT)}: {live} live tips, {len(merged["EDGES"])} links, {size // 1024} KB')
+    events = {m['event'] for m in merged['MOMENTS']} | {p['event'] for p in merged['PRODUCTS']}
+    reach = sum(t.get('status') == 'live' and any(k in events for k in t['triggerKeys']) for t in merged['TIPS'])
+    print(f'\nBuilt {os.path.relpath(OUTPUT, ROOT)}: {live} live tips ({reach} reachable from a moment), {len(merged["EDGES"])} links, {size // 1024} KB')
     if '--merge' in args:
         json.dump(merged, open(CONTENT, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
         print(f'Merged packs into {os.path.relpath(CONTENT, ROOT)}. Now delete the merged pack files from content/packs/.')

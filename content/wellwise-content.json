@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "contentVersion": 202610230001,
+ "contentVersion": 202610231555,
  "REGIONS": [
   "US",
   "IN",
@@ -117,6 +117,61 @@
     "everyday health habit",
     "everyday health habits"
    ]
+  },
+  {
+   "name": "Clothing & textiles",
+   "tag": "clothing",
+   "concept": "clothing_textiles",
+   "defaultGrade": "Moderate",
+   "defaultTimeline": "The action can start today; the relevant outcome may take days to weeks, or may not be directly measurable.",
+   "know": [
+    "thing worth knowing about your clothes",
+    "things worth knowing about your clothes"
+   ]
+  },
+  {
+   "name": "Ingredients & labels",
+   "tag": "ingredients",
+   "concept": "ingredients_labels",
+   "defaultGrade": "Strong",
+   "defaultTimeline": "Changes in what you buy begin immediately; effects on health build over months and years.",
+   "know": [
+    "thing to check on a label",
+    "things to check on a label"
+   ]
+  },
+  {
+   "name": "Gut, kidneys & metabolism",
+   "tag": "body",
+   "concept": "inner_body",
+   "defaultGrade": "Strong",
+   "defaultTimeline": "Some changes help within days; others protect organs over years and may not be directly noticeable.",
+   "know": [
+    "way to look after your insides",
+    "ways to look after your insides"
+   ]
+  },
+  {
+   "name": "Eyes, ears & teeth",
+   "tag": "senses",
+   "concept": "eyes_ears_teeth",
+   "defaultGrade": "Strong",
+   "defaultTimeline": "Comfort can improve the same day; protection against damage builds over years.",
+   "know": [
+    "way to protect your eyes, ears and teeth",
+    "ways to protect your eyes, ears and teeth"
+   ]
+  },
+  {
+   "name": "Sexual & reproductive health",
+   "tag": "reproductive",
+   "concept": "sexual_reproductive",
+   "defaultGrade": "Strong",
+   "defaultTimeline": "The useful timeline depends on the test or change; some steps matter before you need them.",
+   "know": [
+    "thing worth knowing about sexual and reproductive health",
+    "things worth knowing about sexual and reproductive health"
+   ]
   }
  ],
  "TIPS": [
@@ -155,7 +210,6 @@
     "heart"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -174,7 +228,8 @@
     "why": "संतृप्त वसा की जगह असंतृप्त वसा लेने से LDL कोलेस्ट्रॉल कम हो सकता है"
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-002",
@@ -210,7 +265,6 @@
     "heart"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -222,7 +276,8 @@
     "IN": "Try oats upma, poha with peanuts and vegetables, or fruit with curd."
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-003",
@@ -257,7 +312,6 @@
     "food_nutrition"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -275,7 +329,8 @@
     "why": "दालें फ़ाइबर, प्रोटीन और खनिज देती हैं"
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-004",
@@ -308,7 +363,6 @@
     "food_nutrition"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -320,7 +374,8 @@
     "IN": "Try millets such as jowar, bajra or ragi in place of some maida or white rice."
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-005",
@@ -353,7 +408,6 @@
     "food_nutrition"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -370,7 +424,8 @@
     "why": "अलग-अलग सब्ज़ियों से पोषक तत्व और फ़ाइबर बढ़ते हैं"
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-006",
@@ -403,7 +458,6 @@
     "food_nutrition"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -413,7 +467,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-007",
@@ -449,7 +504,6 @@
     "heart"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -459,7 +513,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-008",
@@ -494,7 +549,6 @@
     "metabolic"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -511,7 +565,8 @@
     "why": "बिना बड़ा बदलाव किए अतिरिक्त चीनी कम होती है"
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-009",
@@ -544,7 +599,6 @@
     "food_nutrition"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -554,7 +608,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-010",
@@ -579,12 +634,14 @@
     "https://www.who.int/news-room/fact-sheets/detail/healthy-diet",
     "https://www.heart.org/en/healthy-living/healthy-eating"
    ],
-   "triggerKeys": [],
+   "triggerKeys": [
+    "prompt:grocery",
+    "routine:meal_finished"
+   ],
    "concepts": [
     "food_nutrition"
    ],
    "grade": "Strong",
-   "safety": "check",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -594,7 +651,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-011",
@@ -630,7 +688,6 @@
     "heart"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -642,7 +699,8 @@
     "IN": "Roasted chana or a small handful of peanuts can replace fried namkeen."
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-012",
@@ -674,7 +732,6 @@
     "food_nutrition"
    ],
    "grade": "Limited",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -684,7 +741,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-013",
@@ -716,7 +774,6 @@
     "food_nutrition"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -726,7 +783,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-014",
@@ -756,7 +814,6 @@
     "food_nutrition"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -768,7 +825,8 @@
     "IN": "Compare sodium and saturated fat in two local snack labels"
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-015",
@@ -801,7 +859,6 @@
     "food_nutrition"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -813,7 +870,8 @@
     "IN": "A katori of dal and a sabzi next to rice balances the plate."
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-016",
@@ -845,7 +903,6 @@
     "food_nutrition"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -857,7 +914,8 @@
     "IN": "Most packaged salt in India is iodized. Loose or rock salt may not be."
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-017",
@@ -886,7 +944,6 @@
     "food_nutrition"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -898,7 +955,8 @@
     "GB": "Compare traffic-light colors alongside serving sizes on similar foods"
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-018",
@@ -930,7 +988,6 @@
     "food_nutrition"
    ],
    "grade": "Limited",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -940,7 +997,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-019",
@@ -970,7 +1028,6 @@
     "food_nutrition"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -982,7 +1039,8 @@
     "US": "Check whether a package contains more than one labeled serving"
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-020",
@@ -1014,7 +1072,6 @@
     "food_nutrition"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -1024,7 +1081,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-021",
@@ -1058,7 +1116,6 @@
     "metabolic"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -1075,7 +1132,8 @@
     "why": "खाने के बाद हल्की चहल-क़दमी से ब्लड शुगर का उछाल कम हो सकता है"
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-022",
@@ -1107,7 +1165,6 @@
     "movement_mobility"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -1117,7 +1174,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-023",
@@ -1150,7 +1208,6 @@
     "movement_mobility"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -1160,7 +1217,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-024",
@@ -1191,7 +1249,6 @@
     "movement_mobility"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -1201,7 +1258,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-025",
@@ -1233,7 +1291,6 @@
     "movement_mobility"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -1243,7 +1300,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-026",
@@ -1274,7 +1332,6 @@
     "movement_mobility"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -1284,7 +1341,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-027",
@@ -1315,7 +1373,6 @@
     "movement_mobility"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -1325,7 +1382,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-028",
@@ -1356,7 +1414,6 @@
     "movement_mobility"
    ],
    "grade": "Limited",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -1366,7 +1423,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-029",
@@ -1397,7 +1455,6 @@
     "movement_mobility"
    ],
    "grade": "Limited",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -1407,7 +1464,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-030",
@@ -1438,7 +1496,6 @@
     "movement_mobility"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -1448,7 +1505,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-031",
@@ -1480,7 +1538,6 @@
     "movement_mobility"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -1490,7 +1547,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-032",
@@ -1516,13 +1574,13 @@
    ],
    "triggerKeys": [
     "commerce:walking_shoes",
-    "prompt:outdoors"
+    "prompt:outdoors",
+    "commerce:shoes"
    ],
    "concepts": [
     "movement_mobility"
    ],
    "grade": "Limited",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -1532,7 +1590,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-033",
@@ -1564,7 +1623,6 @@
     "movement_mobility"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -1574,7 +1632,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-034",
@@ -1605,7 +1664,6 @@
     "movement_mobility"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -1615,7 +1673,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-035",
@@ -1646,7 +1705,6 @@
     "movement_mobility"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -1656,7 +1714,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-036",
@@ -1687,7 +1746,6 @@
     "movement_mobility"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -1697,7 +1755,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-037",
@@ -1722,14 +1781,12 @@
     "https://www.who.int/news-room/fact-sheets/detail/physical-activity"
    ],
    "triggerKeys": [
-    "activity:workout",
     "prompt:workout"
    ],
    "concepts": [
     "movement_mobility"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -1739,7 +1796,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-038",
@@ -1770,7 +1828,6 @@
     "movement_mobility"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -1780,7 +1837,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-039",
@@ -1804,12 +1862,14 @@
     "https://www.nih.gov/news-events/nih-research-matters/how-many-steps-better-health",
     "https://www.who.int/news-room/fact-sheets/detail/physical-activity"
    ],
-   "triggerKeys": [],
+   "triggerKeys": [
+    "commerce:fitness_tracker",
+    "commerce:walking_shoes"
+   ],
    "concepts": [
     "movement_mobility"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -1819,7 +1879,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-040",
@@ -1850,7 +1911,6 @@
     "movement_mobility"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -1860,7 +1920,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-041",
@@ -1893,7 +1954,6 @@
     "sleep_recovery"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -1908,7 +1968,8 @@
     "why": "नियमित समय नींद की लय को स्थिर रखता है"
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-042",
@@ -1940,7 +2001,6 @@
     "sleep_recovery"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -1950,7 +2010,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-043",
@@ -1977,7 +2038,6 @@
    ],
    "triggerKeys": [
     "commerce:coffee",
-    "routine:late_coffee",
     "prompt:cant_sleep",
     "calendar:late_night"
    ],
@@ -1986,7 +2046,6 @@
     "caffeine"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -1996,7 +2055,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-044",
@@ -2027,7 +2087,6 @@
     "sleep_recovery"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -2037,7 +2096,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-045",
@@ -2062,13 +2122,13 @@
     "https://www.cdc.gov/sleep/about/index.html"
    ],
    "triggerKeys": [
-    "prompt:cant_sleep"
+    "prompt:cant_sleep",
+    "commerce:mattress"
    ],
    "concepts": [
     "sleep_recovery"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -2078,7 +2138,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-046",
@@ -2103,13 +2164,14 @@
     "https://www.cdc.gov/sleep/about/index.html"
    ],
    "triggerKeys": [
-    "prompt:cant_sleep"
+    "prompt:cant_sleep",
+    "commerce:fitness_tracker",
+    "commerce:mattress"
    ],
    "concepts": [
     "sleep_recovery"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -2119,7 +2181,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-047",
@@ -2145,16 +2208,16 @@
     "https://www.cdc.gov/sleep/about/index.html"
    ],
    "triggerKeys": [
-    "routine:nightcap",
+    "routine:alcohol",
     "prompt:cant_sleep",
-    "calendar:late_night"
+    "calendar:late_night",
+    "commerce:alcohol"
    ],
    "concepts": [
     "sleep_recovery",
     "alcohol"
    ],
    "grade": "Moderate",
-   "safety": "check",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -2164,7 +2227,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-048",
@@ -2189,13 +2253,13 @@
     "https://www.cdc.gov/sleep/about/index.html"
    ],
    "triggerKeys": [
-    "prompt:cant_sleep"
+    "prompt:cant_sleep",
+    "health:snoring"
    ],
    "concepts": [
     "sleep_recovery"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -2205,7 +2269,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-049",
@@ -2236,7 +2301,6 @@
     "sleep_recovery"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -2246,7 +2310,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-050",
@@ -2278,7 +2343,6 @@
     "sleep_recovery"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -2288,7 +2352,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-051",
@@ -2319,7 +2384,6 @@
     "sleep_recovery"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -2329,7 +2393,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-052",
@@ -2360,7 +2425,6 @@
     "sleep_recovery"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -2370,7 +2434,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-053",
@@ -2401,7 +2466,6 @@
     "sleep_recovery"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -2411,7 +2475,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-054",
@@ -2442,7 +2507,6 @@
     "sleep_recovery"
    ],
    "grade": "Moderate",
-   "safety": "check",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -2452,7 +2516,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-055",
@@ -2483,7 +2548,6 @@
     "sleep_recovery"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -2493,7 +2557,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-056",
@@ -2524,7 +2589,6 @@
     "sleep_recovery"
    ],
    "grade": "Strong",
-   "safety": "check",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -2534,7 +2598,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-057",
@@ -2565,7 +2630,6 @@
     "sleep_recovery"
    ],
    "grade": "Limited",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -2575,7 +2639,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-058",
@@ -2608,7 +2673,6 @@
     "movement"
    ],
    "grade": "Limited",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -2618,7 +2682,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-059",
@@ -2652,7 +2717,6 @@
     "travel"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -2662,7 +2726,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-060",
@@ -2687,13 +2752,13 @@
     "https://www.cdc.gov/sleep/about/index.html"
    ],
    "triggerKeys": [
-    "prompt:cant_sleep"
+    "prompt:cant_sleep",
+    "health:fatigue"
    ],
    "concepts": [
     "sleep_recovery"
    ],
    "grade": "Moderate",
-   "safety": "check",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -2703,7 +2768,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-061",
@@ -2737,7 +2803,6 @@
     "household_cookware"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -2754,7 +2819,8 @@
     "why": "खाना पकाने से घर के अंदर धुआँ और महीन कण बनते हैं"
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-062",
@@ -2790,7 +2856,6 @@
     "cookware"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -2802,7 +2867,8 @@
     "IN": "Use a medium flame with nonstick tawas and kadais."
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-063",
@@ -2835,7 +2901,6 @@
     "household_cookware"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -2845,7 +2910,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-064",
@@ -2880,7 +2946,6 @@
     "plastics"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -2890,7 +2955,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-065",
@@ -2923,7 +2989,6 @@
     "household_cookware"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -2933,7 +2998,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-066",
@@ -2965,7 +3031,6 @@
     "household_cookware"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -2975,7 +3040,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-067",
@@ -3008,7 +3074,6 @@
     "household_cookware"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -3018,7 +3083,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-068",
@@ -3050,7 +3116,6 @@
     "household_cookware"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -3060,7 +3125,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-069",
@@ -3092,7 +3158,6 @@
     "household_cookware"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -3101,12 +3166,9 @@
    "sourceLevel": "tip",
    "sourceChecked": "2026-10-23",
    "notes": {},
-   "sponsor": {
-    "name": "PureTap filters",
-    "criteria": "Only filters certified for a named contaminant."
-   },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-070",
@@ -3139,7 +3201,6 @@
     "household_cookware"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -3149,7 +3210,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-071",
@@ -3175,13 +3237,13 @@
     "https://www.cdc.gov/food-safety/"
    ],
    "triggerKeys": [
-    "prompt:cleaning"
+    "prompt:cleaning",
+    "commerce:air_freshener"
    ],
    "concepts": [
     "household_cookware"
    ],
    "grade": "Limited",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -3191,7 +3253,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-072",
@@ -3224,7 +3287,6 @@
     "household_cookware"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -3234,7 +3296,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-073",
@@ -3263,7 +3326,6 @@
     "household_cookware"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -3275,7 +3337,8 @@
     "IN": "Ask your municipal supplier or housing society about local water reports"
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-074",
@@ -3309,7 +3372,6 @@
     "household_cookware"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -3319,7 +3381,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-075",
@@ -3345,13 +3408,13 @@
     "https://www.cdc.gov/food-safety/"
    ],
    "triggerKeys": [
-    "prompt:cleaning"
+    "prompt:cleaning",
+    "commerce:air_freshener"
    ],
    "concepts": [
     "household_cookware"
    ],
    "grade": "Limited",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -3361,7 +3424,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-076",
@@ -3393,7 +3457,6 @@
     "household_cookware"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -3403,7 +3466,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-077",
@@ -3437,7 +3501,6 @@
     "household_cookware"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -3449,7 +3512,8 @@
     "IN": "Check the LPG hose and regulator for cracks."
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-078",
@@ -3471,12 +3535,14 @@
     "https://www.epa.gov/indoor-air-quality-iaq",
     "https://www.cdc.gov/food-safety/"
    ],
-   "triggerKeys": [],
+   "triggerKeys": [
+    "home:water_quality",
+    "weather:flood"
+   ],
    "concepts": [
     "household_cookware"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -3488,7 +3554,8 @@
     "GB": "Check your local water company for boil-water or other advisories"
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-079",
@@ -3511,13 +3578,13 @@
     "https://www.cdc.gov/food-safety/"
    ],
    "triggerKeys": [
-    "home:old_house"
+    "home:old_house",
+    "commerce:paint"
    ],
    "concepts": [
     "household_cookware"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -3529,7 +3596,8 @@
     "US": "Review EPA guidance before sanding pre-1978 paint"
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-080",
@@ -3555,13 +3623,14 @@
     "https://www.epa.gov/indoor-air-quality-iaq",
     "https://www.cdc.gov/food-safety/"
    ],
-   "triggerKeys": [],
+   "triggerKeys": [
+    "commerce:plastic_container"
+   ],
    "concepts": [
     "household_cookware",
     "plastics"
    ],
    "grade": "Limited",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -3571,7 +3640,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-081",
@@ -3604,7 +3674,6 @@
     "skincare_personal_care"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -3614,7 +3683,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-082",
@@ -3650,7 +3720,6 @@
     "sun"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -3659,12 +3728,9 @@
    "sourceLevel": "tip",
    "sourceChecked": "2026-10-23",
    "notes": {},
-   "sponsor": {
-    "name": "Sunday Shade sunscreen",
-    "criteria": "Only products labelled broad-spectrum."
-   },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-083",
@@ -3696,7 +3762,6 @@
     "skincare_personal_care"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -3706,7 +3771,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-084",
@@ -3738,7 +3804,6 @@
     "skincare_personal_care"
    ],
    "grade": "Limited",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -3748,7 +3813,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-085",
@@ -3780,7 +3846,6 @@
     "skincare_personal_care"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -3790,7 +3855,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-086",
@@ -3822,7 +3888,6 @@
     "skincare_personal_care"
    ],
    "grade": "Moderate",
-   "safety": "check",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -3832,7 +3897,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-087",
@@ -3858,13 +3924,13 @@
     "https://www.fda.gov/cosmetics"
    ],
    "triggerKeys": [
-    "commerce:toothpaste"
+    "commerce:toothpaste",
+    "health:dental"
    ],
    "concepts": [
     "skincare_personal_care"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -3874,7 +3940,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-088",
@@ -3906,7 +3973,6 @@
     "skincare_personal_care"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -3916,7 +3982,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-089",
@@ -3949,7 +4016,6 @@
     "skincare_personal_care"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -3959,7 +4025,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-090",
@@ -3991,7 +4058,6 @@
     "skincare_personal_care"
    ],
    "grade": "Moderate",
-   "safety": "check",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -4001,7 +4067,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-091",
@@ -4033,7 +4100,6 @@
     "skincare_personal_care"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -4043,7 +4109,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-092",
@@ -4075,7 +4142,6 @@
     "skincare_personal_care"
    ],
    "grade": "Moderate",
-   "safety": "check",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -4085,7 +4151,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-093",
@@ -4118,7 +4185,6 @@
     "skincare_personal_care"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -4128,7 +4194,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-094",
@@ -4160,7 +4227,6 @@
     "skincare_personal_care"
    ],
    "grade": "Limited",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -4170,7 +4236,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-095",
@@ -4202,7 +4269,6 @@
     "skincare_personal_care"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -4212,7 +4278,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-096",
@@ -4247,7 +4314,6 @@
     "sun"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -4257,7 +4323,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-097",
@@ -4289,7 +4356,6 @@
     "skincare_personal_care"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -4299,7 +4365,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-098",
@@ -4331,7 +4398,6 @@
     "skincare_personal_care"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -4341,7 +4407,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-099",
@@ -4373,7 +4440,6 @@
     "skincare_personal_care"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -4383,7 +4449,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-100",
@@ -4409,13 +4476,13 @@
     "https://www.fda.gov/cosmetics"
    ],
    "triggerKeys": [
-    "prompt:skincare"
+    "prompt:skincare",
+    "info:health_claim"
    ],
    "concepts": [
     "skincare_personal_care"
    ],
    "grade": "Limited",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -4425,7 +4492,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-101",
@@ -4458,7 +4526,6 @@
     "supplements_medication"
    ],
    "grade": "Safety practice",
-   "safety": "check",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -4468,7 +4535,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-102",
@@ -4501,7 +4569,6 @@
     "supplements_medication"
    ],
    "grade": "Safety practice",
-   "safety": "check",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -4511,7 +4578,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-103",
@@ -4536,12 +4604,14 @@
     "https://ods.od.nih.gov/factsheets/list-all/",
     "https://www.fda.gov/drugs"
    ],
-   "triggerKeys": [],
+   "triggerKeys": [
+    "commerce:iron",
+    "health:fatigue"
+   ],
    "concepts": [
     "supplements_medication"
    ],
    "grade": "Safety practice",
-   "safety": "clinician",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -4551,7 +4621,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-104",
@@ -4586,7 +4657,6 @@
     "food"
    ],
    "grade": "Safety practice",
-   "safety": "check",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -4596,7 +4666,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-105",
@@ -4629,7 +4700,6 @@
     "supplements_medication"
    ],
    "grade": "Safety practice",
-   "safety": "check",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -4639,7 +4709,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-106",
@@ -4671,7 +4742,6 @@
     "supplements_medication"
    ],
    "grade": "Safety practice",
-   "safety": "clinician",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -4681,7 +4751,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-107",
@@ -4713,7 +4784,6 @@
     "supplements_medication"
    ],
    "grade": "Safety practice",
-   "safety": "clinician",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -4723,7 +4793,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-108",
@@ -4749,13 +4820,13 @@
     "https://www.fda.gov/drugs"
    ],
    "triggerKeys": [
-    "prompt:supplement"
+    "prompt:supplement",
+    "info:health_claim"
    ],
    "concepts": [
     "supplements_medication"
    ],
    "grade": "Limited",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -4765,7 +4836,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-109",
@@ -4799,7 +4871,6 @@
     "supplements_medication"
    ],
    "grade": "Safety practice",
-   "safety": "check",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -4809,7 +4880,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-110",
@@ -4836,13 +4908,13 @@
    ],
    "triggerKeys": [
     "prompt:supplement",
-    "calendar:appointment"
+    "calendar:appointment",
+    "health:prescription"
    ],
    "concepts": [
     "supplements_medication"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -4852,7 +4924,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-111",
@@ -4884,7 +4957,6 @@
     "supplements_medication"
    ],
    "grade": "Safety practice",
-   "safety": "clinician",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -4894,7 +4966,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-112",
@@ -4926,7 +4999,6 @@
     "supplements_medication"
    ],
    "grade": "Safety practice",
-   "safety": "clinician",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -4936,7 +5008,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-113",
@@ -4962,13 +5035,13 @@
     "https://www.fda.gov/drugs"
    ],
    "triggerKeys": [
-    "prompt:supplement"
+    "prompt:supplement",
+    "health:prescription"
    ],
    "concepts": [
     "supplements_medication"
    ],
    "grade": "Safety practice",
-   "safety": "check",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -4978,7 +5051,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-114",
@@ -5004,13 +5078,13 @@
     "https://www.fda.gov/drugs"
    ],
    "triggerKeys": [
-    "prompt:supplement"
+    "prompt:supplement",
+    "health:prescription"
    ],
    "concepts": [
     "supplements_medication"
    ],
    "grade": "Safety practice",
-   "safety": "check",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -5020,7 +5094,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-115",
@@ -5052,7 +5127,6 @@
     "supplements_medication"
    ],
    "grade": "Safety practice",
-   "safety": "check",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -5062,7 +5136,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-116",
@@ -5094,7 +5169,6 @@
     "supplements_medication"
    ],
    "grade": "Safety practice",
-   "safety": "check",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -5104,7 +5178,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-117",
@@ -5137,7 +5212,6 @@
     "supplements_medication"
    ],
    "grade": "Moderate",
-   "safety": "check",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -5147,7 +5221,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-118",
@@ -5181,7 +5256,6 @@
     "food"
    ],
    "grade": "Safety practice",
-   "safety": "check",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -5191,7 +5265,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-119",
@@ -5216,12 +5291,13 @@
     "https://ods.od.nih.gov/factsheets/list-all/",
     "https://www.fda.gov/drugs"
    ],
-   "triggerKeys": [],
+   "triggerKeys": [
+    "health:prescription"
+   ],
    "concepts": [
     "supplements_medication"
    ],
    "grade": "Safety practice",
-   "safety": "clinician",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -5231,7 +5307,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-120",
@@ -5264,7 +5341,6 @@
     "supplements_medication"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -5274,7 +5350,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-121",
@@ -5309,7 +5386,6 @@
     "heart"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -5319,7 +5395,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-122",
@@ -5345,13 +5422,15 @@
     "https://www.uspreventiveservicestaskforce.org/uspstf/",
     "https://www.who.int/health-topics/noncommunicable-diseases"
    ],
-   "triggerKeys": [],
+   "triggerKeys": [
+    "health:lab_results",
+    "commerce:glucose_meter"
+   ],
    "concepts": [
     "prevention_tests",
     "metabolic"
    ],
    "grade": "Strong",
-   "safety": "clinician",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -5361,7 +5440,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-123",
@@ -5388,14 +5468,14 @@
     "https://www.who.int/health-topics/noncommunicable-diseases"
    ],
    "triggerKeys": [
-    "prompt:checkup"
+    "prompt:checkup",
+    "health:lab_results"
    ],
    "concepts": [
     "prevention_tests",
     "heart"
    ],
    "grade": "Strong",
-   "safety": "check",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -5405,7 +5485,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-124",
@@ -5431,13 +5512,14 @@
     "https://www.uspreventiveservicestaskforce.org/uspstf/",
     "https://www.who.int/health-topics/noncommunicable-diseases"
    ],
-   "triggerKeys": [],
+   "triggerKeys": [
+    "health:lab_results"
+   ],
    "concepts": [
     "prevention_tests",
     "heart"
    ],
    "grade": "Strong",
-   "safety": "clinician",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -5447,7 +5529,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-125",
@@ -5476,7 +5559,6 @@
     "prevention_tests"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -5488,7 +5570,8 @@
     "GB": "Review whether you are eligible for NHS screening programs"
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-126",
@@ -5522,7 +5605,6 @@
     "heart"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -5531,12 +5613,9 @@
    "sourceLevel": "tip",
    "sourceChecked": "2026-10-23",
    "notes": {},
-   "sponsor": {
-    "name": "Cuffwell monitors",
-    "criteria": "Only cuffs listed on an independent validation register."
-   },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-127",
@@ -5569,7 +5648,6 @@
     "prevention_tests"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -5579,7 +5657,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-128",
@@ -5611,7 +5690,6 @@
     "prevention_tests"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -5621,7 +5699,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-129",
@@ -5653,7 +5732,6 @@
     "prevention_tests"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -5663,7 +5741,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-130",
@@ -5696,7 +5775,6 @@
     "prevention_tests"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -5706,7 +5784,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-131",
@@ -5736,7 +5815,6 @@
     "prevention_tests"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -5748,7 +5826,8 @@
     "US": "Compare your age and risk factors with current US screening recommendations"
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-132",
@@ -5773,12 +5852,13 @@
     "https://www.uspreventiveservicestaskforce.org/uspstf/",
     "https://www.who.int/health-topics/noncommunicable-diseases"
    ],
-   "triggerKeys": [],
+   "triggerKeys": [
+    "health:lab_results"
+   ],
    "concepts": [
     "prevention_tests"
    ],
    "grade": "Strong",
-   "safety": "clinician",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -5788,7 +5868,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-133",
@@ -5813,12 +5894,13 @@
     "https://www.uspreventiveservicestaskforce.org/uspstf/",
     "https://www.who.int/health-topics/noncommunicable-diseases"
    ],
-   "triggerKeys": [],
+   "triggerKeys": [
+    "health:lab_results"
+   ],
    "concepts": [
     "prevention_tests"
    ],
    "grade": "Strong",
-   "safety": "clinician",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -5828,7 +5910,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-134",
@@ -5853,12 +5936,14 @@
     "https://www.uspreventiveservicestaskforce.org/uspstf/",
     "https://www.who.int/health-topics/noncommunicable-diseases"
    ],
-   "triggerKeys": [],
+   "triggerKeys": [
+    "health:fatigue",
+    "health:lab_results"
+   ],
    "concepts": [
     "prevention_tests"
    ],
    "grade": "Strong",
-   "safety": "check",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -5868,7 +5953,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-135",
@@ -5894,13 +5980,13 @@
     "https://www.who.int/health-topics/noncommunicable-diseases"
    ],
    "triggerKeys": [
-    "prompt:checkup"
+    "prompt:checkup",
+    "health:lab_results"
    ],
    "concepts": [
     "prevention_tests"
    ],
    "grade": "Strong",
-   "safety": "check",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -5910,7 +5996,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-136",
@@ -5937,14 +6024,14 @@
     "https://www.who.int/health-topics/noncommunicable-diseases"
    ],
    "triggerKeys": [
-    "prompt:checkup"
+    "prompt:checkup",
+    "commerce:glucose_meter"
    ],
    "concepts": [
     "prevention_tests",
     "metabolic"
    ],
    "grade": "Strong",
-   "safety": "check",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -5954,7 +6041,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-137",
@@ -5988,7 +6076,6 @@
     "sleep"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -5998,7 +6085,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-138",
@@ -6031,7 +6119,6 @@
     "prevention_tests"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -6041,7 +6128,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-139",
@@ -6070,7 +6158,6 @@
     "prevention_tests"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -6082,7 +6169,8 @@
     "IN": "Review schedules and regional infectious-disease risks with a local clinician"
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-140",
@@ -6115,7 +6203,6 @@
     "prevention_tests"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -6125,7 +6212,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-141",
@@ -6157,7 +6245,6 @@
     "mental_wellbeing"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -6167,7 +6254,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-142",
@@ -6199,7 +6287,6 @@
     "mental_wellbeing"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -6209,7 +6296,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-143",
@@ -6243,7 +6331,6 @@
     "breathing"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -6253,7 +6340,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-144",
@@ -6284,7 +6372,6 @@
     "mental_wellbeing"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -6294,7 +6381,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-145",
@@ -6326,7 +6414,6 @@
     "mental_wellbeing"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -6336,7 +6423,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-146",
@@ -6368,7 +6456,6 @@
     "mental_wellbeing"
    ],
    "grade": "Limited",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -6378,7 +6465,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-147",
@@ -6409,7 +6497,6 @@
     "mental_wellbeing"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -6419,7 +6506,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-148",
@@ -6450,7 +6538,6 @@
     "mental_wellbeing"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -6460,7 +6547,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-149",
@@ -6491,7 +6579,6 @@
     "mental_wellbeing"
    ],
    "grade": "Limited",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -6501,7 +6588,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-150",
@@ -6532,7 +6620,6 @@
     "mental_wellbeing"
    ],
    "grade": "Limited",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -6542,7 +6629,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-151",
@@ -6576,7 +6664,6 @@
     "movement"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -6586,7 +6673,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-152",
@@ -6617,7 +6705,6 @@
     "mental_wellbeing"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -6627,7 +6714,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-153",
@@ -6658,7 +6746,6 @@
     "mental_wellbeing"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -6668,7 +6755,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-154",
@@ -6701,7 +6789,6 @@
     "caffeine"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -6711,7 +6798,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-155",
@@ -6743,7 +6831,6 @@
     "mental_wellbeing"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -6753,7 +6840,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-156",
@@ -6784,7 +6872,6 @@
     "mental_wellbeing"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -6794,7 +6881,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-157",
@@ -6825,7 +6913,6 @@
     "mental_wellbeing"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -6835,7 +6922,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-158",
@@ -6861,14 +6949,16 @@
     "https://www.berkshirehealthcare.nhs.uk/advice/how-to-cut-back-on-alcohol-for-your-mental-health",
     "https://www.who.int/news-room/fact-sheets/detail/mental-health-strengthening-our-response"
    ],
-   "triggerKeys": [],
+   "triggerKeys": [
+    "routine:alcohol",
+    "commerce:alcohol"
+   ],
    "concepts": [
     "mental_wellbeing",
     "alcohol",
     "sleep"
    ],
    "grade": "Moderate",
-   "safety": "check",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -6878,7 +6968,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-159",
@@ -6909,7 +7000,6 @@
     "mental_wellbeing"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -6919,7 +7009,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-160",
@@ -6950,7 +7041,6 @@
     "mental_wellbeing"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -6960,7 +7050,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-161",
@@ -6986,13 +7077,13 @@
     "https://www.who.int/health-topics/drinking-water"
    ],
    "triggerKeys": [
-    "weather:poor_air_quality"
+    "weather:poor_air_quality",
+    "weather:pollen"
    ],
    "concepts": [
     "air_water_environment"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -7011,7 +7102,8 @@
     "why": "प्रदूषण के महीन कण साँस और दिल की बीमारी को बढ़ा सकते हैं"
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-162",
@@ -7045,7 +7137,6 @@
     "movement"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -7055,7 +7146,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-163",
@@ -7089,7 +7181,6 @@
     "air_water_environment"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -7098,12 +7189,9 @@
    "sourceLevel": "tip",
    "sourceChecked": "2026-10-23",
    "notes": {},
-   "sponsor": {
-    "name": "ClearRoom purifiers",
-    "criteria": "Only purifiers that publish a tested CADR for a stated room size."
-   },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-164",
@@ -7135,7 +7223,6 @@
     "air_water_environment"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -7147,7 +7234,8 @@
     "IN": "This also applies to bidi and hookah smoke."
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-165",
@@ -7179,7 +7267,6 @@
     "air_water_environment"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -7189,7 +7276,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-166",
@@ -7221,7 +7309,6 @@
     "air_water_environment"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -7238,7 +7325,8 @@
     "why": "जमा पानी हटाने से मच्छर कम पनपते हैं"
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-167",
@@ -7270,7 +7358,6 @@
     "air_water_environment"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -7280,7 +7367,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-168",
@@ -7313,7 +7401,6 @@
     "air_water_environment"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -7326,7 +7413,8 @@
     "US": "Check National Weather Service heat advisories."
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-169",
@@ -7361,7 +7449,6 @@
     "sun"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -7371,7 +7458,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-170",
@@ -7404,7 +7492,6 @@
     "air_water_environment"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -7414,7 +7501,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-171",
@@ -7439,12 +7527,14 @@
     "https://www.who.int/health-topics/air-pollution",
     "https://www.who.int/health-topics/drinking-water"
    ],
-   "triggerKeys": [],
+   "triggerKeys": [
+    "home:old_house",
+    "home:water_quality"
+   ],
    "concepts": [
     "air_water_environment"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -7454,7 +7544,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-172",
@@ -7481,13 +7572,13 @@
    ],
    "triggerKeys": [
     "weather:cold_season",
-    "commerce:incense"
+    "commerce:incense",
+    "commerce:air_freshener"
    ],
    "concepts": [
     "air_water_environment"
    ],
    "grade": "Limited",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -7499,7 +7590,8 @@
     "IN": "After lighting agarbatti or diyas, open a window when the air outside allows."
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-173",
@@ -7524,12 +7616,14 @@
     "https://www.who.int/health-topics/air-pollution",
     "https://www.who.int/health-topics/drinking-water"
    ],
-   "triggerKeys": [],
+   "triggerKeys": [
+    "weather:poor_air_quality",
+    "weather:cold_season"
+   ],
    "concepts": [
     "air_water_environment"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -7539,7 +7633,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-174",
@@ -7571,7 +7666,6 @@
     "air_water_environment"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -7581,7 +7675,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-175",
@@ -7615,7 +7710,6 @@
     "air_water_environment"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -7625,7 +7719,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-176",
@@ -7650,12 +7745,14 @@
     "https://www.who.int/health-topics/air-pollution",
     "https://www.who.int/health-topics/drinking-water"
    ],
-   "triggerKeys": [],
+   "triggerKeys": [
+    "prompt:diy",
+    "commerce:paint"
+   ],
    "concepts": [
     "air_water_environment"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -7665,7 +7762,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-177",
@@ -7697,7 +7795,6 @@
     "air_water_environment"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -7709,7 +7806,8 @@
     "IN": "Some districts report arsenic or fluoride in groundwater. Check state water data."
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-178",
@@ -7741,7 +7839,6 @@
     "air_water_environment"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -7751,7 +7848,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-179",
@@ -7776,12 +7874,14 @@
     "https://www.who.int/health-topics/air-pollution",
     "https://www.who.int/health-topics/drinking-water"
    ],
-   "triggerKeys": [],
+   "triggerKeys": [
+    "prompt:grocery",
+    "prompt:cooking"
+   ],
    "concepts": [
     "air_water_environment"
    ],
    "grade": "Safety practice",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -7793,7 +7893,8 @@
     "IN": "Rinse produce in safe drinking water, not stored tank water."
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-180",
@@ -7826,7 +7927,6 @@
     "air_water_environment"
    ],
    "grade": "Moderate",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -7836,7 +7936,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-181",
@@ -7870,7 +7971,6 @@
     "movement"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -7880,7 +7980,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-182",
@@ -7912,7 +8013,6 @@
     "everyday_health"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -7922,7 +8022,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-183",
@@ -7946,12 +8047,14 @@
     "https://www.cdc.gov/clean-hands/about/index.html",
     "https://www.cdc.gov/healthy-living/"
    ],
-   "triggerKeys": [],
+   "triggerKeys": [
+    "health:household_illness",
+    "prompt:cooking"
+   ],
    "concepts": [
     "everyday_health"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -7966,7 +8069,8 @@
     "why": "हाथ धोने से कीटाणु कम फैलते हैं"
    },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-184",
@@ -7991,13 +8095,13 @@
     "https://www.cdc.gov/healthy-living/"
    ],
    "triggerKeys": [
-    "commerce:floss"
+    "commerce:floss",
+    "health:dental"
    ],
    "concepts": [
     "everyday_health"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -8006,12 +8110,9 @@
    "sourceLevel": "tip",
    "sourceChecked": "2026-10-23",
    "notes": {},
-   "sponsor": {
-    "name": "Gumline floss",
-    "criteria": "Any interdental product. No health claims beyond plaque removal."
-   },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-185",
@@ -8036,13 +8137,16 @@
     "https://rethinkingdrinking.niaaa.nih.gov/thinking-about-change/tips-try",
     "https://www.cdc.gov/healthy-living/"
    ],
-   "triggerKeys": [],
+   "triggerKeys": [
+    "routine:alcohol",
+    "commerce:alcohol",
+    "calendar:social_connection"
+   ],
    "concepts": [
     "everyday_health",
     "alcohol"
    ],
    "grade": "Strong",
-   "safety": "check",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -8052,7 +8156,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "common"
   },
   {
    "id": "ww-186",
@@ -8077,13 +8182,13 @@
     "https://www.cdc.gov/healthy-living/"
    ],
    "triggerKeys": [
-    "calendar:appointment"
+    "calendar:appointment",
+    "health:prescription"
    ],
    "concepts": [
     "everyday_health"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -8093,7 +8198,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-187",
@@ -8117,12 +8223,13 @@
     "https://www.heart.org/en/healthy-living/healthy-eating/eat-smart/nutrition-basics/eat-healthy-on-a-budget-by-planning-ahead",
     "https://www.cdc.gov/healthy-living/"
    ],
-   "triggerKeys": [],
+   "triggerKeys": [
+    "prompt:grocery"
+   ],
    "concepts": [
     "everyday_health"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -8132,7 +8239,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-188",
@@ -8156,12 +8264,13 @@
     "https://newsinhealth.nih.gov/2018/03/creating-healthy-habits",
     "https://www.cdc.gov/healthy-living/"
    ],
-   "triggerKeys": [],
+   "triggerKeys": [
+    "routine:morning"
+   ],
    "concepts": [
     "everyday_health"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -8171,7 +8280,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-189",
@@ -8203,7 +8313,6 @@
     "everyday_health"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -8213,7 +8322,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-190",
@@ -8237,12 +8347,13 @@
     "https://medlineplus.gov/evaluatinghealthinformation.html",
     "https://www.cdc.gov/healthy-living/"
    ],
-   "triggerKeys": [],
+   "triggerKeys": [
+    "info:health_claim"
+   ],
    "concepts": [
     "everyday_health"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -8252,7 +8363,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-191",
@@ -8285,7 +8397,6 @@
     "travel"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -8295,7 +8406,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-192",
@@ -8319,12 +8431,14 @@
     "https://www.ready.gov/plan",
     "https://www.cdc.gov/healthy-living/"
    ],
-   "triggerKeys": [],
+   "triggerKeys": [
+    "travel:international_trip",
+    "travel:long_trip"
+   ],
    "concepts": [
     "everyday_health"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -8334,7 +8448,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-193",
@@ -8366,7 +8481,6 @@
     "everyday_health"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -8376,7 +8490,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-194",
@@ -8408,7 +8523,6 @@
     "everyday_health"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -8417,12 +8531,9 @@
    "sourceLevel": "tip",
    "sourceChecked": "2026-10-23",
    "notes": {},
-   "sponsor": {
-    "name": "TrueTemp thermometers",
-    "criteria": "Only probe thermometers with a stated accuracy range."
-   },
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-195",
@@ -8446,12 +8557,14 @@
     "https://www.nhs.uk/conditions/periods/period-problems/",
     "https://www.cdc.gov/healthy-living/"
    ],
-   "triggerKeys": [],
+   "triggerKeys": [
+    "health:period",
+    "commerce:period_products"
+   ],
    "concepts": [
     "everyday_health"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -8461,7 +8574,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-196",
@@ -8496,7 +8610,6 @@
     "travel"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -8506,7 +8619,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-197",
@@ -8531,13 +8645,14 @@
     "https://www.cdc.gov/healthy-living/"
    ],
    "triggerKeys": [
-    "commerce:power_tools"
+    "commerce:power_tools",
+    "prompt:loud",
+    "commerce:headphones"
    ],
    "concepts": [
     "everyday_health"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -8547,7 +8662,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-198",
@@ -8572,13 +8688,14 @@
     "https://www.cdc.gov/healthy-living/"
    ],
    "triggerKeys": [
-    "prompt:checkup"
+    "prompt:checkup",
+    "prompt:loud",
+    "commerce:headphones"
    ],
    "concepts": [
     "everyday_health"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -8588,7 +8705,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-199",
@@ -8612,12 +8730,13 @@
     "https://www.aad.org/public/diseases/a-z/athletes-foot-prevent",
     "https://www.cdc.gov/healthy-living/"
    ],
-   "triggerKeys": [],
+   "triggerKeys": [
+    "activity:workout"
+   ],
    "concepts": [
     "everyday_health"
    ],
    "grade": "Limited",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -8627,7 +8746,8 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
   },
   {
    "id": "ww-200",
@@ -8659,7 +8779,6 @@
     "everyday_health"
    ],
    "grade": "Strong",
-   "safety": "general",
    "review": {
     "status": "not-reviewed",
     "by": null,
@@ -8669,7 +8788,2134 @@
    "sourceChecked": "2026-10-23",
    "notes": {},
    "status": "live",
-   "added": "2026-01-01"
+   "added": "2026-01-01",
+   "familiarity": "lesser-known"
+  },
+  {
+   "title": "Wash new clothes before you wear them",
+   "category": "Clothing & textiles",
+   "grade": "Limited",
+   "action": "Wash new clothes, especially close-fitting ones, a few times before the first wear",
+   "why": "Some dyes and wrinkle-resistant resins in fabric can cause skin rashes, and washing reduces what reaches your skin",
+   "caution": "Washing may not remove every resin. A rash where clothes rub, like the inner thighs or behind the knees, is worth showing a doctor.",
+   "sources": [
+    "https://dermnetnz.org/topics/textile-contact-dermatitis",
+    "https://dermnetnz.org/topics/textile-dye-allergy"
+   ],
+   "triggerKeys": [
+    "commerce:clothing",
+    "prompt:laundry"
+   ],
+   "id": "ww-204",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "The action can start today; the relevant outcome may take days to weeks, or may not be directly measurable.",
+   "tags": [
+    "clothing"
+   ],
+   "concepts": [
+    "clothing_textiles"
+   ]
+  },
+  {
+   "title": "Dress for heat in loose, light-coloured clothes",
+   "category": "Clothing & textiles",
+   "familiarity": "common",
+   "grade": "Safety practice",
+   "action": "On hot days, wear loose, lightweight, light-coloured clothing and a wide-brimmed hat",
+   "why": "Loose fabric lets air move over your skin so sweat can cool you, and light colours absorb less heat",
+   "caution": "Heavy work clothing or protective gear holds heat in, so take more breaks when you have to wear it.",
+   "sources": [
+    "https://www.cdc.gov/climate-health/php/resources/protect-yourself-from-the-dangers-of-extreme-heat.html",
+    "https://www.cdc.gov/yellow-book/hcp/environmental-hazards-risks/heat-and-cold-illness-in-travelers.html"
+   ],
+   "triggerKeys": [
+    "weather:heat_warning",
+    "commerce:clothing"
+   ],
+   "id": "ww-205",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "The action can start today; the relevant outcome may take days to weeks, or may not be directly measurable.",
+   "tags": [
+    "clothing"
+   ],
+   "concepts": [
+    "clothing_textiles"
+   ]
+  },
+  {
+   "title": "Pick clothes with a UPF label for sun",
+   "category": "Clothing & textiles",
+   "grade": "Moderate",
+   "action": "For long days outside, choose clothing with a UPF of 30 or more, in a tight weave",
+   "why": "A UPF number tells you how much UV a fabric blocks, which colour and feel cannot",
+   "caution": "Wet clothing protects less than dry. Still use sunscreen on skin that clothes do not cover.",
+   "sources": [
+    "https://www.aad.org/public/everyday-care/sun-protection/shade-clothing-sunscreen/what-to-wear-protect-skin-from-sun"
+   ],
+   "triggerKeys": [
+    "weather:high_uv",
+    "commerce:clothing",
+    "prompt:outdoors"
+   ],
+   "id": "ww-206",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "The action can start today; the relevant outcome may take days to weeks, or may not be directly measurable.",
+   "tags": [
+    "clothing"
+   ],
+   "concepts": [
+    "clothing_textiles"
+   ]
+  },
+  {
+   "title": "Layer up for the cold and change out of wet clothes",
+   "category": "Clothing & textiles",
+   "familiarity": "common",
+   "grade": "Safety practice",
+   "action": "Dress in layers in the cold, and change into dry clothes as soon as you get in if you are wet",
+   "why": "Layers trap warm air, and wet clothing makes you lose heat much faster",
+   "caution": "Older adults feel the cold less clearly, so check on them in cold spells.",
+   "sources": [
+    "https://www.weather.gov/safety/cold-during"
+   ],
+   "triggerKeys": [
+    "weather:cold_season",
+    "commerce:clothing",
+    "prompt:outdoors"
+   ],
+   "id": "ww-207",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "The action can start today; the relevant outcome may take days to weeks, or may not be directly measurable.",
+   "tags": [
+    "clothing"
+   ],
+   "concepts": [
+    "clothing_textiles"
+   ]
+  },
+  {
+   "title": "Keep high heels for short occasions",
+   "category": "Clothing & textiles",
+   "grade": "Moderate",
+   "action": "For everyday wear, choose a heel under about 4 cm with a wide base and room for your toes",
+   "why": "High heels push weight onto the ball of the foot and strain the back, knees and ankles",
+   "caution": "Ongoing foot pain, corns or bunions are worth seeing a podiatrist about.",
+   "sources": [
+    "https://www.somersetft.nhs.uk/podiatry/wp-content/uploads/sites/135/2022/04/Podiatry-Footwear-advice-FINAL-090322.pdf",
+    "https://policyonline.nhslothian.scot/wp-content/uploads/2023/03/General_Footwear_Advice.pdf"
+   ],
+   "triggerKeys": [
+    "commerce:shoes",
+    "commerce:clothing"
+   ],
+   "id": "ww-208",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "The action can start today; the relevant outcome may take days to weeks, or may not be directly measurable.",
+   "tags": [
+    "clothing"
+   ],
+   "concepts": [
+    "clothing_textiles"
+   ]
+  },
+  {
+   "title": "Change out of damp socks and shoes",
+   "category": "Clothing & textiles",
+   "grade": "Moderate",
+   "action": "Change socks when they get damp, dry your feet well, and let shoes air out between wears",
+   "why": "The fungus behind athlete's foot grows in warm, damp places like sweaty socks and shoes",
+   "caution": "Athlete's foot can spread to the groin, so treat it early.",
+   "sources": [
+    "https://aad.org/public/diseases/a-z/athletes-foot-prevent"
+   ],
+   "triggerKeys": [
+    "activity:workout",
+    "prompt:workout",
+    "commerce:walking_shoes"
+   ],
+   "id": "ww-209",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "The action can start today; the relevant outcome may take days to weeks, or may not be directly measurable.",
+   "tags": [
+    "clothing"
+   ],
+   "concepts": [
+    "clothing_textiles"
+   ]
+  },
+  {
+   "title": "Lock laundry pods away from children",
+   "category": "Household & cookware",
+   "grade": "Safety practice",
+   "action": "Keep laundry pods sealed in their box, up high or locked away, and handle them with dry hands",
+   "why": "Children mistake the soft, bright pods for sweets, and the liquid inside is concentrated and toxic",
+   "caution": "If a child bites one or gets it in an eye, call your poison centre at once. In the US, that is 1-800-222-1222.",
+   "sources": [
+    "https://www.cpsc.gov/content/cpsc-and-accc-warn-of-poison-dangers-with-liquid-laundry-packets"
+   ],
+   "triggerKeys": [
+    "prompt:laundry",
+    "commerce:cleaning_product"
+   ],
+   "id": "ww-210",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Exposure changes start when the source is addressed; health effects may not be directly observable.",
+   "tags": [
+    "household"
+   ],
+   "concepts": [
+    "household_cookware"
+   ]
+  },
+  {
+   "title": "Check aluminium and brass cookware for lead",
+   "category": "Household & cookware",
+   "grade": "Safety practice",
+   "action": "Check your aluminium, brass and Hindalium pots against the FDA lead list, and stop cooking in any listed piece",
+   "why": "Some imported aluminium and brass cookware has been found to release lead into food, and no level of lead is known to be safe",
+   "caution": "Young children and people who are pregnant or breastfeeding are most at risk. Do not donate listed pieces.",
+   "sources": [
+    "https://www.fda.gov/food/alerts-advisories-safety-information/fda-issues-warning-about-imported-cookware-may-leach-lead-august-2025",
+    "https://www.fda.gov/food/environmental-contaminants-food/lead-food-and-foodwares"
+   ],
+   "triggerKeys": [
+    "commerce:cookware",
+    "prompt:cooking",
+    "home:old_house"
+   ],
+   "notes": {
+    "IN": "Hindalium and aluminium kadais and handis are common in Indian kitchens. Check the brand against the list."
+   },
+   "id": "ww-211",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Exposure changes start when the source is addressed; health effects may not be directly observable.",
+   "tags": [
+    "household"
+   ],
+   "concepts": [
+    "household_cookware"
+   ]
+  },
+  {
+   "title": "Skip air fresheners and fix the smell",
+   "category": "Household & cookware",
+   "grade": "Moderate",
+   "action": "Remove the source of a smell and open a window, rather than spraying air freshener or burning scented candles",
+   "why": "Air fresheners release chemicals into indoor air, and cutting the source works better than masking it",
+   "caution": "People with asthma often notice scented products first.",
+   "sources": [
+    "https://www.epa.gov/indoor-air-quality-iaq/volatile-organic-compounds-impact-indoor-air-quality"
+   ],
+   "triggerKeys": [
+    "commerce:air_freshener",
+    "prompt:cleaning",
+    "weather:cold_season"
+   ],
+   "id": "ww-212",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Exposure changes start when the source is addressed; health effects may not be directly observable.",
+   "tags": [
+    "household"
+   ],
+   "concepts": [
+    "household_cookware"
+   ]
+  },
+  {
+   "title": "Avoid kajal, kohl and surma that may contain lead",
+   "category": "Skincare & personal care",
+   "grade": "Safety practice",
+   "action": "Check eye cosmetics for kohl, kajal or surma, and do not put them on children’s eyes",
+   "why": "These products often contain high levels of lead, sometimes more than half their weight, and have poisoned children",
+   "caution": "Eyeliners labelled as kajal by regulated brands may not contain traditional kohl. Read the ingredients.",
+   "sources": [
+    "https://www.fda.gov/cosmetics/cosmetic-products/kohl-kajal-al-kahal-surma-tiro-tozali-or-kwalli-any-name-beware-lead-poisoning",
+    "https://www.cdc.gov/lead-prevention/prevention/foods-cosmetics-medicines.html"
+   ],
+   "triggerKeys": [
+    "commerce:kohl",
+    "commerce:skincare"
+   ],
+   "notes": {
+    "IN": "Applying kajal to babies’ eyes is a common tradition. Lead exposure in early childhood is the main worry."
+   },
+   "id": "ww-213",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "The action can start today; the relevant outcome may take days to weeks, or may not be directly measurable.",
+   "tags": [
+    "skincare"
+   ],
+   "concepts": [
+    "skincare_personal_care"
+   ]
+  },
+  {
+   "title": "Check skin-lightening creams for mercury",
+   "category": "Skincare & personal care",
+   "grade": "Safety practice",
+   "action": "Avoid skin-lightening creams that list mercury, calomel or mercurio, or that have no clear label",
+   "why": "Mercury in these creams can be absorbed through the skin and cause lasting harm, even to others in the home",
+   "caution": "Pregnant people and children face the highest risk. For dark spots, ask a doctor about proven options.",
+   "sources": [
+    "https://www.fda.gov/consumers/consumer-updates/mercury-poisoning-linked-skin-products",
+    "https://www.who.int/initiatives/elimination-of-mercury-containing-skin-lightening-products"
+   ],
+   "triggerKeys": [
+    "commerce:skin_lightening",
+    "commerce:skincare"
+   ],
+   "id": "ww-214",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "The action can start today; the relevant outcome may take days to weeks, or may not be directly measurable.",
+   "tags": [
+    "skincare"
+   ],
+   "concepts": [
+    "skincare_personal_care"
+   ]
+  },
+  {
+   "title": "Limit processed meat",
+   "category": "Ingredients & labels",
+   "grade": "Strong",
+   "action": "Have bacon, ham, sausages and salami less often, and swap in beans, fish or fresh meat",
+   "why": "Processed meat causes colorectal cancer; each 50 g eaten daily raises the risk by about 18%",
+   "caution": "The extra risk for one person is small. It adds up with how much and how often you eat it.",
+   "sources": [
+    "https://www.who.int/news-room/questions-and-answers/item/cancer-carcinogenicity-of-the-consumption-of-red-meat-and-processed-meat"
+   ],
+   "triggerKeys": [
+    "grocery:processed_meat",
+    "prompt:grocery"
+   ],
+   "id": "ww-215",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Changes in what you buy begin immediately; effects on health build over months and years.",
+   "tags": [
+    "ingredients"
+   ],
+   "concepts": [
+    "ingredients_labels"
+   ]
+  },
+  {
+   "title": "Don’t rely on sweeteners to lose weight",
+   "category": "Ingredients & labels",
+   "grade": "Moderate",
+   "action": "Use water or unsweetened drinks to cut sugar, rather than switching to sweetened “diet” versions",
+   "why": "WHO found no long-term benefit from non-sugar sweeteners for reducing body fat",
+   "caution": "This advice does not cover people who already have diabetes. It is not a finding that sweeteners are unsafe.",
+   "sources": [
+    "https://www.who.int/news/item/15-05-2023-who-advises-not-to-use-non-sugar-sweeteners-for-weight-control-in-newly-released-guideline"
+   ],
+   "triggerKeys": [
+    "grocery:sweetener",
+    "grocery:soda"
+   ],
+   "id": "ww-216",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Changes in what you buy begin immediately; effects on health build over months and years.",
+   "tags": [
+    "ingredients"
+   ],
+   "concepts": [
+    "ingredients_labels"
+   ]
+  },
+  {
+   "title": "Cook rice in extra water to cut arsenic",
+   "category": "Ingredients & labels",
+   "grade": "Moderate",
+   "action": "Cook rice in 6 to 10 parts water to 1 part rice, then drain the extra, like pasta",
+   "why": "Rice takes up arsenic from soil and water, and draining the cooking water lowers it by about 40 to 60%",
+   "caution": "This also drains some added vitamins and iron from enriched white rice. Brown rice usually has more arsenic than white.",
+   "sources": [
+    "https://www.fda.gov/food/environmental-contaminants-food/what-you-can-do-limit-exposure-arsenic"
+   ],
+   "triggerKeys": [
+    "grocery:rice",
+    "prompt:cooking"
+   ],
+   "notes": {
+    "IN": "The draining method is close to the traditional way of cooking rice in plenty of water in parts of India."
+   },
+   "id": "ww-217",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Changes in what you buy begin immediately; effects on health build over months and years.",
+   "tags": [
+    "ingredients"
+   ],
+   "concepts": [
+    "ingredients_labels"
+   ]
+  },
+  {
+   "title": "Count caffeine across your drinks",
+   "category": "Ingredients & labels",
+   "grade": "Moderate",
+   "action": "Add up caffeine from coffee, tea, colas and energy drinks, and keep the total under about 400 mg a day",
+   "why": "Most healthy adults have no ill effects up to 400 mg, and one large energy drink can contain over 300 mg",
+   "caution": "People who are pregnant, sensitive to caffeine or taking certain medicines may need less.",
+   "sources": [
+    "https://www.fda.gov/consumers/consumer-updates/spilling-beans-how-much-caffeine-too-much"
+   ],
+   "triggerKeys": [
+    "grocery:energy_drink",
+    "commerce:coffee"
+   ],
+   "id": "ww-218",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Changes in what you buy begin immediately; effects on health build over months and years.",
+   "tags": [
+    "ingredients"
+   ],
+   "concepts": [
+    "ingredients_labels"
+   ]
+  },
+  {
+   "title": "Look for partially hydrogenated oil on labels",
+   "category": "Ingredients & labels",
+   "grade": "Strong",
+   "action": "Check ingredient lists of biscuits, fried snacks and baked goods for “partially hydrogenated” oil, and choose another",
+   "why": "Industrially made trans fats raise heart disease risk and have no place in a healthy diet",
+   "caution": "Many countries now limit trans fat, but older stock and loose fried foods may still contain it.",
+   "sources": [
+    "https://www.who.int/news-room/fact-sheets/detail/trans-fat"
+   ],
+   "triggerKeys": [
+    "grocery:namkeen",
+    "grocery:butter",
+    "prompt:grocery"
+   ],
+   "notes": {
+    "IN": "Vanaspati is a partially hydrogenated fat, often used for frying in sweet shops and street food."
+   },
+   "id": "ww-219",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Changes in what you buy begin immediately; effects on health build over months and years.",
+   "tags": [
+    "ingredients"
+   ],
+   "concepts": [
+    "ingredients_labels"
+   ]
+  },
+  {
+   "title": "Use the added-sugars line on labels",
+   "category": "Ingredients & labels",
+   "scope": "US",
+   "grade": "Strong",
+   "action": "Check “Includes added sugars” on the Nutrition Facts label: 5% DV or less is low, 20% or more is high",
+   "why": "The daily value for added sugars is 50 g, and the percent shows how much of it one serving uses",
+   "caution": "Your own limit may be higher or lower than 50 g, depending on how many calories you need.",
+   "sources": [
+    "https://www.fda.gov/food/nutrition-facts-label/added-sugars-nutrition-facts-label"
+   ],
+   "triggerKeys": [
+    "grocery:soda",
+    "grocery:juice",
+    "prompt:grocery"
+   ],
+   "id": "ww-220",
+   "regions": [
+    "US"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Changes in what you buy begin immediately; effects on health build over months and years.",
+   "tags": [
+    "ingredients"
+   ],
+   "concepts": [
+    "ingredients_labels"
+   ]
+  },
+  {
+   "title": "Treat “may contain” as a real warning",
+   "category": "Ingredients & labels",
+   "scope": "GB",
+   "grade": "Safety practice",
+   "action": "If you have a food allergy, do not eat foods labelled “may contain” your allergen",
+   "why": "The label means the business found a risk of your allergen getting into the food that it could not control",
+   "caution": "These labels are voluntary, so a food without one is not guaranteed free of an allergen. Ask staff about loose foods.",
+   "sources": [
+    "https://www.food.gov.uk/safety-hygiene/allergen-information-and-labelling-for-consumers"
+   ],
+   "triggerKeys": [
+    "prompt:grocery",
+    "grocery:namkeen"
+   ],
+   "id": "ww-221",
+   "regions": [
+    "GB"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Changes in what you buy begin immediately; effects on health build over months and years.",
+   "tags": [
+    "ingredients"
+   ],
+   "concepts": [
+    "ingredients_labels"
+   ]
+  },
+  {
+   "title": "Know that no amount of alcohol is risk-free",
+   "category": "Ingredients & labels",
+   "grade": "Strong",
+   "action": "Treat every drink as adding a little risk, and choose alcohol-free days and smaller measures",
+   "why": "Alcohol causes at least seven types of cancer, and the risk starts at low levels of drinking",
+   "caution": "If you drink heavily every day, do not stop suddenly without medical advice.",
+   "sources": [
+    "https://www.who.int/europe/news/item/04-01-2023-no-level-of-alcohol-consumption-is-safe-for-our-health"
+   ],
+   "triggerKeys": [
+    "routine:alcohol",
+    "commerce:alcohol"
+   ],
+   "id": "ww-222",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Changes in what you buy begin immediately; effects on health build over months and years.",
+   "tags": [
+    "ingredients"
+   ],
+   "concepts": [
+    "ingredients_labels"
+   ]
+  },
+  {
+   "title": "Go easy on ibuprofen for your kidneys",
+   "category": "Gut, kidneys & metabolism",
+   "grade": "Moderate",
+   "action": "Take painkillers like ibuprofen and naproxen at the lowest dose for the shortest time, and drink enough fluids",
+   "why": "These medicines reduce blood flow to the kidneys and can damage them, especially at high doses or with long use",
+   "caution": "People with kidney, heart or liver disease, high blood pressure, or on blood-pressure medicines should ask before using them.",
+   "sources": [
+    "https://www.kidney.org/news-stories/watch-out-your-kidneys-when-you-use-medicines-pain",
+    "https://www.kidney.org/kidney-topics/pain-medicines-and-kidney-disease"
+   ],
+   "triggerKeys": [
+    "commerce:painkillers",
+    "health:prescription",
+    "activity:workout"
+   ],
+   "id": "ww-223",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Some changes help within days; others protect organs over years and may not be directly noticeable.",
+   "tags": [
+    "body"
+   ],
+   "concepts": [
+    "inner_body"
+   ]
+  },
+  {
+   "title": "Take only one paracetamol product at a time",
+   "category": "Gut, kidneys & metabolism",
+   "grade": "Strong",
+   "action": "Check every cold, flu and pain medicine for paracetamol (acetaminophen) before you combine them",
+   "why": "Too much paracetamol damages the liver, and two products that both contain it can take you past the limit of 4,000 mg a day",
+   "caution": "Signs of liver damage can take days to show. If you took too much, get help even if you feel fine.",
+   "sources": [
+    "https://www.nhs.uk/medicines/paracetamol-for-adults/about-paracetamol-for-adults/",
+    "https://cacmap.fda.gov/drugs/safe-use-over-counter-pain-relievers-and-fever-reducers/careful-acetaminophen-pain-relief-medicines-can-cause-liver-damage"
+   ],
+   "triggerKeys": [
+    "commerce:painkillers",
+    "health:household_illness",
+    "health:prescription"
+   ],
+   "notes": {
+    "IN": "Crocin, Dolo and Calpol are paracetamol. So are many cold and flu tablets.",
+    "GB": "Many cold and flu remedies contain paracetamol as well as Calpol and own-brand tablets."
+   },
+   "id": "ww-224",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Some changes help within days; others protect organs over years and may not be directly noticeable.",
+   "tags": [
+    "body"
+   ],
+   "concepts": [
+    "inner_body"
+   ]
+  },
+  {
+   "title": "Drink enough to keep kidney stones away",
+   "category": "Gut, kidneys & metabolism",
+   "grade": "Moderate",
+   "action": "Drink enough through the day, more in hot weather and after exercise, so your urine stays pale",
+   "why": "Plenty of fluid is the main way to prevent kidney stones, and many people need six to eight glasses a day",
+   "caution": "If you have kidney failure or a fluid limit, follow your doctor’s advice instead.",
+   "sources": [
+    "https://www.niddk.nih.gov/health-information/urologic-diseases/kidney-stones/eating-diet-nutrition"
+   ],
+   "triggerKeys": [
+    "weather:heat_warning",
+    "prompt:workout",
+    "activity:workout"
+   ],
+   "id": "ww-225",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Some changes help within days; others protect organs over years and may not be directly noticeable.",
+   "tags": [
+    "body"
+   ],
+   "concepts": [
+    "inner_body"
+   ]
+  },
+  {
+   "title": "Get heartburn that keeps coming back checked",
+   "category": "Gut, kidneys & metabolism",
+   "grade": "Strong",
+   "action": "See a doctor if heartburn keeps returning, or does not get better with antacids and changes to how you eat",
+   "why": "Untreated reflux disease can damage the food pipe over time, and treatment works well",
+   "caution": "Trouble swallowing, weight loss without trying, vomiting or signs of bleeding need a prompt appointment.",
+   "sources": [
+    "https://www.niddk.nih.gov/health-information/digestive-diseases/acid-reflux-ger-gerd-adults/symptoms-causes"
+   ],
+   "triggerKeys": [
+    "health:gut",
+    "routine:meal_finished"
+   ],
+   "id": "ww-226",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Some changes help within days; others protect organs over years and may not be directly noticeable.",
+   "tags": [
+    "body"
+   ],
+   "concepts": [
+    "inner_body"
+   ]
+  },
+  {
+   "title": "Skip antibiotics for colds and flu",
+   "category": "Gut, kidneys & metabolism",
+   "grade": "Strong",
+   "action": "Do not ask for or take antibiotics for a cold, flu or most sore throats; rest and treat the symptoms",
+   "why": "Antibiotics do not work on viruses, and taking them anyway brings side effects and resistant infections",
+   "caution": "For flu, antiviral medicines can help if started early, especially for people at high risk. Ask quickly.",
+   "sources": [
+    "https://www.cdc.gov/antibiotic-use/about/index.html"
+   ],
+   "triggerKeys": [
+    "health:household_illness",
+    "health:prescription"
+   ],
+   "familiarity": "common",
+   "id": "ww-227",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Some changes help within days; others protect organs over years and may not be directly noticeable.",
+   "tags": [
+    "body"
+   ],
+   "concepts": [
+    "inner_body"
+   ]
+  },
+  {
+   "title": "Always get blood in your poo checked",
+   "category": "Gut, kidneys & metabolism",
+   "grade": "Strong",
+   "action": "See a doctor about blood in your poo, bleeding from your bottom, or a change in bowel habit that lasts three weeks",
+   "why": "These are the main signs of bowel cancer, which is far easier to treat when found early",
+   "caution": "Most bleeding is from piles or small tears. Heavy bleeding or large clots need urgent care.",
+   "sources": [
+    "https://www.nhs.uk/conditions/bowel-cancer/symptoms/"
+   ],
+   "triggerKeys": [
+    "health:gut",
+    "prompt:checkup"
+   ],
+   "id": "ww-228",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Some changes help within days; others protect organs over years and may not be directly noticeable.",
+   "tags": [
+    "body"
+   ],
+   "concepts": [
+    "inner_body"
+   ]
+  },
+  {
+   "title": "Take the one-minute prediabetes test",
+   "category": "Gut, kidneys & metabolism",
+   "grade": "Moderate",
+   "action": "Answer the seven questions in the CDC prediabetes risk test, and get a blood test if you score 5 or more",
+   "why": "Most people with prediabetes do not know they have it, and it can be reversed",
+   "caution": "The quiz uses age, weight and family history only. Only a blood test can diagnose prediabetes.",
+   "sources": [
+    "https://www.cdc.gov/diabetes/widgets/risktest/about-the-test.html",
+    "https://www.cdc.gov/diabetes/prevention-type-2/prediabetes-prevent-type-2.html"
+   ],
+   "triggerKeys": [
+    "commerce:glucose_meter",
+    "prompt:checkup",
+    "grocery:soda"
+   ],
+   "id": "ww-229",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Some changes help within days; others protect organs over years and may not be directly noticeable.",
+   "tags": [
+    "body"
+   ],
+   "concepts": [
+    "inner_body"
+   ]
+  },
+  {
+   "title": "Add fibre and fluid for constipation",
+   "category": "Gut, kidneys & metabolism",
+   "familiarity": "common",
+   "grade": "Moderate",
+   "action": "Add high-fibre foods step by step, drink more as you do, and keep a regular toilet routine",
+   "why": "Fibre adds bulk and helps stool move, and extra fluid makes it work",
+   "caution": "Constipation with weight loss, blood or severe pain, or that lasts for weeks, needs a doctor.",
+   "sources": [
+    "https://www.niddk.nih.gov/health-information/digestive-diseases/constipation/treatment"
+   ],
+   "triggerKeys": [
+    "health:gut",
+    "prompt:grocery"
+   ],
+   "id": "ww-230",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Some changes help within days; others protect organs over years and may not be directly noticeable.",
+   "tags": [
+    "body"
+   ],
+   "concepts": [
+    "inner_body"
+   ]
+  },
+  {
+   "title": "Use the 20-20-20 rule at screens",
+   "category": "Eyes, ears & teeth",
+   "grade": "Moderate",
+   "action": "Every 20 minutes, look at something at least 20 feet away for at least 20 seconds",
+   "why": "You blink far less at a screen, which dries and tires your eyes",
+   "caution": "Eye strain that does not ease with breaks may need new glasses. Get your eyes checked.",
+   "sources": [
+    "https://www.aao.org/eye-health/diseases/what-is-eye-strain"
+   ],
+   "triggerKeys": [
+    "prompt:screens",
+    "prompt:desk",
+    "calendar:desk_day"
+   ],
+   "id": "ww-231",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Comfort can improve the same day; protection against damage builds over years.",
+   "tags": [
+    "senses"
+   ],
+   "concepts": [
+    "eyes_ears_teeth"
+   ]
+  },
+  {
+   "title": "Never sleep or swim in contact lenses",
+   "category": "Eyes, ears & teeth",
+   "grade": "Strong",
+   "action": "Take contact lenses out before you sleep, shower, swim or use a hot tub, and never store them in water",
+   "why": "Sleeping in lenses raises the risk of eye infection, and germs in water can get into your eye",
+   "caution": "Some lenses are approved for overnight wear. Follow your eye care provider’s advice.",
+   "sources": [
+    "https://www.cdc.gov/contact-lenses/prevention/index.html"
+   ],
+   "triggerKeys": [
+    "commerce:contact_lenses",
+    "activity:workout",
+    "prompt:outdoors"
+   ],
+   "id": "ww-232",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Comfort can improve the same day; protection against damage builds over years.",
+   "tags": [
+    "senses"
+   ],
+   "concepts": [
+    "eyes_ears_teeth"
+   ]
+  },
+  {
+   "title": "Keep headphones under 60% volume",
+   "category": "Eyes, ears & teeth",
+   "grade": "Strong",
+   "action": "Set the volume to no more than 60% of maximum, and use noise-cancelling headphones in loud places",
+   "why": "Loud listening damages hearing for good, and safe listening time drops fast as volume rises",
+   "caution": "Ringing ears or muffled sound after listening is an early warning sign.",
+   "sources": [
+    "https://www.who.int/news-room/questions-and-answers/item/deafness-and-hearing-loss-safe-listening"
+   ],
+   "triggerKeys": [
+    "commerce:headphones",
+    "prompt:screens"
+   ],
+   "id": "ww-233",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Comfort can improve the same day; protection against damage builds over years.",
+   "tags": [
+    "senses"
+   ],
+   "concepts": [
+    "eyes_ears_teeth"
+   ]
+  },
+  {
+   "title": "Stop using cotton buds in your ears",
+   "category": "Eyes, ears & teeth",
+   "grade": "Moderate",
+   "action": "Clean only the outer ear with a damp cloth, and let earwax move out on its own",
+   "why": "Ears clean themselves, and cotton buds push wax deeper and can damage the canal or eardrum",
+   "caution": "For blocked ears, olive oil drops can help. Do not use drops if you have a perforated eardrum or grommets.",
+   "sources": [
+    "https://www.chelwest.nhs.uk/your-visit/patient-leaflets/ent-audiology/regular-ear-care",
+    "https://www.leedsth.nhs.uk/services/hearing-and-balance-service-audiology/earwax/"
+   ],
+   "triggerKeys": [
+    "commerce:cotton_buds",
+    "prompt:loud"
+   ],
+   "id": "ww-234",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Comfort can improve the same day; protection against damage builds over years.",
+   "tags": [
+    "senses"
+   ],
+   "concepts": [
+    "eyes_ears_teeth"
+   ]
+  },
+  {
+   "title": "Spit, don’t rinse, after brushing",
+   "category": "Eyes, ears & teeth",
+   "grade": "Strong",
+   "action": "After brushing, spit out the toothpaste but do not rinse with water or mouthwash",
+   "why": "Rinsing washes away the fluoride left on your teeth, which keeps protecting them",
+   "caution": "If you use mouthwash, use it at a different time of day.",
+   "sources": [
+    "https://www.nth.nhs.uk/resources/a-guide-to-toothbrushing/"
+   ],
+   "triggerKeys": [
+    "commerce:toothpaste",
+    "health:dental",
+    "routine:morning"
+   ],
+   "id": "ww-235",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Comfort can improve the same day; protection against damage builds over years.",
+   "tags": [
+    "senses"
+   ],
+   "concepts": [
+    "eyes_ears_teeth"
+   ]
+  },
+  {
+   "title": "Have a full eye exam at 40",
+   "category": "Eyes, ears & teeth",
+   "grade": "Strong",
+   "action": "Book a comprehensive eye exam at 40, even if you see well, then repeat it as your eye doctor advises",
+   "why": "Glaucoma and other eye diseases often cause no symptoms until vision is lost",
+   "caution": "With diabetes, high blood pressure or a family history of eye disease, start earlier.",
+   "sources": [
+    "https://www.aao.org/eye-health/glasses-contacts/screening"
+   ],
+   "triggerKeys": [
+    "health:eye_test",
+    "prompt:checkup",
+    "health:preventive_visit"
+   ],
+   "id": "ww-236",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Comfort can improve the same day; protection against damage builds over years.",
+   "tags": [
+    "senses"
+   ],
+   "concepts": [
+    "eyes_ears_teeth"
+   ]
+  },
+  {
+   "title": "Choose sunglasses labelled UV400",
+   "category": "Eyes, ears & teeth",
+   "grade": "Moderate",
+   "action": "Buy sunglasses labelled “100% UV protection” or “UV400”, ideally a wraparound style",
+   "why": "Dark lenses without UV filtering can let more UV in, because your pupils open wider",
+   "caution": "Colour, darkness, price and polarisation do not tell you how much UV is blocked.",
+   "sources": [
+    "https://www.aao.org/eye-health/glasses-contacts/sunglasses-3"
+   ],
+   "triggerKeys": [
+    "commerce:glasses",
+    "weather:high_uv",
+    "prompt:outdoors"
+   ],
+   "id": "ww-237",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Comfort can improve the same day; protection against damage builds over years.",
+   "tags": [
+    "senses"
+   ],
+   "concepts": [
+    "eyes_ears_teeth"
+   ]
+  },
+  {
+   "title": "Wear earplugs at concerts",
+   "category": "Eyes, ears & teeth",
+   "grade": "Strong",
+   "action": "Take foam or high-fidelity earplugs to concerts, clubs and festivals, and stand away from the speakers",
+   "why": "Concerts often reach 94 to 110 decibels, loud enough to damage hearing for good",
+   "caution": "Ringing ears or muffled sound after a gig is an early warning sign.",
+   "sources": [
+    "https://www.nidcd.nih.gov/health/noise-induced-hearing-loss",
+    "https://noisyplanet.nidcd.nih.gov/have-you-heard/how-effective-earplugs"
+   ],
+   "triggerKeys": [
+    "prompt:loud",
+    "calendar:late_night"
+   ],
+   "id": "ww-238",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Comfort can improve the same day; protection against damage builds over years.",
+   "tags": [
+    "senses"
+   ],
+   "concepts": [
+    "eyes_ears_teeth"
+   ]
+  },
+  {
+   "title": "Take folic acid before you try for a baby",
+   "category": "Sexual & reproductive health",
+   "grade": "Strong",
+   "action": "If you could become pregnant, take 400 mcg of folic acid every day, starting before pregnancy",
+   "why": "It prevents neural tube defects, which form in the first weeks, often before you know you are pregnant",
+   "caution": "After a pregnancy affected by a neural tube defect, or on some epilepsy medicines, ask about a higher dose.",
+   "sources": [
+    "https://www.cdc.gov/folic-acid/about/index.html"
+   ],
+   "triggerKeys": [
+    "commerce:pregnancy_test",
+    "prompt:supplement"
+   ],
+   "id": "ww-239",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "The useful timeline depends on the test or change; some steps matter before you need them.",
+   "tags": [
+    "reproductive"
+   ],
+   "concepts": [
+    "sexual_reproductive"
+   ]
+  },
+  {
+   "title": "Ask which STI tests are right for you",
+   "category": "Sexual & reproductive health",
+   "grade": "Strong",
+   "action": "Get tested for HIV at least once, and ask about chlamydia, gonorrhoea and syphilis tests if you have new partners",
+   "why": "Many STIs cause no symptoms, and testing is the only way to know",
+   "caution": "Which tests you need depends on your age, partners and sex life. A sexual health clinic can advise in confidence.",
+   "sources": [
+    "https://www.cdc.gov/sti/testing/index.html"
+   ],
+   "triggerKeys": [
+    "prompt:sexual_health",
+    "commerce:condoms"
+   ],
+   "id": "ww-240",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "The useful timeline depends on the test or change; some steps matter before you need them.",
+   "tags": [
+    "reproductive"
+   ],
+   "concepts": [
+    "sexual_reproductive"
+   ]
+  },
+  {
+   "title": "Use water- or silicone-based lube with latex condoms",
+   "category": "Sexual & reproductive health",
+   "grade": "Strong",
+   "action": "Use water- or silicone-based lubricant with latex condoms, check the date, and store them somewhere cool",
+   "why": "Oil-based products like petroleum jelly, cooking oil or massage oil weaken latex and can make condoms break",
+   "caution": "Throw away condoms that are past their date, sticky, brittle or in a damaged pack.",
+   "sources": [
+    "https://www.cdc.gov/condom-use/index.html"
+   ],
+   "triggerKeys": [
+    "commerce:condoms",
+    "prompt:sexual_health"
+   ],
+   "id": "ww-241",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "The useful timeline depends on the test or change; some steps matter before you need them.",
+   "tags": [
+    "reproductive"
+   ],
+   "concepts": [
+    "sexual_reproductive"
+   ]
+  },
+  {
+   "title": "Change tampons every 4 to 8 hours",
+   "category": "Sexual & reproductive health",
+   "grade": "Safety practice",
+   "action": "Use the lowest absorbency you need, and change tampons every 4 to 8 hours, even on light days",
+   "why": "Lower absorbency and regular changes lower the small risk of toxic shock syndrome",
+   "caution": "Sudden fever, rash, dizziness or vomiting while using a tampon needs urgent care.",
+   "sources": [
+    "https://www.fda.gov/consumers/consumer-updates/facts-tampons-and-how-use-them-safely"
+   ],
+   "triggerKeys": [
+    "commerce:period_products",
+    "health:period"
+   ],
+   "id": "ww-242",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "The useful timeline depends on the test or change; some steps matter before you need them.",
+   "tags": [
+    "reproductive"
+   ],
+   "concepts": [
+    "sexual_reproductive"
+   ]
+  },
+  {
+   "title": "Get heavy periods looked at",
+   "category": "Sexual & reproductive health",
+   "grade": "Strong",
+   "action": "See a doctor if you change pads or tampons every 1 to 2 hours, pass large clots, or bleed through clothes",
+   "why": "Heavy periods are common, treatable, and can cause iron-deficiency anaemia and tiredness",
+   "caution": "Fainting or bleeding that keeps you in bed needs prompt care.",
+   "sources": [
+    "https://www.nhs.uk/conditions/periods/period-problems/"
+   ],
+   "triggerKeys": [
+    "health:period",
+    "health:fatigue",
+    "commerce:period_products"
+   ],
+   "id": "ww-243",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "The useful timeline depends on the test or change; some steps matter before you need them.",
+   "tags": [
+    "reproductive"
+   ],
+   "concepts": [
+    "sexual_reproductive"
+   ]
+  },
+  {
+   "title": "Check your testicles once a month",
+   "category": "Sexual & reproductive health",
+   "grade": "Moderate",
+   "action": "Once a month, after a warm shower, feel each testicle for lumps, swelling or changes in size or shape",
+   "why": "Testicular cancer is usually curable, and changes are easier to treat when found early",
+   "caution": "Most lumps are not cancer, but any new lump or change should be checked.",
+   "sources": [
+    "https://www.nhs.uk/tests-and-treatments/how-to-check-your-testicles/"
+   ],
+   "triggerKeys": [
+    "prompt:sexual_health",
+    "prompt:checkup"
+   ],
+   "id": "ww-244",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "The useful timeline depends on the test or change; some steps matter before you need them.",
+   "tags": [
+    "reproductive"
+   ],
+   "concepts": [
+    "sexual_reproductive"
+   ]
+  },
+  {
+   "title": "Talk about menopause symptoms early",
+   "category": "Sexual & reproductive health",
+   "grade": "Strong",
+   "action": "If menopause or perimenopause symptoms bother you, ask a doctor about treatment. You do not need to wait for periods to stop.",
+   "why": "HRT is safe and effective for most people and eases hot flushes, mood swings, brain fog and vaginal dryness",
+   "caution": "HRT is not usually advised after breast cancer. Non-hormonal options exist too.",
+   "sources": [
+    "https://www.nhs.uk/conditions/menopause-and-perimenopause/treatment/"
+   ],
+   "triggerKeys": [
+    "health:menopause",
+    "health:fatigue",
+    "prompt:cant_sleep"
+   ],
+   "id": "ww-245",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "The useful timeline depends on the test or change; some steps matter before you need them.",
+   "tags": [
+    "reproductive"
+   ],
+   "concepts": [
+    "sexual_reproductive"
+   ]
+  },
+  {
+   "title": "Move to lift your mood",
+   "category": "Mental wellbeing",
+   "familiarity": "common",
+   "grade": "Strong",
+   "action": "When you feel low or anxious, take a brisk walk or any activity you enjoy, and build it into your week",
+   "why": "Physical activity reduces symptoms of depression and anxiety, and improves thinking and wellbeing",
+   "caution": "Activity helps alongside other support. It is not a reason to delay treatment for depression.",
+   "sources": [
+    "https://www.who.int/news-room/feature-stories/detail/physical-activity---great-for-your-body--great-for-your-mind"
+   ],
+   "triggerKeys": [
+    "prompt:low_mood",
+    "calendar:stressful_day",
+    "prompt:desk"
+   ],
+   "id": "ww-246",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Some effects may be felt the same day; sustained improvements generally depend on weeks of repetition.",
+   "tags": [
+    "mental"
+   ],
+   "concepts": [
+    "mental_wellbeing"
+   ]
+  },
+  {
+   "title": "Learn something new for your wellbeing",
+   "category": "Mental wellbeing",
+   "grade": "Moderate",
+   "action": "Pick one small new skill this week: a new recipe, a short course, or fixing something yourself",
+   "why": "Learning new skills builds confidence and a sense of purpose, which lifts mental wellbeing",
+   "caution": "Choose something you enjoy. It should not become another source of pressure.",
+   "sources": [
+    "https://www.nhs.uk/mental-health/self-help/guides-tools-and-activities/five-steps-to-mental-wellbeing/"
+   ],
+   "triggerKeys": [
+    "prompt:low_mood",
+    "routine:morning"
+   ],
+   "id": "ww-247",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Some effects may be felt the same day; sustained improvements generally depend on weeks of repetition.",
+   "tags": [
+    "mental"
+   ],
+   "concepts": [
+    "mental_wellbeing"
+   ]
+  },
+  {
+   "title": "Do one kind thing for someone",
+   "category": "Mental wellbeing",
+   "grade": "Moderate",
+   "action": "Do one small act of kindness today: a thank you, a helping hand, or time to listen",
+   "why": "Giving and kindness create positive feelings and a sense of purpose, and help you connect with others",
+   "caution": "Giving should not leave you drained. Look after your own needs too.",
+   "sources": [
+    "https://www.nhs.uk/mental-health/self-help/guides-tools-and-activities/five-steps-to-mental-wellbeing/"
+   ],
+   "triggerKeys": [
+    "prompt:low_mood",
+    "calendar:social_connection"
+   ],
+   "id": "ww-248",
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Some effects may be felt the same day; sustained improvements generally depend on weeks of repetition.",
+   "tags": [
+    "mental"
+   ],
+   "concepts": [
+    "mental_wellbeing"
+   ]
+  },
+  {
+   "title": "Refer yourself to NHS Talking Therapies",
+   "category": "Mental wellbeing",
+   "scope": "GB",
+   "grade": "Strong",
+   "action": "If you live in England and have anxiety or low mood, refer yourself online. You do not need to see a GP first.",
+   "why": "Talking therapies like CBT are free on the NHS and work well for anxiety and depression",
+   "caution": "This is not a crisis service. In a crisis, call 111 and choose the mental health option, or 999.",
+   "sources": [
+    "https://www.nhs.uk/nhs-services/mental-health-services/find-nhs-talking-therapies-for-anxiety-and-depression/"
+   ],
+   "triggerKeys": [
+    "prompt:low_mood",
+    "calendar:stressful_day"
+   ],
+   "id": "ww-249",
+   "regions": [
+    "GB"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Some effects may be felt the same day; sustained improvements generally depend on weeks of repetition.",
+   "tags": [
+    "mental"
+   ],
+   "concepts": [
+    "mental_wellbeing"
+   ]
+  },
+  {
+   "title": "Call Tele MANAS on 14416",
+   "category": "Mental wellbeing",
+   "scope": "IN",
+   "grade": "Strong",
+   "action": "For stress, low mood or any mental health worry, call Tele MANAS free on 14416 or 1-800-891-4416, day or night",
+   "why": "Trained counsellors answer in 20 languages, and can connect you to psychiatrists and in-person care",
+   "caution": "If someone is in immediate danger, call 112.",
+   "sources": [
+    "https://telemanas.mohfw.gov.in/home",
+    "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2022057&reg=48&lang=2"
+   ],
+   "triggerKeys": [
+    "prompt:low_mood",
+    "calendar:stressful_day"
+   ],
+   "id": "ww-250",
+   "regions": [
+    "IN"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Some effects may be felt the same day; sustained improvements generally depend on weeks of repetition.",
+   "tags": [
+    "mental"
+   ],
+   "concepts": [
+    "mental_wellbeing"
+   ]
+  },
+  {
+   "title": "Call or text 988 when things feel too much",
+   "category": "Mental wellbeing",
+   "scope": "US",
+   "grade": "Strong",
+   "action": "Call or text 988, or chat at 988lifeline.org, for free, confidential support at any hour",
+   "why": "You do not have to be suicidal to reach out; 988 helps with stress, loneliness, substance use and more",
+   "caution": "If someone is in immediate danger, call 911.",
+   "sources": [
+    "https://www.samhsa.gov/mental-health/988/faqs"
+   ],
+   "triggerKeys": [
+    "prompt:low_mood",
+    "calendar:stressful_day"
+   ],
+   "id": "ww-251",
+   "regions": [
+    "US"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Some effects may be felt the same day; sustained improvements generally depend on weeks of repetition.",
+   "tags": [
+    "mental"
+   ],
+   "concepts": [
+    "mental_wellbeing"
+   ]
+  },
+  {
+   "id": "ww-201",
+   "title": "Set up one cleaner-air room",
+   "category": "Air, water & environment",
+   "action": "Pick one room, close it off, and run a correctly sized air purifier there on smoky or high-AQI days",
+   "why": "One well-filtered room gives you a place to breathe cleaner air when the whole home cannot be filtered",
+   "caution": "Keep the room cool enough in hot weather. A purifier does not remove all gases.",
+   "sources": [
+    "https://www.epa.gov/wildfires/how-create-cleaner-air-room-home"
+   ],
+   "triggerKeys": [
+    "weather:poor_air_quality",
+    "weather:wildfire_smoke",
+    "commerce:air_purifier"
+   ],
+   "notes": {
+    "IN": "Useful during winter smog in many north Indian cities."
+   },
+   "hi": {
+    "title": "घर में एक साफ़ हवा वाला कमरा बनाएँ",
+    "action": "धुएँ या ज़्यादा AQI वाले दिनों में एक कमरा बंद करें और उसमें सही आकार का एयर प्यूरीफ़ायर चलाएँ",
+    "why": "जब पूरे घर की हवा साफ़ न हो सके, तब एक कमरा साँस लेने के लिए साफ़ जगह देता है"
+   },
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "grade": "Safety practice",
+   "timeline": "Exposure changes start when the source is addressed; health effects may not be directly observable.",
+   "tags": [
+    "environment"
+   ],
+   "concepts": [
+    "air_water_environment"
+   ]
+  },
+  {
+   "id": "ww-202",
+   "title": "Keep a simple blood pressure log",
+   "category": "Prevention & tests",
+   "action": "Write down each home reading with the date and time, and bring the log to your next appointment",
+   "why": "A written record shows your doctor a pattern, not one reading on one day",
+   "caution": "Seek urgent care for a very high reading with symptoms such as chest pain or weakness.",
+   "sources": [
+    "https://www.cdc.gov/high-blood-pressure/measure/index.html"
+   ],
+   "triggerKeys": [
+    "commerce:blood_pressure_monitor",
+    "calendar:appointment"
+   ],
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "grade": "Strong",
+   "timeline": "The useful timeline depends on the test, treatment or deficiency; some findings need prompt follow-up.",
+   "tags": [
+    "prevention"
+   ],
+   "concepts": [
+    "prevention_tests"
+   ]
+  },
+  {
+   "id": "ww-203",
+   "title": "Learn the signs of heat illness",
+   "category": "Air, water & environment",
+   "action": "Before a hot day, read the warning signs of heat exhaustion and heat stroke, and know what to do for each",
+   "why": "Heat illness can get worse quickly, and early action prevents harm",
+   "caution": "Heat stroke is an emergency. Call for help at once.",
+   "sources": [
+    "https://www.cdc.gov/climate-health/php/resources/protect-yourself-from-the-dangers-of-extreme-heat.html"
+   ],
+   "triggerKeys": [
+    "weather:heat_warning",
+    "prompt:outdoors"
+   ],
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "grade": "Safety practice",
+   "timeline": "Exposure changes start when the source is addressed; health effects may not be directly observable.",
+   "tags": [
+    "environment"
+   ],
+   "concepts": [
+    "air_water_environment"
+   ]
   }
  ],
  "EDGES": [
@@ -9146,6 +11392,162 @@
    "b": "ww-065",
    "type": "complements",
    "why": "Clean hands and clean boards both stop germs spreading in the kitchen."
+  },
+  {
+   "a": "ww-222",
+   "b": "ww-185",
+   "type": "reinforces",
+   "why": "Both look at alcohol: one at the cancer risk of any amount, one at your own habits."
+  },
+  {
+   "a": "ww-204",
+   "b": "ww-084",
+   "type": "complements",
+   "why": "Fabric dyes and fragrance are both common causes of contact rashes."
+  },
+  {
+   "a": "ww-205",
+   "b": "ww-168",
+   "type": "complements",
+   "why": "Light clothing and planning around heat work together on hot days."
+  },
+  {
+   "a": "ww-206",
+   "b": "ww-169",
+   "type": "complements",
+   "why": "UPF clothing covers what sunscreen and shade miss."
+  },
+  {
+   "a": "ww-237",
+   "b": "ww-206",
+   "type": "complements",
+   "why": "Sunglasses protect the eyes, UPF clothing the skin."
+  },
+  {
+   "a": "ww-224",
+   "b": "ww-110",
+   "type": "depends-on",
+   "why": "Knowing what you take makes it easy to spot two products with the same painkiller."
+  },
+  {
+   "a": "ww-223",
+   "b": "ww-224",
+   "type": "complements",
+   "why": "The two common painkillers carry different risks: kidneys for ibuprofen, liver for paracetamol."
+  },
+  {
+   "a": "ww-229",
+   "b": "ww-136",
+   "type": "reinforces",
+   "why": "The quiz tells you whether a diabetes blood test is worth asking for."
+  },
+  {
+   "a": "ww-216",
+   "b": "ww-008",
+   "type": "complements",
+   "why": "Unsweetened drinks beat both sugary and diet versions."
+  },
+  {
+   "a": "ww-220",
+   "b": "ww-008",
+   "type": "reinforces",
+   "why": "The added-sugars line shows how much sugar a drink adds."
+  },
+  {
+   "a": "ww-217",
+   "b": "ww-177",
+   "type": "shared-goal",
+   "why": "Both cut arsenic, from food and from water."
+  },
+  {
+   "a": "ww-211",
+   "b": "ww-079",
+   "type": "shared-goal",
+   "why": "Lead can come from cookware as well as old paint and pipes."
+  },
+  {
+   "a": "ww-213",
+   "b": "ww-214",
+   "type": "shared-goal",
+   "why": "Lead and mercury both hide in some cosmetics and are most harmful to children."
+  },
+  {
+   "a": "ww-243",
+   "b": "ww-195",
+   "type": "complements",
+   "why": "Adjusting routines helps day to day; heavy bleeding needs a doctor."
+  },
+  {
+   "a": "ww-243",
+   "b": "ww-134",
+   "type": "depends-on",
+   "why": "Heavy periods are a common cause of iron-deficiency anaemia."
+  },
+  {
+   "a": "ww-246",
+   "b": "ww-022",
+   "type": "reinforces",
+   "why": "Breaking up sitting with movement also helps your mood."
+  },
+  {
+   "a": "ww-249",
+   "b": "ww-160",
+   "type": "depends-on",
+   "why": "Talking therapies are one way to get the assessment that sustained distress needs."
+  },
+  {
+   "a": "ww-238",
+   "b": "ww-198",
+   "type": "complements",
+   "why": "Protecting your ears and acting on early hearing changes go together."
+  },
+  {
+   "a": "ww-233",
+   "b": "ww-197",
+   "type": "shared-goal",
+   "why": "Both limit the noise dose that damages hearing."
+  },
+  {
+   "a": "ww-235",
+   "b": "ww-087",
+   "type": "depends-on",
+   "why": "Spitting without rinsing only helps if your toothpaste has fluoride."
+  },
+  {
+   "a": "ww-227",
+   "b": "ww-183",
+   "type": "complements",
+   "why": "Handwashing stops colds spreading; antibiotics do not cure them."
+  },
+  {
+   "a": "ww-231",
+   "b": "ww-038",
+   "type": "complements",
+   "why": "Screen breaks rest your eyes as well as your body."
+  },
+  {
+   "a": "ww-201",
+   "b": "ww-163",
+   "type": "depends-on",
+   "why": "A cleaner-air room works only with a purifier sized for that room."
+  },
+  {
+   "a": "ww-201",
+   "b": "ww-165",
+   "type": "complements",
+   "why": "Both reduce the smoke you breathe at home."
+  },
+  {
+   "a": "ww-202",
+   "b": "ww-121",
+   "type": "reinforces",
+   "why": "A log turns single readings into a trend."
+  },
+  {
+   "a": "ww-203",
+   "b": "ww-168",
+   "type": "complements",
+   "why": "Planning around heat and knowing the warning signs work together."
   }
  ],
  "MOMENTS": [
@@ -9154,161 +11556,291 @@
    "source": "environment",
    "name": "Air quality is poor today",
    "event": "weather:poor_air_quality",
-   "friendly": "The air outside is poor today. Here is one way to protect your lungs."
+   "friendly": "The air outside is poor today. Here is one way to protect your lungs.",
+   "keywords": [
+    "air quality",
+    "aqi",
+    "smog",
+    "air pollution"
+   ]
   },
   {
    "id": "env-heat",
    "source": "environment",
    "name": "Heatwave warning",
    "event": "weather:heat_warning",
-   "friendly": "It is very hot today. Here is one thing worth knowing."
+   "friendly": "It is very hot today. Here is one thing worth knowing.",
+   "keywords": [
+    "heatwave",
+    "heat wave",
+    "heat warning",
+    "extreme heat"
+   ]
   },
   {
    "id": "env-uv",
    "source": "environment",
    "name": "High UV today",
    "event": "weather:high_uv",
-   "friendly": "The sun is strong today. Here is a simple way to protect your skin."
+   "friendly": "The sun is strong today. Here is a simple way to protect your skin.",
+   "keywords": [
+    "uv index",
+    "high uv"
+   ]
   },
   {
    "id": "env-monsoon",
    "source": "environment",
    "name": "Monsoon week",
    "event": "weather:monsoon",
-   "friendly": "Heavy rain is here. Standing water brings its own risks."
+   "friendly": "Heavy rain is here. Standing water brings its own risks.",
+   "keywords": [
+    "monsoon",
+    "heavy rain"
+   ]
   },
   {
    "id": "env-flood",
    "source": "environment",
    "name": "Local flooding",
    "event": "weather:flood",
-   "friendly": "There is flooding nearby. Here is how to stay safe around flood water."
+   "friendly": "There is flooding nearby. Here is how to stay safe around flood water.",
+   "keywords": [
+    "flood",
+    "flooding",
+    "flooded"
+   ]
   },
   {
    "id": "env-smoke",
    "source": "environment",
    "name": "Smoke in the air",
    "event": "weather:wildfire_smoke",
-   "friendly": "There is smoke in the air. Here is how to cut what you breathe in."
+   "friendly": "There is smoke in the air. Here is how to cut what you breathe in.",
+   "keywords": [
+    "wildfire",
+    "bushfire",
+    "smoke"
+   ]
   },
   {
    "id": "env-damp",
    "source": "environment",
    "name": "Damp, humid week",
    "event": "environment:humidity",
-   "friendly": "It is a damp week. Here is how to keep mold away."
+   "friendly": "It is a damp week. Here is how to keep mold away.",
+   "keywords": [
+    "damp",
+    "mould",
+    "mold",
+    "humid"
+   ]
   },
   {
    "id": "env-cold",
    "source": "environment",
    "name": "Windows-shut season",
    "event": "weather:cold_season",
-   "friendly": "With windows shut, indoor air matters more."
+   "friendly": "With windows shut, indoor air matters more.",
+   "keywords": [
+    "cold snap",
+    "freezing"
+   ]
   },
   {
    "id": "cal-flight",
    "source": "calendar",
    "name": "Flight across time zones",
    "event": "travel:time_zone",
-   "friendly": "You have a long flight coming up. Here is how to ease jet lag."
+   "friendly": "You have a long flight coming up. Here is how to ease jet lag.",
+   "keywords": [
+    "flight",
+    "flying",
+    "airport",
+    "boarding"
+   ]
   },
   {
    "id": "cal-intl",
    "source": "calendar",
    "name": "International trip next month",
    "event": "travel:international_trip",
-   "friendly": "You have a trip abroad coming up. Some prep needs lead time."
+   "friendly": "You have a trip abroad coming up. Some prep needs lead time.",
+   "keywords": [
+    "trip abroad",
+    "international trip",
+    "passport",
+    "visa appointment",
+    "holiday abroad"
+   ]
   },
   {
    "id": "cal-long",
    "source": "calendar",
    "name": "Long road or rail trip",
    "event": "travel:long_trip",
-   "friendly": "A long trip is on your calendar. A little planning helps."
+   "friendly": "A long trip is on your calendar. A little planning helps.",
+   "keywords": [
+    "road trip",
+    "long drive",
+    "train to",
+    "drive to"
+   ]
   },
   {
    "id": "cal-desk",
    "source": "calendar",
    "name": "Back-to-back meetings",
    "event": "calendar:desk_day",
-   "friendly": "Your day is full of meetings. Here is an easy way to move a little."
+   "friendly": "Your day is full of meetings. Here is an easy way to move a little.",
+   "keywords": [
+    "standup",
+    "stand-up",
+    "workshop",
+    "all-hands",
+    "offsite"
+   ]
   },
   {
    "id": "cal-appt",
    "source": "calendar",
    "name": "Doctor's appointment this week",
    "event": "calendar:appointment",
-   "friendly": "You have an appointment soon. A little prep makes it count."
+   "friendly": "You have an appointment soon. A little prep makes it count.",
+   "keywords": [
+    "doctor",
+    "gp appointment",
+    "clinic",
+    "hospital appointment",
+    "consultation"
+   ]
   },
   {
    "id": "cal-checkup",
    "source": "calendar",
    "name": "Annual check-up booked",
    "event": "health:preventive_visit",
-   "friendly": "Your check-up is booked. Here is something worth asking about."
+   "friendly": "Your check-up is booked. Here is something worth asking about.",
+   "keywords": [
+    "check-up",
+    "checkup",
+    "annual physical",
+    "health check",
+    "wellness exam"
+   ]
   },
   {
    "id": "cal-late",
    "source": "calendar",
    "name": "Late-night event",
    "event": "calendar:late_night",
-   "friendly": "You have a late night ahead. Here is how to protect your sleep."
+   "friendly": "You have a late night ahead. Here is how to protect your sleep.",
+   "keywords": [
+    "late night",
+    "night out",
+    "party"
+   ]
   },
   {
    "id": "cal-stress",
    "source": "calendar",
    "name": "Big deadline today",
    "event": "calendar:stressful_day",
-   "friendly": "Today looks demanding. Here is a small thing that can help."
+   "friendly": "Today looks demanding. Here is a small thing that can help.",
+   "keywords": [
+    "deadline",
+    "exam",
+    "interview",
+    "presentation",
+    "pitch"
+   ]
   },
   {
    "id": "cal-social",
    "source": "calendar",
    "name": "Dinner with friends",
    "event": "calendar:social_connection",
-   "friendly": "You have plans with friends. Here is a nice way to add to it."
+   "friendly": "You have plans with friends. Here is a nice way to add to it.",
+   "keywords": [
+    "dinner with",
+    "lunch with",
+    "drinks with",
+    "birthday",
+    "catch up",
+    "catch-up"
+   ]
   },
   {
    "id": "p-cook",
    "source": "prompt",
    "name": "I'm cooking",
    "event": "prompt:cooking",
-   "friendly": "You are cooking. Here is one useful kitchen tip."
+   "friendly": "You are cooking. Here is one useful kitchen tip.",
+   "keywords": [
+    "cooking",
+    "recipe"
+   ]
   },
   {
    "id": "p-ate",
    "source": "prompt",
    "name": "I just ate",
    "event": "routine:meal_finished",
-   "friendly": "You just ate. Here is an easy next step."
+   "friendly": "You just ate. Here is an easy next step.",
+   "keywords": [
+    "just ate",
+    "finished dinner",
+    "finished lunch"
+   ]
   },
   {
    "id": "p-shop",
    "source": "prompt",
    "name": "I'm grocery shopping",
    "event": "prompt:grocery",
-   "friendly": "You are shopping. Here is one thing to look for."
+   "friendly": "You are shopping. Here is one thing to look for.",
+   "keywords": [
+    "grocery",
+    "groceries",
+    "supermarket",
+    "big basket",
+    "blinkit"
+   ]
   },
   {
    "id": "p-work",
    "source": "prompt",
    "name": "I worked out",
    "event": "prompt:workout",
-   "friendly": "Nice work. Here is something to help your training."
+   "friendly": "Nice work. Here is something to help your training.",
+   "keywords": [
+    "worked out",
+    "workout done"
+   ]
   },
   {
    "id": "p-desk",
    "source": "prompt",
    "name": "I've been sitting all day",
    "event": "prompt:desk",
-   "friendly": "Long day at the desk. Here is a small fix."
+   "friendly": "Long day at the desk. Here is a small fix.",
+   "keywords": [
+    "sitting all day",
+    "at my desk"
+   ]
   },
   {
    "id": "p-sleep",
    "source": "prompt",
    "name": "I'm not sleeping well",
    "event": "prompt:cant_sleep",
-   "friendly": "Sleep has been hard. Here is one thing to try."
+   "friendly": "Sleep has been hard. Here is one thing to try.",
+   "keywords": [
+    "can't sleep",
+    "cannot sleep",
+    "insomnia",
+    "sleeping badly"
+   ]
   },
   {
    "id": "p-low",
@@ -9316,49 +11848,379 @@
    "name": "I feel stressed or low",
    "event": "prompt:low_mood",
    "friendly": "Thank you for telling us. Here is one small thing that may help.",
-   "support": true
+   "support": true,
+   "keywords": [
+    "stressed",
+    "anxious",
+    "low mood",
+    "feeling low",
+    "overwhelmed",
+    "burnt out",
+    "burned out"
+   ]
   },
   {
    "id": "p-clean",
    "source": "prompt",
    "name": "I'm cleaning the house",
    "event": "prompt:cleaning",
-   "friendly": "You are cleaning. Here is how to do it safely."
+   "friendly": "You are cleaning. Here is how to do it safely.",
+   "keywords": [
+    "cleaning the house",
+    "deep clean",
+    "spring clean"
+   ]
   },
   {
    "id": "p-skin",
    "source": "prompt",
    "name": "I'm sorting my skincare",
    "event": "prompt:skincare",
-   "friendly": "You are sorting your skincare. Here is one tip."
+   "friendly": "You are sorting your skincare. Here is one tip.",
+   "keywords": [
+    "skincare routine"
+   ]
   },
   {
    "id": "p-supp",
    "source": "prompt",
    "name": "I'm thinking about supplements",
    "event": "prompt:supplement",
-   "friendly": "Before you buy, here is one thing to check."
+   "friendly": "Before you buy, here is one thing to check.",
+   "keywords": [
+    "which supplement",
+    "should i take a supplement"
+   ]
   },
   {
    "id": "p-check",
    "source": "prompt",
    "name": "I want a health check",
    "event": "prompt:checkup",
-   "friendly": "Good idea. Here is one check worth knowing about."
+   "friendly": "Good idea. Here is one check worth knowing about.",
+   "keywords": [
+    "health checkup",
+    "full body checkup"
+   ]
   },
   {
    "id": "p-out",
    "source": "prompt",
    "name": "I'm heading outdoors",
    "event": "prompt:outdoors",
-   "friendly": "You are heading out. Here is one thing to keep in mind."
+   "friendly": "You are heading out. Here is one thing to keep in mind.",
+   "keywords": [
+    "hike",
+    "hiking",
+    "trek",
+    "picnic",
+    "beach",
+    "camping"
+   ]
   },
   {
    "id": "p-morning",
    "source": "prompt",
    "name": "Good morning",
    "event": "routine:morning",
-   "friendly": "Good morning. Here is a simple way to start the day."
+   "friendly": "Good morning. Here is a simple way to start the day.",
+   "keywords": [
+    "good morning"
+   ]
+  },
+  {
+   "id": "env-pollen",
+   "source": "environment",
+   "name": "High pollen today",
+   "event": "weather:pollen",
+   "friendly": "Pollen is high today. Here is one way to breathe easier.",
+   "keywords": [
+    "pollen",
+    "hay fever",
+    "hayfever"
+   ]
+  },
+  {
+   "id": "p-water",
+   "source": "prompt",
+   "name": "I'm unsure about my tap water",
+   "event": "home:water_quality",
+   "friendly": "Here is how to know what is in your water.",
+   "keywords": [
+    "boil water notice",
+    "tap water",
+    "water quality",
+    "water supply"
+   ]
+  },
+  {
+   "id": "p-drink",
+   "source": "prompt",
+   "name": "I'm having a drink",
+   "event": "routine:alcohol",
+   "friendly": "Enjoy it. Here is one thing worth knowing about alcohol.",
+   "keywords": [
+    "beer",
+    "wine",
+    "pub",
+    "cocktail",
+    "whisky",
+    "drinks tonight"
+   ]
+  },
+  {
+   "id": "p-tired",
+   "source": "prompt",
+   "name": "I feel tired all the time",
+   "event": "health:fatigue",
+   "friendly": "Ongoing tiredness has many causes. Here is one worth checking.",
+   "keywords": [
+    "always tired",
+    "exhausted",
+    "fatigue",
+    "no energy"
+   ]
+  },
+  {
+   "id": "p-snore",
+   "source": "prompt",
+   "name": "I've been told I snore",
+   "event": "health:snoring",
+   "friendly": "Snoring can be more than noise. Here is what to look for.",
+   "keywords": [
+    "snore",
+    "snoring"
+   ]
+  },
+  {
+   "id": "p-period",
+   "source": "prompt",
+   "name": "My period started",
+   "event": "health:period",
+   "friendly": "Here is something useful for this time of the month.",
+   "keywords": [
+    "period",
+    "menstrual",
+    "cramps"
+   ]
+  },
+  {
+   "id": "p-claim",
+   "source": "prompt",
+   "name": "I read a health claim online",
+   "event": "info:health_claim",
+   "friendly": "Here is how to check a health claim before you act on it.",
+   "keywords": [
+    "health claim",
+    "is it true that",
+    "miracle cure"
+   ]
+  },
+  {
+   "id": "p-ill",
+   "source": "prompt",
+   "name": "Someone at home is ill",
+   "event": "health:household_illness",
+   "friendly": "Here is how to stop it spreading at home.",
+   "keywords": [
+    "flu",
+    "fever",
+    "stomach bug",
+    "norovirus",
+    "covid"
+   ]
+  },
+  {
+   "id": "p-diy",
+   "source": "prompt",
+   "name": "I'm painting or doing DIY",
+   "event": "prompt:diy",
+   "friendly": "Here is how to keep the fumes and dust down.",
+   "keywords": [
+    "painting",
+    "diy",
+    "varnish",
+    "sanding",
+    "renovation"
+   ]
+  },
+  {
+   "id": "p-laundry",
+   "source": "prompt",
+   "name": "I'm doing laundry",
+   "event": "prompt:laundry",
+   "friendly": "Something useful about your clothes and laundry.",
+   "keywords": [
+    "laundry",
+    "washing machine",
+    "dry cleaning"
+   ]
+  },
+  {
+   "id": "p-screen",
+   "source": "prompt",
+   "name": "I've been on screens all day",
+   "event": "prompt:screens",
+   "friendly": "Your eyes and ears do a lot of work. Here is one way to help them.",
+   "keywords": [
+    "screen time",
+    "eye strain",
+    "headphones"
+   ]
+  },
+  {
+   "id": "p-gut",
+   "source": "prompt",
+   "name": "My stomach feels off",
+   "event": "health:gut",
+   "friendly": "Here is something useful about your gut.",
+   "keywords": [
+    "bloated",
+    "bloating",
+    "indigestion",
+    "constipated",
+    "heartburn"
+   ]
+  },
+  {
+   "id": "p-sexual",
+   "source": "prompt",
+   "name": "I want a sexual health check",
+   "event": "prompt:sexual_health",
+   "friendly": "Here is something worth knowing about sexual health.",
+   "keywords": [
+    "sti test",
+    "sexual health",
+    "new partner"
+   ]
+  },
+  {
+   "id": "cal-move",
+   "source": "calendar",
+   "name": "Moving home",
+   "event": "home:old_house",
+   "friendly": "A new home is a good time to check a few hidden things.",
+   "keywords": [
+    "moving house",
+    "move house",
+    "moving day",
+    "new flat",
+    "new apartment",
+    "removals",
+    "house move"
+   ]
+  },
+  {
+   "id": "cal-blood",
+   "source": "calendar",
+   "name": "Blood test booked",
+   "event": "health:lab_results",
+   "friendly": "Here is how to get the most from your test results.",
+   "keywords": [
+    "blood test",
+    "lab test",
+    "bloodwork",
+    "blood work",
+    "pathology",
+    "lab report",
+    "test results",
+    "haemoglobin",
+    "hemoglobin",
+    "hba1c",
+    "ferritin",
+    "creatinine",
+    "lipid profile",
+    "cholesterol",
+    "tsh",
+    "vitamin b12 level"
+   ]
+  },
+  {
+   "id": "cal-dentist",
+   "source": "calendar",
+   "name": "Dentist appointment",
+   "event": "health:dental",
+   "friendly": "Here is something useful before you see the dentist.",
+   "keywords": [
+    "dentist",
+    "dental",
+    "hygienist"
+   ]
+  },
+  {
+   "id": "cal-eye",
+   "source": "calendar",
+   "name": "Eye test",
+   "event": "health:eye_test",
+   "friendly": "Here is something useful about your eyes.",
+   "keywords": [
+    "optician",
+    "eye test",
+    "optometrist",
+    "eye exam"
+   ]
+  },
+  {
+   "id": "cal-gym",
+   "source": "calendar",
+   "name": "Gym, pool or sports session",
+   "event": "activity:workout",
+   "friendly": "Here is something useful for your session.",
+   "keywords": [
+    "gym",
+    "swim",
+    "swimming",
+    "pool",
+    "yoga",
+    "pilates",
+    "football",
+    "tennis",
+    "badminton",
+    "cricket",
+    "5k",
+    "parkrun"
+   ]
+  },
+  {
+   "id": "cal-pharm",
+   "source": "calendar",
+   "name": "Prescription refill",
+   "event": "health:prescription",
+   "friendly": "Here is something useful about your medicines.",
+   "keywords": [
+    "pharmacy",
+    "prescription",
+    "refill",
+    "chemist"
+   ]
+  },
+  {
+   "id": "cal-loud",
+   "source": "calendar",
+   "name": "Concert or loud event",
+   "event": "prompt:loud",
+   "friendly": "Loud events are fun. Here is how to protect your hearing.",
+   "keywords": [
+    "concert",
+    "gig",
+    "festival",
+    "club night",
+    "nightclub"
+   ]
+  },
+  {
+   "id": "p-meno",
+   "source": "prompt",
+   "name": "I think it could be menopause",
+   "event": "health:menopause",
+   "friendly": "Here is something useful about menopause.",
+   "keywords": [
+    "menopause",
+    "perimenopause",
+    "hot flushes",
+    "hot flashes",
+    "night sweats"
+   ]
   }
  ],
  "PRODUCTS": [
@@ -9374,8 +12236,7 @@
     "skillet"
    ],
    "event": "commerce:nonstick_pan",
-   "object": "your new pan",
-   "scan": "Nonstick tawa 28 cm"
+   "object": "your new pan"
   },
   {
    "id": "purifier",
@@ -9386,8 +12247,7 @@
     "hepa"
    ],
    "event": "commerce:air_purifier",
-   "object": "your new air purifier",
-   "scan": "HEPA air purifier"
+   "object": "your new air purifier"
   },
   {
    "id": "lentils",
@@ -9403,8 +12263,7 @@
     "masoor"
    ],
    "event": "grocery:lentils",
-   "object": "the lentils in your basket",
-   "scan": "Toor dal 1 kg"
+   "object": "the lentils in your basket"
   },
   {
    "id": "soda",
@@ -9418,8 +12277,7 @@
     "fizzy"
    ],
    "event": "grocery:soda",
-   "object": "your drinks order",
-   "scan": "Cola 6-pack"
+   "object": "your drinks order"
   },
   {
    "id": "namkeen",
@@ -9433,8 +12291,7 @@
     "mixture"
    ],
    "event": "grocery:namkeen",
-   "object": "your snacks",
-   "scan": "Masala namkeen 200 g"
+   "object": "your snacks"
   },
   {
    "id": "juice",
@@ -9443,8 +12300,7 @@
     "juice"
    ],
    "event": "grocery:juice",
-   "object": "the juice in your basket",
-   "scan": null
+   "object": "the juice in your basket"
   },
   {
    "id": "ghee",
@@ -9454,8 +12310,7 @@
     "butter"
    ],
    "event": "grocery:butter",
-   "object": "your ghee or butter",
-   "scan": "Desi ghee 500 ml"
+   "object": "your ghee or butter"
   },
   {
    "id": "oats",
@@ -9466,8 +12321,7 @@
     "porridge"
    ],
    "event": "grocery:oats",
-   "object": "your oats",
-   "scan": "Rolled oats 1 kg"
+   "object": "your oats"
   },
   {
    "id": "vitd",
@@ -9479,8 +12333,7 @@
     "cholecalciferol"
    ],
    "event": "commerce:vitamin_d",
-   "object": "your vitamin D",
-   "scan": "Vitamin D3 capsules"
+   "object": "your vitamin D"
   },
   {
    "id": "multi",
@@ -9492,8 +12345,7 @@
     "supplements"
    ],
    "event": "commerce:supplement",
-   "object": "your supplement",
-   "scan": null
+   "object": "your supplement"
   },
   {
    "id": "herbal",
@@ -9507,8 +12359,7 @@
     "giloy"
    ],
    "event": "commerce:herbal_supplement",
-   "object": "your herbal supplement",
-   "scan": "Ashwagandha capsules"
+   "object": "your herbal supplement"
   },
   {
    "id": "potassium",
@@ -9521,8 +12372,7 @@
     "low-sodium salt"
    ],
    "event": "commerce:potassium_supplement",
-   "object": "your low-sodium salt",
-   "scan": "Low-sodium salt 1 kg"
+   "object": "your low-sodium salt"
   },
   {
    "id": "magnesium",
@@ -9531,8 +12381,7 @@
     "magnesium"
    ],
    "event": "commerce:magnesium",
-   "object": "your magnesium",
-   "scan": null
+   "object": "your magnesium"
   },
   {
    "id": "probiotic",
@@ -9541,8 +12390,7 @@
     "probiotic"
    ],
    "event": "commerce:probiotic",
-   "object": "your probiotic",
-   "scan": null
+   "object": "your probiotic"
   },
   {
    "id": "grapefruit",
@@ -9551,8 +12399,7 @@
     "grapefruit"
    ],
    "event": "grocery:grapefruit",
-   "object": "the grapefruit in your basket",
-   "scan": null
+   "object": "the grapefruit in your basket"
   },
   {
    "id": "cleaner",
@@ -9566,8 +12413,7 @@
     "detergent"
    ],
    "event": "commerce:cleaning_product",
-   "object": "your cleaning products",
-   "scan": "Bleach toilet cleaner"
+   "object": "your cleaning products"
   },
   {
    "id": "humidifier",
@@ -9576,8 +12422,7 @@
     "humidifier"
    ],
    "event": "commerce:humidifier",
-   "object": "your new humidifier",
-   "scan": null
+   "object": "your new humidifier"
   },
   {
    "id": "filter",
@@ -9590,8 +12435,7 @@
     "filter cartridge"
    ],
    "event": "commerce:water_filter",
-   "object": "your water filter",
-   "scan": null
+   "object": "your water filter"
   },
   {
    "id": "skincare",
@@ -9605,8 +12449,7 @@
     "toner"
    ],
    "event": "commerce:skincare",
-   "object": "your new skincare",
-   "scan": null
+   "object": "your new skincare"
   },
   {
    "id": "moisturizer",
@@ -9617,8 +12460,7 @@
     "lotion"
    ],
    "event": "commerce:moisturizer",
-   "object": "your moisturizer",
-   "scan": null
+   "object": "your moisturizer"
   },
   {
    "id": "sunscreen",
@@ -9629,8 +12471,7 @@
     "sunblock"
    ],
    "event": "commerce:sunscreen",
-   "object": "your sunscreen",
-   "scan": "Sunscreen SPF 50"
+   "object": "your sunscreen"
   },
   {
    "id": "retinol",
@@ -9642,8 +12483,7 @@
     "adapalene"
    ],
    "event": "commerce:retinoid",
-   "object": "your retinol product",
-   "scan": null
+   "object": "your retinol product"
   },
   {
    "id": "hairdye",
@@ -9655,8 +12495,7 @@
     "henna"
    ],
    "event": "commerce:hair_dye",
-   "object": "your hair colour",
-   "scan": "Hair colour kit"
+   "object": "your hair colour"
   },
   {
    "id": "essential",
@@ -9667,8 +12506,7 @@
     "eucalyptus oil"
    ],
    "event": "commerce:essential_oil",
-   "object": "your essential oil",
-   "scan": null
+   "object": "your essential oil"
   },
   {
    "id": "bp",
@@ -9680,8 +12518,7 @@
     "sphygmomanometer"
    ],
    "event": "commerce:blood_pressure_monitor",
-   "object": "your new BP monitor",
-   "scan": "Upper-arm BP monitor"
+   "object": "your new BP monitor"
   },
   {
    "id": "coffee",
@@ -9693,8 +12530,7 @@
     "cappuccino"
    ],
    "event": "commerce:coffee",
-   "object": "your coffee",
-   "scan": null
+   "object": "your coffee"
   },
   {
    "id": "toothpaste",
@@ -9703,8 +12539,7 @@
     "toothpaste"
    ],
    "event": "commerce:toothpaste",
-   "object": "your toothpaste",
-   "scan": null
+   "object": "your toothpaste"
   },
   {
    "id": "floss",
@@ -9714,8 +12549,7 @@
     "interdental"
    ],
    "event": "commerce:floss",
-   "object": "your floss",
-   "scan": null
+   "object": "your floss"
   },
   {
    "id": "shoes",
@@ -9727,8 +12561,7 @@
     "running shoes"
    ],
    "event": "commerce:walking_shoes",
-   "object": "your new shoes",
-   "scan": null
+   "object": "your new shoes"
   },
   {
    "id": "thermo",
@@ -9739,8 +12572,7 @@
     "food thermometer"
    ],
    "event": "commerce:meat_thermometer",
-   "object": "your thermometer",
-   "scan": null
+   "object": "your thermometer"
   },
   {
    "id": "container",
@@ -9752,8 +12584,7 @@
     "tiffin"
    ],
    "event": "commerce:plastic_container",
-   "object": "your containers",
-   "scan": "Plastic lunch box set"
+   "object": "your containers"
   },
   {
    "id": "band",
@@ -9765,8 +12596,7 @@
     "weights"
    ],
    "event": "commerce:resistance_band",
-   "object": "your new gear",
-   "scan": null
+   "object": "your new gear"
   },
   {
    "id": "tools",
@@ -9778,8 +12608,7 @@
     "saw"
    ],
    "event": "commerce:power_tools",
-   "object": "your new tools",
-   "scan": null
+   "object": "your new tools"
   },
   {
    "id": "incense",
@@ -9790,8 +12619,7 @@
     "dhoop"
    ],
    "event": "commerce:incense",
-   "object": "your incense",
-   "scan": "Agarbatti pack"
+   "object": "your incense"
   },
   {
    "id": "gasstove",
@@ -9803,8 +12631,7 @@
     "burner"
    ],
    "event": "commerce:gas_stove",
-   "object": "your gas stove",
-   "scan": null
+   "object": "your gas stove"
   },
   {
    "id": "board",
@@ -9814,8 +12641,7 @@
     "chopping board"
    ],
    "event": "commerce:cutting_board",
-   "object": "your cutting board",
-   "scan": null
+   "object": "your cutting board"
   },
   {
    "id": "notebook",
@@ -9826,150 +12652,362 @@
     "journal"
    ],
    "event": "commerce:decorative_notebook",
-   "object": "your notebook",
-   "scan": "Decorative notebook"
-  }
- ],
- "AGENT_SCENARIOS": [
-  {
-   "id": "pan",
-   "name": "Bought a nonstick frying pan",
-   "event": "commerce:nonstick_pan",
-   "detail": "An order confirmation shows a new nonstick pan.",
-   "kind": "Commerce"
+   "object": "your notebook"
   },
   {
-   "id": "purifier",
-   "name": "Bought an air purifier",
-   "event": "commerce:air_purifier",
-   "detail": "A household purchase for a bedroom air purifier.",
-   "kind": "Commerce"
+   "id": "alcohol",
+   "name": "Alcohol",
+   "keywords": [
+    "beer",
+    "wine",
+    "whisky",
+    "whiskey",
+    "vodka",
+    "gin",
+    "rum",
+    "lager",
+    "cider"
+   ],
+   "event": "commerce:alcohol",
+   "object": "your drinks"
   },
   {
-   "id": "beans",
-   "name": "Added lentils to a grocery basket",
-   "event": "grocery:lentils",
-   "detail": "A grocery order includes dried lentils.",
-   "kind": "Groceries"
+   "id": "paint",
+   "name": "Paint or varnish",
+   "keywords": [
+    "paint",
+    "varnish",
+    "paint thinner",
+    "turpentine",
+    "primer",
+    "wood stain"
+   ],
+   "event": "commerce:paint",
+   "object": "your paint"
   },
   {
-   "id": "soda",
-   "name": "Bought a case of soda",
-   "event": "grocery:soda",
-   "detail": "A recurring grocery order includes sweetened drinks.",
-   "kind": "Groceries"
+   "id": "iron",
+   "name": "Iron supplement",
+   "keywords": [
+    "iron tablets",
+    "ferrous",
+    "iron supplement"
+   ],
+   "event": "commerce:iron",
+   "object": "your iron supplement"
   },
   {
-   "id": "flight",
-   "name": "Booked a long-haul flight",
-   "event": "travel:time_zone",
-   "detail": "A flight itinerary crosses several time zones.",
-   "kind": "Travel"
+   "id": "thyroid",
+   "name": "Thyroid medicine",
+   "keywords": [
+    "levothyroxine",
+    "thyroxine",
+    "eltroxin",
+    "thyronorm",
+    "synthroid"
+   ],
+   "event": "profile:thyroid_medication",
+   "object": "your thyroid medicine"
   },
   {
-   "id": "aqi",
-   "name": "Poor air quality forecast",
-   "event": "weather:poor_air_quality",
-   "detail": "Local outdoor air quality has deteriorated.",
-   "kind": "Environment"
+   "id": "anticoag",
+   "name": "Blood thinner",
+   "keywords": [
+    "warfarin",
+    "apixaban",
+    "rivaroxaban",
+    "eliquis",
+    "xarelto",
+    "blood thinner",
+    "dabigatran"
+   ],
+   "event": "profile:anticoagulant",
+   "object": "your blood thinner"
   },
   {
-   "id": "heat",
-   "name": "Extreme heat advisory",
-   "event": "weather:heat_warning",
-   "detail": "Local conditions raise heat-stress concerns.",
-   "kind": "Environment"
+   "id": "rx",
+   "name": "Prescription medicine",
+   "keywords": [
+    "prescription",
+    "repeat prescription",
+    "tablets",
+    "capsules"
+   ],
+   "event": "health:prescription",
+   "object": "your medicine"
   },
   {
-   "id": "meeting",
-   "name": "Finished a long desk workday",
-   "event": "calendar:desk_day",
-   "detail": "Long calendar blocks suggest a sedentary day.",
-   "kind": "Routine"
+   "id": "tracker",
+   "name": "Fitness tracker",
+   "keywords": [
+    "fitness tracker",
+    "smartwatch",
+    "fitbit",
+    "step counter",
+    "pedometer",
+    "apple watch"
+   ],
+   "event": "commerce:fitness_tracker",
+   "object": "your tracker"
   },
   {
-   "id": "coffee",
-   "name": "Ordered an afternoon coffee",
-   "event": "routine:late_coffee",
-   "detail": "A late-day caffeine purchase, if a user opted to share it.",
-   "kind": "Commerce"
+   "id": "glucometer",
+   "name": "Glucose meter",
+   "keywords": [
+    "glucometer",
+    "glucose meter",
+    "cgm",
+    "blood sugar monitor"
+   ],
+   "event": "commerce:glucose_meter",
+   "object": "your glucose meter"
   },
   {
-   "id": "meal",
-   "name": "Just finished dinner",
-   "event": "routine:meal_finished",
-   "detail": "A routine meal event shared by an agent.",
-   "kind": "Routine"
+   "id": "pregtest",
+   "name": "Pregnancy or ovulation test",
+   "keywords": [
+    "pregnancy test",
+    "ovulation test",
+    "prenatal"
+   ],
+   "event": "commerce:pregnancy_test",
+   "object": "your test"
   },
   {
-   "id": "supp",
-   "name": "Purchased vitamin D",
-   "event": "commerce:vitamin_d",
-   "detail": "A vitamin D supplement appears in an order.",
-   "kind": "Commerce"
+   "id": "condoms",
+   "name": "Condoms",
+   "keywords": [
+    "condom",
+    "condoms"
+   ],
+   "event": "commerce:condoms",
+   "object": "your purchase"
   },
   {
-   "id": "clean",
-   "name": "Bought household cleaners",
-   "event": "commerce:cleaning_product",
-   "detail": "Household cleaners have been purchased.",
-   "kind": "Commerce"
+   "id": "periodcare",
+   "name": "Period products",
+   "keywords": [
+    "tampon",
+    "tampons",
+    "menstrual cup",
+    "sanitary pad",
+    "sanitary pads",
+    "period pants"
+   ],
+   "event": "commerce:period_products",
+   "object": "your period products"
   },
   {
-   "id": "humid",
-   "name": "Bought a humidifier",
-   "event": "commerce:humidifier",
-   "detail": "A new room humidifier was delivered.",
-   "kind": "Commerce"
+   "id": "clothes",
+   "name": "Clothing",
+   "keywords": [
+    "t-shirt",
+    "shirt",
+    "jeans",
+    "dress",
+    "kurta",
+    "leggings",
+    "jacket",
+    "saree",
+    "underwear",
+    "socks",
+    "activewear",
+    "hoodie"
+   ],
+   "event": "commerce:clothing",
+   "object": "your new clothes"
   },
   {
-   "id": "water",
-   "name": "Asked about drinking water quality",
-   "event": "home:water_quality",
-   "detail": "A question about a local household water supply.",
-   "kind": "Home"
+   "id": "shoes2",
+   "name": "Shoes",
+   "keywords": [
+    "heels",
+    "flip flops",
+    "sandals",
+    "boots",
+    "chappal"
+   ],
+   "event": "commerce:shoes",
+   "object": "your new shoes"
   },
   {
-   "id": "trip",
-   "name": "Planning an international trip",
-   "event": "travel:international_trip",
-   "detail": "An international departure is approaching.",
-   "kind": "Travel"
+   "id": "earbuds",
+   "name": "Headphones",
+   "keywords": [
+    "earbuds",
+    "headphones",
+    "airpods",
+    "earphones"
+   ],
+   "event": "commerce:headphones",
+   "object": "your headphones"
   },
   {
-   "id": "workout",
-   "name": "Completed a demanding workout",
-   "event": "activity:workout",
-   "detail": "A fitness activity log shows a harder workout.",
-   "kind": "Activity"
+   "id": "lenses",
+   "name": "Contact lenses",
+   "keywords": [
+    "contact lens",
+    "contact lenses",
+    "lens solution"
+   ],
+   "event": "commerce:contact_lenses",
+   "object": "your contact lenses"
   },
   {
-   "id": "skin",
-   "name": "Bought a new skincare product",
-   "event": "commerce:skincare",
-   "detail": "New skincare products are being introduced.",
-   "kind": "Commerce"
+   "id": "glasses",
+   "name": "Glasses or sunglasses",
+   "keywords": [
+    "sunglasses",
+    "reading glasses",
+    "spectacles",
+    "blue light glasses"
+   ],
+   "event": "commerce:glasses",
+   "object": "your glasses"
   },
   {
-   "id": "filter",
-   "name": "Purchased a water filter",
-   "event": "commerce:water_filter",
-   "detail": "A household water filter has been bought.",
-   "kind": "Commerce"
+   "id": "sweetener",
+   "name": "Sweetener",
+   "keywords": [
+    "sweetener",
+    "stevia",
+    "aspartame",
+    "sucralose",
+    "sugar free"
+   ],
+   "event": "grocery:sweetener",
+   "object": "your sweetener"
   },
   {
-   "id": "bp",
-   "name": "Bought a blood-pressure monitor",
-   "event": "commerce:blood_pressure_monitor",
-   "detail": "A home blood-pressure cuff is being set up.",
-   "kind": "Commerce"
+   "id": "energy",
+   "name": "Energy drink",
+   "keywords": [
+    "energy drink",
+    "red bull",
+    "monster energy"
+   ],
+   "event": "grocery:energy_drink",
+   "object": "your energy drink"
   },
   {
-   "id": "unknown",
-   "name": "Bought a decorative notebook",
-   "event": "commerce:decorative_notebook",
-   "detail": "No strong evidence-based wellness relevance identified; do not force a tip.",
-   "kind": "Other"
+   "id": "processedmeat",
+   "name": "Processed meat",
+   "keywords": [
+    "bacon",
+    "sausage",
+    "salami",
+    "ham",
+    "hot dog",
+    "pepperoni"
+   ],
+   "event": "grocery:processed_meat",
+   "object": "your bacon or sausages"
+  },
+  {
+   "id": "rice",
+   "name": "Rice",
+   "keywords": [
+    "rice",
+    "basmati",
+    "brown rice"
+   ],
+   "event": "grocery:rice",
+   "object": "your rice"
+  },
+  {
+   "id": "candle",
+   "name": "Scented candle or air freshener",
+   "keywords": [
+    "scented candle",
+    "candle",
+    "air freshener",
+    "room spray",
+    "reed diffuser"
+   ],
+   "event": "commerce:air_freshener",
+   "object": "your candle or air freshener"
+  },
+  {
+   "id": "mattress",
+   "name": "Mattress or pillow",
+   "keywords": [
+    "mattress",
+    "pillow"
+   ],
+   "event": "commerce:mattress",
+   "object": "your new bed"
+  },
+  {
+   "id": "painkillers",
+   "name": "Painkillers",
+   "keywords": [
+    "paracetamol",
+    "acetaminophen",
+    "ibuprofen",
+    "tylenol",
+    "crocin",
+    "dolo",
+    "advil",
+    "nurofen",
+    "naproxen",
+    "painkiller",
+    "painkillers",
+    "combiflam"
+   ],
+   "event": "commerce:painkillers",
+   "object": "your painkillers"
+  },
+  {
+   "id": "cottonbuds",
+   "name": "Cotton buds",
+   "keywords": [
+    "cotton buds",
+    "cotton swabs",
+    "q-tips",
+    "ear buds"
+   ],
+   "event": "commerce:cotton_buds",
+   "object": "your cotton buds"
+  },
+  {
+   "id": "kohl",
+   "name": "Kohl, kajal or surma",
+   "keywords": [
+    "kajal",
+    "kohl",
+    "surma"
+   ],
+   "event": "commerce:kohl",
+   "object": "your kajal"
+  },
+  {
+   "id": "cookware",
+   "name": "Aluminium or brass cookware",
+   "keywords": [
+    "aluminium kadai",
+    "aluminum pot",
+    "aluminium pot",
+    "brass",
+    "hindalium",
+    "kadhai",
+    "kadai",
+    "handi"
+   ],
+   "event": "commerce:cookware",
+   "object": "your new cookware"
+  },
+  {
+   "id": "lightening",
+   "name": "Skin-lightening cream",
+   "keywords": [
+    "skin lightening",
+    "fairness cream",
+    "whitening cream",
+    "skin whitening",
+    "brightening cream"
+   ],
+   "event": "commerce:skin_lightening",
+   "object": "your skin cream"
   }
  ]
 }

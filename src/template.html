@@ -4,8 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#f5f7f2">
-<meta name="description" content="Wellwise V3: useful health insights, sparked by everyday moments">
-<title>Wellwise V3</title>
+<meta name="description" content="Wellwise: useful health insights, sparked by everyday moments">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<title>Wellwise</title>
 <style>
 :root{--bg:#f5f7f2;--ink:#172a22;--muted:#5f7166;--green:#146c4b;--pale:#e7f3e9;--line:#e0e8df;--card:#fff;--amber:#7b5019;--amberbg:#fff4e5;--amberline:#f0ddc2;--red:#8a2a1f;--redbg:#fdecea;--redline:#f2cfc9;--wa:#dcf8c6;--soft:#f7faf6}
 *{box-sizing:border-box}
@@ -17,6 +19,8 @@ h1{font-size:clamp(28px,4vw,44px);line-height:1.13;letter-spacing:-.045em;margin
 h2{font-size:23px;letter-spacing:-.03em;margin:3px 0 12px}
 h3{font-size:17px;letter-spacing:-.015em;margin:0 0 6px}
 p{margin:6px 0 12px}
+code{background:#eef4ee;border-radius:6px;padding:1px 6px;font-size:12.5px;overflow-wrap:anywhere}
+pre{background:#f2f6f1;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:12px;overflow-x:auto;white-space:pre-wrap;overflow-wrap:anywhere}
 .skip{position:absolute;left:-999px}.skip:focus{left:12px;top:12px;z-index:20;background:#fff;padding:8px 12px;border-radius:8px}
 .muted{color:var(--muted)}.small{font-size:12.5px}.lead{font-size:17px;color:#3f5a4a}
 .wrap{max-width:1160px;margin:auto;padding:0 22px}
@@ -30,20 +34,22 @@ main{padding-top:28px;padding-bottom:70px}
 .card,.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 7px 20px #203c2b07}
 .panel{padding:26px}
 .hero{background:linear-gradient(120deg,#e8f4e8,#fff 64%);border:1px solid #d8e8d9;border-radius:22px;padding:28px}
+.hero.live{background:linear-gradient(120deg,#e3effa,#fff 64%);border-color:#cfe0f0}
 .eyebrow{letter-spacing:.12em;font-weight:850;text-transform:uppercase;color:var(--green);font-size:11px}
 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
-.two{grid-template-columns:repeat(2,minmax(0,1fr))}.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.two{grid-template-columns:repeat(2,minmax(0,1fr))}.four{grid-template-columns:repeat(4,minmax(0,1fr))}.five{grid-template-columns:repeat(5,minmax(0,1fr))}
 .row{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.between{justify-content:space-between}
 .spaced{margin-top:20px}.gap{height:12px}
-.btn{border:1px solid var(--green);background:var(--green);color:#fff;border-radius:11px;padding:10px 15px;font-weight:700}
+.btn{border:1px solid var(--green);background:var(--green);color:#fff;border-radius:11px;padding:10px 15px;font-weight:700;text-decoration:none;display:inline-block}
 .btn.alt{background:#e6f3e8;color:var(--green);border-color:#d8e9db}
 .btn.ghost{background:#fff;color:var(--green);border-color:#c6dcd0}
 .btn.sm{padding:7px 10px;font-size:12.5px}
 .btn:disabled{opacity:.45;cursor:not-allowed}
 .badge{display:inline-flex;align-items:center;padding:3px 9px;border:1px solid #d8e5da;border-radius:30px;font-size:11px;font-weight:720;color:#3e6650;background:#f3f8f3;white-space:nowrap}
-.badge.warn{background:var(--amberbg);color:var(--amber);border-color:var(--amberline)}
-.badge.danger{background:var(--redbg);color:var(--red);border-color:var(--redline)}
-.badge.new{background:#e3f0ff;color:#1d4f91;border-color:#c9def7}.badge.sponsor{background:#f1eefb;color:#4b3c86;border-color:#ddd6f3}
+.badge.known{background:#f4f1ea;color:#6a5a33;border-color:#e6dec9}
+.badge.rare{background:#eef3fb;color:#2c4f7c;border-color:#d3e0f2}
+.badge.new{background:#e3f0ff;color:#1d4f91;border-color:#c9def7}
+.badge.live{background:#e7f0fb;color:#1d4f91;border-color:#c9def7}
 .field{width:100%;padding:10px 12px;border:1px solid #cedfd1;border-radius:10px;background:#fff;color:var(--ink);min-width:0}
 textarea.field{min-height:84px;resize:vertical}
 label{font-size:13px;font-weight:650;display:block}
@@ -66,9 +72,6 @@ label .field{margin-top:5px;font-weight:400}
 .graphnode{border:1px solid #d3e2d7;background:#f5faf5;border-radius:12px;padding:12px;min-width:160px;flex:1}
 .graphnode.center{background:#dcefe1;border-color:#8dbca2}
 .metric{font-size:30px;font-weight:850;line-height:1;letter-spacing:-.04em}
-.bars{display:grid;gap:10px}
-.barrow{display:grid;grid-template-columns:120px 1fr 48px;align-items:center;gap:8px;font-size:12.5px}
-.bar{height:13px;background:#e8eee7;border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:#438a64;border-radius:6px}
 .pick{border-radius:12px;padding:12px;border:1px solid var(--line);background:#fff;text-align:left;color:var(--ink)}
 .pick:hover{border-color:#a9cbb5}
 .pick.selected{border:2px solid var(--green);padding:11px;background:#f0f8f0}
@@ -82,7 +85,6 @@ label .field{margin-top:5px;font-weight:400}
 .bubble{border:1px solid #d0e4d5;background:#edf6ef;border-radius:17px;padding:18px}
 .wa{background:var(--wa);border:1px solid #c5e6ad;border-radius:14px 14px 14px 4px;padding:12px 14px;max-width:440px}
 .wa .meta{font-size:11px;color:#4f6b45;text-align:right}
-.sponsored{border:1px dashed #cfc6ee;background:#faf9fe;border-radius:14px;padding:16px}
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:9;background:#173e2c;color:#fff;padding:11px 17px;border-radius:12px;box-shadow:0 10px 30px #1114;max-width:92vw}
 .hide{display:none!important}
 details{border:1px solid var(--line);padding:13px;border-radius:11px;background:#fcfdfb}summary{cursor:pointer;font-weight:750}
@@ -90,8 +92,14 @@ details{border:1px solid var(--line);padding:13px;border-radius:11px;background:
 .scorerow{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
 .checkin{border-left:4px solid var(--green)}
 .know li{margin:4px 0}
-@media(max-width:860px){.grid,.four{grid-template-columns:repeat(2,minmax(0,1fr))}.side{grid-template-columns:1fr}.topinner{flex-wrap:wrap;padding:9px 0;gap:4px}nav{order:2;width:100%;overflow-x:auto;flex-wrap:nowrap}.navbtn{white-space:nowrap}.panel{padding:20px}}
-@media(max-width:540px){.wrap{padding:0 14px}.grid,.two,.four,.detailgrid,.formgrid,.checks{grid-template-columns:1fr}.hero{padding:19px}.card,.panel{padding:17px}.barrow{grid-template-columns:90px 1fr 43px}}
+.tapgrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:10px}
+.tapgrid .btn{width:100%;text-align:center}
+.readings{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.camera{width:100%;max-height:340px;border-radius:12px;background:#0b1a13;object-fit:cover}
+.drop{border:1.5px dashed #b9d3c0;border-radius:12px;padding:16px;text-align:center;background:#fbfdfa}
+.status{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.status:last-child{border:0}
+@media(max-width:860px){.grid,.four,.five{grid-template-columns:repeat(2,minmax(0,1fr))}.tapgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.side{grid-template-columns:1fr}.topinner{flex-wrap:wrap;padding:9px 0;gap:4px}nav{order:2;width:100%;overflow-x:auto;flex-wrap:nowrap}.navbtn{white-space:nowrap}.panel{padding:20px}}
+@media(max-width:540px){.wrap{padding:0 16px}.grid,.two,.four,.five,.detailgrid,.formgrid,.checks{grid-template-columns:1fr}.tapgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{padding:19px}.card,.panel{padding:17px}}
 </style>
 </head>
 <body>
@@ -101,55 +109,58 @@ details{border:1px solid var(--line);padding:13px;border-radius:11px;background:
 <div id="toast" class="toast hide" role="status"></div>
 <footer class="wrap footer" id="footer"></footer>
 <script>/*__DATA__*/</script>
+<script>/*__ENGINE__*/</script>
 <script>
 /* ---------- content: data, never code ---------- */
-const OVERLAY_KEY='wellwise-v3-added-tips';
-let CONTENT=WW,TIPS,ALLTIPS,EDGES,MOMENTS,PRODUCTS,AGENT_SCENARIOS,CATEGORIES,TIPMAP,CATS,KNOW,ALL_EVENTS,REACHABLE,importReport=null;
-function loadOverlay(){try{const o=JSON.parse(localStorage.getItem(OVERLAY_KEY)||'{}');return{tips:o.tips||[],edges:o.edges||[]}}catch(e){return{tips:[],edges:[]}}}
-function saveOverlay(o){try{localStorage.setItem(OVERLAY_KEY,JSON.stringify(o))}catch(e){}}
+const ENGINE=window.WWEngine;
+let CONTENT=WW,TIPS,ALLTIPS,EDGES,MOMENTS,PRODUCTS,CATEGORIES,TIPMAP,CATS,KNOW,ALL_EVENTS,REACHABLE;
 function applyContent(c){
- const ov=loadOverlay(),base=new Set(c.TIPS.map(t=>t.id));
- CATEGORIES=c.CATEGORIES;MOMENTS=c.MOMENTS;PRODUCTS=c.PRODUCTS;AGENT_SCENARIOS=c.AGENT_SCENARIOS;
- ALLTIPS=[...c.TIPS,...ov.tips.filter(t=>!base.has(t.id))].filter(t=>t.status!=='draft');
+ CATEGORIES=c.CATEGORIES;MOMENTS=c.MOMENTS;PRODUCTS=c.PRODUCTS;
+ ALLTIPS=c.TIPS.filter(t=>t.status!=='draft');
  TIPMAP=Object.fromEntries(ALLTIPS.map(t=>[t.id,t]));
  TIPS=ALLTIPS.filter(t=>t.status!=='retired');
  const live=new Set(TIPS.map(t=>t.id));
- EDGES=[...c.EDGES,...ov.edges].filter(e=>live.has(e.a)&&live.has(e.b));
- CATS=[...new Set(TIPS.map(t=>t.category))];
+ EDGES=c.EDGES.filter(e=>live.has(e.a)&&live.has(e.b));
+ CATS=CATEGORIES.map(x=>x.name).filter(n=>TIPS.some(t=>t.category===n));
  KNOW=Object.fromEntries(CATEGORIES.map(x=>[x.name,x.know]));
- ALL_EVENTS=new Set([...MOMENTS.map(m=>m.event),...PRODUCTS.map(p=>p.event),...AGENT_SCENARIOS.map(a=>a.event)]);
- REACHABLE=TIPS.filter(t=>t.safety!=='clinician'&&t.triggerKeys.some(k=>ALL_EVENTS.has(k))).length;
+ ALL_EVENTS=ENGINE.allEvents(c);
+ REACHABLE=TIPS.filter(t=>t.triggerKeys.some(k=>ALL_EVENTS.has(k))).length;
 }
 applyContent(CONTENT);
 const knowPhrase=(c,n)=>(KNOW[c]||['tip about '+c.toLowerCase(),'tips about '+c.toLowerCase()])[n===1?0:1];
 const isNew=t=>t.added&&(Date.now()+(S?.offsetDays||0)*864e5-Date.parse(t.added))/864e5<=30;
 const REGIONS={GLOBAL:'Worldwide',US:'United States',IN:'India',GB:'United Kingdom',OTHER:'Other'};
 const KEY='wellwise-v3-prototype',DAY=864e5;
-const SRC={environment:'Weather & air',share:'Share a product',scan:'Scan',calendar:'Calendar',prompt:'Quick check-in',agent:'Your agent'};
-const SAFETY={general:{label:'General guidance',cls:''},check:{label:'Check first',cls:'warn'},clinician:{label:'Talk to a clinician',cls:'danger'}};
+const SRC={environment:'Near you',share:'Share',scan:'Scan',calendar:'Calendar',prompt:'Quick check-in',whatsapp:'WhatsApp',agent:'Your agent',email:'Email'};
+const TABS={near:'Near you',share:'Share',scan:'Scan',calendar:'Calendar',prompt:'Quick check-in',whatsapp:'WhatsApp',agent:'Your agent',email:'Email'};
+const VIA={environment:'Near you',share:'Share',scan:'Scan',photo:'Photo',document:'Document',calendar:'Calendar',prompt:'Quick check-in',whatsapp:'WhatsApp',agent:'Your agent',email:'Email',daily:'Daily tip',weekly:'Weekly tip',checkin:'Check-in'};
 const GRADE_NOTE={'Strong':'Backed by major public-health guidance.','Moderate':'Reasonable evidence; effects vary by person.','Limited':'Plausible but less studied.','Safety practice':'A precaution based on known hazards.'};
-const DIET_BOOST={Vegan:['ww-104','ww-020','ww-009','ww-003'],Vegetarian:['ww-104','ww-020','ww-009']};
-const AGENTS=['Muse','Instinct','Dots','Other agent'];
-const CHANNELS=['Push preview','Email preview','WhatsApp preview'];
+const CHANNELS=['In the app','WhatsApp'];
+const TAPS=['p-cook','p-ate','p-shop','p-desk','p-sleep','p-low','p-tired','p-drink','p-out','p-screen'];
+const DISCLAIMER='Wellwise shares general health information. It is not a substitute for medical advice. Always check with a certified healthcare provider about your own health.';
 
 const I18N={
- en:{discover:'Discover',moments:'Moments',journey:'My journey',explore:'Explore',inbox:'Inbox',settings:'Settings',tryThis:'Try this',why:'Why it matters',considerations:'Keep in mind',timeline:'Typical timeline for this kind of change',localNote:'Local note',willTry:'I’ll try this',trying:'✓ Trying',already:'Already doing',adopted:'✓ Habit',notForMe:'Not for me',open:'Read more →',dailyEyebrow:'Your daily insight',heroTitle:'Learn something useful, right when it matters.',heroSub:'Short, evidence-informed tips, sparked by your day.',useful:'Useful',notUseful:'Not useful'},
+ en:{discover:'Discover',moments:'Moments',journey:'My journey',explore:'Explore',inbox:'Inbox',settings:'Settings',tryThis:'Try this',why:'Why it matters',considerations:'Keep in mind',timeline:'Typical timeline for this kind of change',localNote:'Local note',willTry:'I’ll try this',trying:'✓ Trying',already:'Already doing',adopted:'✓ Habit',notForMe:'Not for me',open:'Read more →',dailyEyebrow:'Your daily insight',heroTitle:'Learn something useful, right when it matters.',heroSub:'Short, sourced tips, sparked by your day.',useful:'Useful',notUseful:'Not useful'},
  hi:{discover:'खोजें',moments:'पल',journey:'मेरी यात्रा',explore:'लाइब्रेरी',inbox:'इनबॉक्स',settings:'सेटिंग्स',tryThis:'यह आज़माएँ',why:'यह क्यों ज़रूरी है',considerations:'ध्यान रखें',timeline:'नतीजे कब दिख सकते हैं',localNote:'स्थानीय बात',willTry:'आज़माना है',trying:'✓ आज़मा रहे हैं',already:'पहले से कर रहे हैं',adopted:'✓ आदत बन गई',notForMe:'मेरे लिए नहीं',open:'और पढ़ें →',dailyEyebrow:'आज की जानकारी',heroTitle:'सही समय पर, काम की बात जानें।',heroSub:'आपके दिन से जुड़ी छोटी, भरोसेमंद जानकारियाँ।',useful:'काम का',notUseful:'काम का नहीं'}
 };
 
-const DEFAULTS={geo:'GLOBAL',cats:[],age:'',diet:'',lang:'en',statuses:{},statusAt:{},seen:{},source:{},feedback:{},checkins:{},notifications:[],events:[],delivered:{},agentConnected:false,agent:AGENTS[0],channel:CHANNELS[0],frequency:'both',discovery:'balanced',learning:false,offsetDays:0,momentTab:'environment',selected:null,shareText:''};
+const DEFAULTS={geo:'GLOBAL',geoAuto:true,cats:[],age:'',diet:'',lang:'en',statuses:{},statusAt:{},seen:{},source:{},feedback:{},checkins:{},notifications:[],events:[],delivered:{},channel:CHANNELS[0],frequency:'both',discovery:'balanced',offsetDays:0,momentTab:'near',selected:null,shareText:'',nearConsent:false,live:null,inboxSince:0,lastDaily:'',tap:null,intakes:{},updatedAt:0};
 let S;try{S=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){S={}}
 S={...DEFAULTS,...S};
-let searchText='',searchCat='ALL',searchScope='ALL',searchSafety='ALL';
+if(!CHANNELS.includes(S.channel))S.channel=/whatsapp/i.test(S.channel)?'WhatsApp':CHANNELS[0];
+if(S.momentTab==='environment')S.momentTab='near';
+let searchText='',searchCat='ALL',searchGeo='MINE',searchKind='ALL';
+const API={on:false,features:{},linked:{},calendar:null,wa:null,agentKey:null,email:null,busy:false};
 
 const $=id=>document.getElementById(id);
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const persist=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+let syncTimer=null;
+const persist=()=>{S.updatedAt=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}if(API.on){clearTimeout(syncTimer);syncTimer=setTimeout(pushState,800)}};
 const now=()=>Date.now()+S.offsetDays*DAY;
 const day=()=>Math.floor(now()/DAY);
 const L=k=>(I18N[S.lang]&&I18N[S.lang][k])||I18N.en[k]||k;
 const tx=(t,f)=>S.lang==='hi'&&t.hi&&t.hi[f]?t.hi[f]:t[f];
-const eligible=t=>S.geo==='GLOBAL'||t.regions.includes(S.geo);
+const eligible=t=>ENGINE.eligible(t,S);
 const inInterests=t=>!S.cats.length||S.cats.includes(t.category);
 const stat=id=>S.statuses[id]||'';
 const statusLabel=v=>({trying:L('trying'),adopted:L('adopted'),'not-relevant':L('notForMe')}[v]||'');
@@ -158,61 +169,133 @@ const fmtDate=ms=>new Date(ms).toLocaleDateString(undefined,{day:'numeric',month
 const fmtTime=ms=>new Date(ms).toLocaleString(undefined,{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'});
 const rel=id=>EDGES.filter(e=>e.a===id||e.b===id).map(e=>({...e,other:e.a===id?e.b:e.a}));
 const header=(ey,title,sub='')=>`<div class="eyebrow">${esc(ey)}</div><h1>${esc(title)}</h1>${sub?`<p class="lead">${esc(sub)}</p>`:''}`;
-function hash(str){let h=2166136261;for(let i=0;i<str.length;i++)h=Math.imul(h^str.charCodeAt(i),16777619);return h>>>0}
-function toast(msg){const el=$('toast');el.textContent=msg;el.classList.remove('hide');clearTimeout(window.__t);window.__t=setTimeout(()=>el.classList.add('hide'),2600)}
+const hash=ENGINE.hash;
+function toast(msg){const el=$('toast');el.textContent=msg;el.classList.remove('hide');clearTimeout(window.__t);window.__t=setTimeout(()=>el.classList.add('hide'),2800)}
 
-/* ---------- reach (computed once) ---------- */
+/* ---------- server ---------- */
+async function api(path,opts={}){
+ if(typeof fetch!=='function')throw new Error('offline');
+ const r=await fetch(path,{method:opts.method||'GET',headers:opts.body!==undefined?{'content-type':'application/json'}:{},body:opts.body!==undefined?JSON.stringify(opts.body):undefined,credentials:'same-origin'});
+ const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||'Something went wrong');return j}
+async function connect(){
+ if(!hosted()||typeof fetch!=='function')return;
+ try{const me=await api('/api/me');API.on=true;API.features=me.features||{};API.linked=me.linked||{};
+  const remote=me.state||{};if((remote.updatedAt||0)>(S.updatedAt||0)){const keep={momentTab:S.momentTab,selected:S.selected};S={...DEFAULTS,...remote,...keep};delete S._server;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}else pushState();
+  await pullInbox();if(S.nearConsent)refreshLive();render();
+  setInterval(pullInbox,60e3);window.addEventListener('focus',pullInbox);
+ }catch(e){API.on=false}}
+function pushState(){if(!API.on)return;const {live,...rest}=S;api('/api/state',{method:'PUT',body:{state:rest}}).catch(()=>{})}
+async function refreshMe(){try{const me=await api('/api/me');API.linked=me.linked||{};API.features=me.features||{}}catch(e){}}
+/* Tips the server delivered (calendar, near you, WhatsApp, agents, email, daily tips) join the journey here. */
+async function pullInbox(){
+ if(!API.on)return;
+ try{const {items}=await api('/api/inbox?since='+(S.inboxSince||0));if(!items.length)return;
+  for(const it of items){if(S.notifications.some(n=>n.id===it.id))continue;const e={id:it.id,tip:it.tip,moment:it.moment,source:it.source,agent:it.source==='agent'?it.via:null,channel:it.channel,at:it.at,message:it.message};
+   S.notifications.unshift(e);if(!['daily','weekly','checkin'].includes(it.source))S.events.unshift(e);if(TIPMAP[it.tip]&&!S.seen[it.tip]){S.seen[it.tip]=it.at;S.source[it.tip]=VIA[it.source]||it.source}S.inboxSince=Math.max(S.inboxSince,it.at)}
+  S.notifications=S.notifications.slice(0,100);S.events=S.events.slice(0,100);persist();render();toast(items.length===1?'A new tip arrived':`${items.length} new tips arrived`)}catch(e){}}
+
+/* ---------- near you: live air and weather ---------- */
+function useLocation(){
+ if(!navigator.geolocation){toast('This browser cannot share a location');return}
+ toast('Checking the air and weather near you…');
+ navigator.geolocation.getCurrentPosition(p=>{S.nearConsent=true;persist();refreshLive(p.coords)},()=>toast('Location is off. You can turn it on in your browser settings.'),{maximumAge:30*60e3,timeout:15e3})}
+function refreshLive(coords){
+ if(!API.on)return;
+ const go=c=>api(`/api/live?lat=${c.latitude}&lon=${c.longitude}&keep=1`).then(l=>{S.live=l;if(S.geoAuto&&l.region)S.geo=l.region;persist();render()}).catch(e=>toast(e.message));
+ if(coords)return go(coords);
+ if(S.live&&Date.now()-S.live.at<30*60e3)return;
+ navigator.geolocation?.getCurrentPosition(p=>go(p.coords),()=>{},{maximumAge:30*60e3,timeout:15e3})}
+function stopLocation(){S.nearConsent=false;S.live=null;persist();if(API.on)api('/api/location',{method:'DELETE',body:{}}).catch(()=>{});render();toast('Near you is off')}
+const liveMoments=()=>(S.live?.moments||[]).map(x=>({...x,m:MOMENTS.find(m=>m.id===x.id)})).filter(x=>x.m&&candidates(x.m.event).scored.length);
+function readingBadges(r){if(!r)return '';const b=[];if(r.aqi!=null)b.push('Air quality '+Math.round(r.aqi)+' (US AQI)');if(r.tempMax!=null)b.push('High '+Math.round(r.tempMax)+'°C');if(r.uvMax!=null)b.push('UV '+Math.round(r.uvMax));if(r.humidity!=null)b.push('Humidity '+Math.round(r.humidity)+'%');if(r.precip)b.push(Math.round(r.precip)+' mm rain');return `<div class="readings">${b.map(x=>`<span class="badge live">${esc(x)}</span>`).join('')}</div>`}
 
 /* ---------- state actions ---------- */
 function markSeen(id,source){if(!S.seen[id]){S.seen[id]=now();S.source[id]=source||'Explore';persist()}}
 function setStatus(id,v){if(S.statuses[id]===v){delete S.statuses[id];delete S.statusAt[id]}else{S.statuses[id]=v;S.statusAt[id]=now()}markSeen(id);persist();render();toast('Journey updated')}
-function vote(id,v){S.feedback[id]=S.feedback[id]===v?undefined:v;persist();render();toast('Thanks. This shapes what you see next.')}
+function vote(id,v){S.feedback[id]=S.feedback[id]===v?undefined:v;persist();if(API.on)api('/api/feedback',{method:'POST',body:{tip:id,vote:S.feedback[id]||null,source:S.source[id]}}).catch(()=>{});render();toast('Thanks. This shapes what you see next.')}
 function setLang(v){S.lang=v;persist();render()}
 
-/* ---------- ranking ---------- */
-function candidates(event){
- const all=TIPS.filter(t=>t.triggerKeys.includes(event)&&eligible(t));
- const blocked=all.filter(t=>t.safety==='clinician');
- const scored=all.filter(t=>t.safety!=='clinician').map(t=>{let s=100;const why=[];
-  if(S.seen[t.id]){s-=25;why.push('seen before −25')}
-  if(S.cats.length){if(S.cats.includes(t.category)){s+=8;why.push('your interests +8')}else if(S.discovery==='focused'){s-=15;why.push('outside your interests −15')}}
-  if(S.discovery==='exploratory'){const r=hash(t.id+day())%11;s+=r;why.push('surprise +'+r)}
-  if((DIET_BOOST[S.diet]||[]).includes(t.id)){s+=10;why.push('fits your diet +10')}
-  if(S.feedback[t.id]==='not-useful'){s-=40;why.push('marked not useful −40')}
-  if(S.feedback[t.id]==='useful'){s+=5;why.push('marked useful +5')}
-  if(S.statuses[t.id]==='not-relevant'){s-=60;why.push('not for me −60')}
-  if(S.statuses[t.id]==='adopted'){s-=20;why.push('already a habit −20')}
-  return {t,s,why}}).sort((a,b)=>b.s-a.s||a.t.id.localeCompare(b.t.id));
- return {scored,blocked};
-}
+/* ---------- ranking (rules live in engine.js) ---------- */
+function candidates(event){return ENGINE.candidates(TIPS,event,S,now())}
 
 /* ---------- moments ---------- */
 function resolveSel(sel){
  if(!sel)return null;
- if(sel.kind==='moment'){const m=MOMENTS.find(x=>x.id===sel.id);return m&&{key:'m:'+m.id,name:m.name,event:m.event,friendly:m.friendly,source:m.source,support:!!m.support}}
- if(sel.kind==='product'){const p=PRODUCTS.find(x=>x.id===sel.id);if(!p)return null;const label=sel.via==='scan'&&p.scan?p.scan:p.name;return {key:'p:'+p.id+':'+sel.via,name:(sel.via==='scan'?'Scanned: ':'Shared: ')+label,event:p.event,friendly:`Something useful about ${p.object}.`,source:sel.via}}
- if(sel.kind==='agent'){const a=AGENT_SCENARIOS.find(x=>x.id===sel.id);return a&&{key:'a:'+a.id+':'+S.agent,name:a.name,event:a.event,friendly:a.detail,source:'agent',agent:S.agent}}
+ if(sel.kind==='moment'){const m=MOMENTS.find(x=>x.id===sel.id);return m&&{key:'m:'+m.id+(sel.via?':'+sel.via:''),name:sel.label||m.name,event:m.event,friendly:m.friendly,source:sel.via||(m.source==='environment'?'environment':m.source),support:!!m.support||m.id==='p-low'}}
+ if(sel.kind==='product'){const p=PRODUCTS.find(x=>x.id===sel.id);if(!p)return null;return {key:'p:'+p.id+':'+sel.via,name:(sel.via==='scan'?'Scanned: ':'Shared: ')+(sel.label||p.name),event:p.event,friendly:`Something useful about ${p.object}.`,source:sel.via}}
+ if(sel.kind==='intake'){const r=S.intakes[sel.id];if(!r)return null;const via=sel.via||'share';return {key:'i:'+sel.id,name:(r.summary||'What you shared'),event:r.match?r.match.event:'none',friendly:r.friendly||'We looked for a health link in what you shared.',source:via,intake:r}}
  if(sel.kind==='none')return {key:'none',name:'Shared: “'+sel.text+'”',event:'none',friendly:'We looked for a health link in what you shared.',source:'share'};
  return null;
 }
-function selectMoment(kind,id,via){S.selected={kind,id,via};const m=resolveSel(S.selected);if(m)delete S.delivered[m.key];persist();render()}
-function openMoment(id){S.selected={kind:'moment',id};const m=MOMENTS.find(x=>x.id===id);if(m)S.momentTab=m.source;persist();nav('moments')}
-function setTab(t){S.momentTab=t;persist();render()}
-function matchProduct(text){const s=text.toLowerCase();let best=null,len=0;for(const p of PRODUCTS)for(const k of p.keywords){const re=new RegExp('(^|[^a-z0-9])'+k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'([^a-z0-9]|$)');if(re.test(s)&&k.length>len){best=p;len=k.length}}return best}
-function findShared(){const text=($('shareBox')?.value||'').trim();S.shareText=text;if(!text){toast('Paste or type a product first');return}const p=matchProduct(text);S.selected=p?{kind:'product',id:p.id,via:'share'}:{kind:'none',text:text.slice(0,60)};persist();render()}
+function selectMoment(kind,id,via,label){S.selected={kind,id,via,label};const m=resolveSel(S.selected);if(m)delete S.delivered[m.key];persist();render()}
+function openMoment(id){S.selected={kind:'moment',id};const m=MOMENTS.find(x=>x.id===id);if(m)S.momentTab=m.source==='environment'?'near':m.source;persist();nav('moments')}
+function setTab(t){if(t==='environment')t='near';S.momentTab=t;persist();render();if(t==='calendar')loadCalendar()}
+function matchProduct(text){return ENGINE.matchProduct(PRODUCTS,text)}
+/* The same tip lands once in the journey and inbox, whichever button saved it. */
+function saveTip(key,tipId,moment,source,message){
+ if(S.delivered[key]){toast('Already saved');return false}
+ S.delivered[key]=tipId;markSeen(tipId,VIA[source]||source);
+ const e={id:'evt-'+now()+'-'+Math.random().toString(36).slice(2,6),tip:tipId,moment,source,agent:null,channel:'In the app',at:now(),message};
+ S.events.unshift(e);S.events=S.events.slice(0,100);S.notifications.unshift({...e});S.notifications=S.notifications.slice(0,100);
+ persist();render();toast('Saved to your journey and inbox');return true}
 function deliver(){
  const m=resolveSel(S.selected);if(!m)return;
  if(S.delivered[m.key]){toast('Already saved');return}
  const top=candidates(m.event).scored[0];
  if(!top){toast('No strong match. Nothing was sent.');return}
- S.delivered[m.key]=top.t.id;
- const via=m.source==='agent'?m.agent:SRC[m.source];
- markSeen(top.t.id,via);
- const e={id:'evt-'+now()+'-'+Math.random().toString(36).slice(2,6),tip:top.t.id,moment:m.name,source:m.source,agent:m.agent||null,channel:S.channel,at:now(),message:m.friendly};
- S.events.unshift(e);S.events=S.events.slice(0,100);
- S.notifications.unshift({...e});S.notifications=S.notifications.slice(0,100);
- persist();render();toast('Saved to your journey and sent as a '+S.channel.toLowerCase());
-}
+ saveTip(m.key,top.t.id,m.name,m.source,m.friendly)}
+function tapMoment(id){S.tap=S.tap===id?null:id;persist();render()}
+function saveTap(){const m=MOMENTS.find(x=>x.id===S.tap),top=m&&candidates(m.event).scored[0];if(top)saveTip('tap:'+m.id+':'+day(),top.t.id,m.name,'prompt',m.friendly)}
+function saveLive(){const x=liveMoments()[0];if(!x)return;const top=candidates(x.m.event).scored[0];saveTip('live:'+x.id+':'+day(),top.t.id,x.m.name+' · '+x.reason,'environment',x.m.friendly)}
+
+/* ---------- reading what people share: links, text, photos, documents, barcodes ---------- */
+function localIntake(text){const ms=ENGINE.matchText(CONTENT,text);const pick=ms.map(m=>({m,top:candidates(m.event).scored[0]})).find(x=>x.top);
+ const lab=m=>m.kind==='product'?PRODUCTS.find(p=>p.id===m.id).name:MOMENTS.find(x=>x.id===m.id).name;
+ return {id:'loc-'+Date.now(),kind:'text',summary:text.slice(0,80),matches:ms.map(m=>({...m,label:lab(m)})),match:pick?{...pick.m,label:lab(pick.m)}:null,tip:pick?pick.top.t.id:null,friendly:pick?(pick.m.kind==='product'?`Something useful about ${PRODUCTS.find(p=>p.id===pick.m.id).object}.`:MOMENTS.find(x=>x.id===pick.m.id).friendly):'',read:[]}}
+function keepIntake(r,via){S.intakes={...Object.fromEntries(Object.entries(S.intakes).slice(-9)),[r.id]:r};S.selected={kind:'intake',id:r.id,via};persist();render()}
+async function sendIntake(body,via){
+ API.busy=true;render();
+ try{const r=await api('/api/intake',{method:'POST',body:{...body,source:via}});API.busy=false;keepIntake(r,via);if(!r.tip)toast(r.note||'No strong match. Nothing was sent.')}
+ catch(e){API.busy=false;render();toast(e.message)}}
+function findShared(){
+ const text=($('shareBox')?.value||'').trim();S.shareText=text;if(!text){toast('Paste a link or some text first');return}
+ if(API.on)return sendIntake({text},'share');
+ const p=matchProduct(text);S.selected=p?{kind:'product',id:p.id,via:'share'}:{kind:'none',text:text.slice(0,60)};persist();render()}
+function fileToB64(f){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]);r.onerror=rej;r.readAsDataURL(f)})}
+async function shrinkImage(f){
+ if(!/^image\//.test(f.type)||typeof createImageBitmap!=='function')return {data:await fileToB64(f),mediaType:f.type||'image/jpeg'};
+ const bmp=await createImageBitmap(f),k=Math.min(1,1600/Math.max(bmp.width,bmp.height)),c=document.createElement('canvas');c.width=Math.round(bmp.width*k);c.height=Math.round(bmp.height*k);c.getContext('2d').drawImage(bmp,0,0,c.width,c.height);
+ return {data:c.toDataURL('image/jpeg',.85).split(',')[1],mediaType:'image/jpeg'}}
+async function barcodeIn(source){try{if(!('BarcodeDetector' in window))return null;const d=new BarcodeDetector({formats:['ean_13','ean_8','upc_a','upc_e']});const r=await d.detect(source);return r[0]?.rawValue||null}catch(e){return null}}
+async function readFile(input,via){
+ const f=input.files[0];if(!f)return;input.value='';
+ if(!API.on){toast('Reading files needs a connection to Wellwise');return}
+ if(f.size>12e6){toast('That file is too large. The limit is 12 MB.');return}
+ if(/^image\//.test(f.type)){const bmp=typeof createImageBitmap==='function'?await createImageBitmap(f).catch(()=>null):null;const code=bmp?await barcodeIn(bmp):null;
+  if(code)return sendIntake({barcode:code},'scan');return sendIntake({image:await shrinkImage(f)},via==='scan'?'scan':'photo')}
+ return sendIntake({doc:{data:await fileToB64(f),mediaType:f.type,name:f.name}},'document')}
+let camStream=null,camTimer=null;
+async function startCamera(){
+ if(!navigator.mediaDevices?.getUserMedia){toast('This browser cannot open the camera. Take a photo instead.');return}
+ try{camStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});render();const v=$('cam');v.srcObject=camStream;await v.play();
+  if(!('BarcodeDetector' in window)){toast('Point at the label, then tap “Read this”.');return}
+  camTimer=setInterval(async()=>{const code=await barcodeIn(v);if(code){stopCamera();toast('Barcode found');sendIntake({barcode:code},'scan')}},500)}
+ catch(e){toast('The camera is blocked. You can allow it in your browser settings.')}}
+function stopCamera(){clearInterval(camTimer);camStream?.getTracks().forEach(t=>t.stop());camStream=null;if(S.momentTab==='scan')render()}
+async function snapCamera(){const v=$('cam');if(!v)return;const c=document.createElement('canvas');c.width=v.videoWidth;c.height=v.videoHeight;c.getContext('2d').drawImage(v,0,0);stopCamera();sendIntake({image:{data:c.toDataURL('image/jpeg',.85).split(',')[1],mediaType:'image/jpeg'}},'scan')}
+
+/* ---------- calendar, WhatsApp, agents, email ---------- */
+async function loadCalendar(){if(!API.on)return;try{API.calendar=await api('/api/calendar');render()}catch(e){}}
+async function connectCalendar(){const url=($('calUrl')?.value||'').trim();if(!url){toast('Paste your calendar’s secret address first');return}
+ API.busy=true;render();try{API.calendar=await api('/api/calendar',{method:'POST',body:{url}});await refreshMe();toast(`Connected. ${API.calendar.moments.length} moment${API.calendar.moments.length===1?'':'s'} found in the next two weeks.`)}catch(e){toast(e.message)}API.busy=false;render()}
+async function syncCalendar(){try{API.calendar=await api('/api/calendar/sync',{method:'POST',body:{}});await pullInbox();toast('Calendar checked')}catch(e){toast(e.message)}render()}
+async function disconnectCalendar(){await api('/api/calendar',{method:'DELETE',body:{}}).catch(()=>{});API.calendar=null;await refreshMe();render();toast('Calendar disconnected')}
+async function linkWhatsApp(){try{API.wa=await api('/api/whatsapp',{method:'POST',body:{}});render()}catch(e){toast(e.message)}}
+async function unlinkWhatsApp(){await api('/api/whatsapp',{method:'DELETE',body:{}}).catch(()=>{});if(S.channel==='WhatsApp')S.channel=CHANNELS[0];persist();await refreshMe();render();toast('WhatsApp unlinked')}
+async function makeAgentKey(){if(API.linked.agent&&!confirm('Make a new key? The old key stops working.'))return;try{API.agentKey=await api('/api/agent-key',{method:'POST',body:{}});await refreshMe();render()}catch(e){toast(e.message)}}
+async function revokeAgentKey(){await api('/api/agent-key',{method:'DELETE',body:{}}).catch(()=>{});API.agentKey=null;await refreshMe();render();toast('Agent key turned off')}
+async function makeEmail(){try{API.email=await api('/api/email',{method:'POST',body:{}});await refreshMe();render()}catch(e){toast(e.message)}}
+async function copyText(t){try{await navigator.clipboard.writeText(t);toast('Copied')}catch(e){window.prompt('Copy this:',t)}}
 
 /* ---------- journey helpers ---------- */
 function dueCheckins(){const out=[];for(const [id,st] of Object.entries(S.statuses)){if(st!=='trying'||!S.statusAt[id])continue;const age=(now()-S.statusAt[id])/DAY;if(age>=30&&!S.checkins[id+':30'])out.push({id,stage:30});else if(age>=7&&!S.checkins[id+':7'])out.push({id,stage:7})}return out}
@@ -223,209 +306,216 @@ function knowList(){const k=knowledge();return k.length?`<ul class="know">${k.ma
 function recapBlock(){const r=recap();return `<div class="grid four">${[['Moments',r.moments],['New tips',r.discovered],['Started trying',r.trying],['New habits',r.adopted]].map(([l,n])=>`<div class="detail"><span class="small muted">${l}</span><div class="metric numeric" style="font-size:24px;margin-top:4px">${n}</div></div>`).join('')}</div>`}
 
 /* ---------- shared pieces ---------- */
-function safetyBadge(t){const s=SAFETY[t.safety];return t.safety==='general'?'':`<span class="badge ${s.cls}">${s.label}</span>`}
-function card(t){return `<article class="card tipcard"><div class="eyebrow">${esc(t.category)}</div><h3>${esc(tx(t,'title'))}</h3><p>${esc(tx(t,'action'))}</p><div class="taglist">${isNew(t)?'<span class="badge new">New</span>':''}${safetyBadge(t)}${stat(t.id)?`<span class="badge">${esc(statusLabel(stat(t.id)))}</span>`:''}${S.seen[t.id]?'<span class="badge">Seen</span>':''}${t.sponsor?'':''}</div><div class="row"><button class="btn alt sm" onclick="nav('tip/${t.id}')">${esc(L('open'))}</button><button class="btn ghost sm" onclick="shareTip('${t.id}')">${hosted()?'Share':'Copy tip'}</button></div></article>`}
-function safetyNotice(t){if(t.safety==='clinician')return `<div class="notice danger spaced"><b>Talk to a clinician before you act on this.</b><p class="small" style="margin:4px 0 0">This tip touches on medicines or test results. Wellwise never sends it from a purchase or a moment. Read it, then take it to a doctor or pharmacist.</p></div>`;if(t.safety==='check')return `<div class="notice warn spaced"><b>Check first.</b><p class="small" style="margin:4px 0 0">This is safe for most people, but not for everyone. Read “Keep in mind” before you start.</p></div>`;return ''}
+function knownBadge(t){return t.familiarity==='common'?'<span class="badge known" title="Common knowledge, but worth repeating">Well known</span>':'<span class="badge rare" title="Fewer people know this">Lesser known</span>'}
+function card(t){return `<article class="card tipcard"><div class="eyebrow">${esc(t.category)}</div><h3>${esc(tx(t,'title'))}</h3><p>${esc(tx(t,'action'))}</p><div class="taglist">${isNew(t)?'<span class="badge new">New</span>':''}${knownBadge(t)}${stat(t.id)?`<span class="badge">${esc(statusLabel(stat(t.id)))}</span>`:''}${S.seen[t.id]?'<span class="badge">Seen</span>':''}</div><div class="row"><button class="btn alt sm" onclick="nav('tip/${t.id}')">${esc(L('open'))}</button><button class="btn ghost sm" onclick="shareTip('${t.id}')">${hosted()?'Share':'Copy tip'}</button></div></article>`}
+function tipBlock(t,saveCall,done){return `<div class="card"><h3>${esc(tx(t,'title'))}</h3><p class="small">${esc(tx(t,'why'))}</p><p class="small"><b>${esc(L('tryThis'))}:</b> ${esc(tx(t,'action'))}</p><div class="taglist">${knownBadge(t)}<span class="badge">${esc(t.grade)} evidence</span></div><div class="row spaced">${saveCall?`<button class="btn sm" ${done?'disabled':''} onclick="${saveCall}">${done?'✓ Saved':'Save to my journey'}</button>`:''}<button class="btn ghost sm" onclick="nav('tip/${t.id}')">${esc(L('open'))}</button></div></div>`}
 async function shareTip(id){const t=TIPMAP[id];const text=`${t.title} — ${t.action}`;const url=location.href.split('#')[0]+'#tip/'+id;
  try{if(navigator.share&&hosted()){await navigator.share({title:'Wellwise: '+t.title,text,url});return}}catch(e){if(e.name==='AbortError')return}
  const payload=hosted()?text+'\n'+url:text;
- try{await navigator.clipboard.writeText(payload);toast(hosted()?'Link copied':'Tip text copied. Links work once the page is online.')}catch(e){window.prompt('Copy this tip:',payload)}}
+ try{await navigator.clipboard.writeText(payload);toast(hosted()?'Link copied':'Tip text copied')}catch(e){window.prompt('Copy this tip:',payload)}}
 
 /* ---------- pages ---------- */
-function dailyTip(){let a=TIPS.filter(t=>eligible(t)&&inInterests(t)&&t.safety!=='clinician');if(!a.length)a=TIPS.filter(t=>eligible(t)&&t.safety!=='clinician');return a[(day()*17+31)%a.length]}
-const LOCAL_ENV={IN:'env-aqi',US:'env-heat',GB:'env-damp',GLOBAL:'env-uv',OTHER:'env-uv'};
+function dailyTip(){return ENGINE.dailyTip(TIPS,S,now())}
 
 function discover(){
- const t=dailyTip(),due=dueCheckins(),env=MOMENTS.find(m=>m.id===LOCAL_ENV[S.geo]);
- const fresh=TIPS.filter(x=>eligible(x)&&inInterests(x)&&!S.seen[x.id]&&x.safety!=='clinician'&&!isNew(x));
+ const due=dueCheckins(),lm=liveMoments()[0];
+ const fresh=TIPS.filter(x=>eligible(x)&&inInterests(x)&&!S.seen[x.id]&&!isNew(x)).sort((a,b)=>(a.familiarity==='common')-(b.familiarity==='common'));
+ let hero;
+ if(lm){const top=candidates(lm.m.event).scored[0].t,done=S.delivered['live:'+lm.id+':'+day()];
+  hero=`<div class="hero live spaced"><div class="eyebrow">Near you today${S.live.place?' · '+esc(S.live.place):''}</div><h2 style="font-size:29px;margin-top:12px">${esc(lm.m.name)}</h2>${readingBadges(S.live.reading)}<p class="lead">${esc(lm.m.friendly)}</p><h3>${esc(tx(top,'title'))}</h3><p><b>${esc(L('tryThis'))}:</b> ${esc(tx(top,'action'))}</p><div class="row spaced"><button class="btn" onclick="nav('tip/${top.id}')">${esc(L('open'))}</button><button class="btn ghost" ${done?'disabled':''} onclick="saveLive()">${done?'✓ Saved':'Save to my journey'}</button></div><p class="small muted spaced" style="margin-bottom:0">Live from Open-Meteo for your area. Updated ${fmtTime(S.live.at)}.</p></div>`}
+ else{const t=dailyTip();
+  hero=`<div class="hero spaced"><div class="eyebrow">${esc(L('dailyEyebrow'))} · ${new Date(now()).toLocaleDateString(undefined,{month:'short',day:'numeric'})}</div><h2 style="font-size:29px;margin-top:12px">${esc(tx(t,'title'))}</h2><p class="lead">${esc(tx(t,'why'))}</p><p><b>${esc(L('tryThis'))}:</b> ${esc(tx(t,'action'))}</p><div class="row spaced"><button class="btn" onclick="nav('tip/${t.id}')">${esc(L('open'))}</button><button class="btn ghost" onclick="nav('moments')">Tell us about your day</button></div>
+  ${S.live?`<p class="small muted spaced" style="margin-bottom:0">Nothing stands out in the air or weather${S.live.place?' near '+esc(S.live.place):''} today, so here is your daily tip.</p>`:API.on?`<p class="small spaced" style="margin-bottom:0"><a href="#" onclick="useLocation();return false">Turn on Near you</a> <span class="muted">to get tips for today’s air and weather where you are.</span></p>`:''}</div>`}
+ const tm=S.tap&&MOMENTS.find(x=>x.id===S.tap),ttop=tm&&candidates(tm.event).scored[0];
  return `${header('Wellwise',L('heroTitle'),L('heroSub'))}
  ${due.length?`<div class="sectiontitle"><h2>Quick check-in</h2></div><div class="grid two">${due.slice(0,4).map(d=>{const x=TIPMAP[d.id];return `<div class="card checkin"><span class="small muted">${d.stage} days ago you started</span><h3 style="margin-top:6px">${esc(tx(x,'title'))}</h3><p class="small">How is it going?</p><div class="row"><button class="btn sm" onclick="checkin('${d.id}',${d.stage},'kept')">It’s a habit now</button><button class="btn alt sm" onclick="checkin('${d.id}',${d.stage},'still')">Still trying</button><button class="btn ghost sm" onclick="checkin('${d.id}',${d.stage},'stopped')">I stopped</button></div></div>`}).join('')}</div>`:''}
- <div class="hero spaced"><div class="eyebrow">${esc(L('dailyEyebrow'))} · ${new Date(now()).toLocaleDateString(undefined,{month:'short',day:'numeric'})}</div><h2 style="font-size:29px;margin-top:12px">${esc(tx(t,'title'))}</h2><p class="lead">${esc(tx(t,'why'))}</p><p><b>${esc(L('tryThis'))}:</b> ${esc(tx(t,'action'))}</p><div class="row spaced"><button class="btn" onclick="nav('tip/${t.id}')">${esc(L('open'))}</button><button class="btn ghost" onclick="nav('moments')">Tell us about your day</button></div></div>
- <div class="grid two spaced">
-  <div class="card"><span class="badge">Near you today</span><h3 style="margin-top:12px">${esc(env.name)}</h3><p class="small muted">${esc(env.friendly)}</p><button class="btn alt sm" onclick="openMoment('${env.id}')">See what this means →</button></div>
-  <div class="card"><span class="badge">What happened today?</span><h3 style="margin-top:12px">One tap, one useful tip</h3><div class="row" style="margin-top:8px">${['p-cook','p-ate','p-desk','p-sleep'].map(id=>{const m=MOMENTS.find(x=>x.id===id);return `<button class="btn ghost sm" onclick="openMoment('${id}')">${esc(m.name)}</button>`}).join('')}</div></div>
- </div>
+ ${hero}
+ <div class="panel spaced"><span class="badge">What happened today?</span><h3 style="margin-top:12px">One tap, one more useful tip</h3><div class="tapgrid">${TAPS.map(id=>{const m=MOMENTS.find(x=>x.id===id);return m?`<button class="btn ${S.tap===id?'':'ghost'} sm" onclick="tapMoment('${id}')">${esc(m.name)}</button>`:''}).join('')}</div>
+ ${ttop?`<div class="spaced">${tm.id==='p-low'?supportNotice():''}<p class="small muted" style="margin:0 0 8px">${esc(tm.friendly)}</p>${tipBlock(ttop.t,'saveTap()',S.delivered['tap:'+tm.id+':'+day()])}</div>`:''}</div>
  <div class="sectiontitle"><h2>Your week</h2><button class="btn ghost sm" onclick="nav('journey')">My journey →</button></div>
  <div class="panel">${recapBlock()}<div class="spaced">${knowList()}</div></div>
  ${TIPS.some(isNew)?`<div class="sectiontitle"><h2>New in Wellwise</h2><span class="small muted">${TIPS.filter(isNew).length} new tip${TIPS.filter(isNew).length>1?'s':''} this month</span></div><div class="grid">${TIPS.filter(isNew).sort((a,b)=>b.added.localeCompare(a.added)).slice(0,3).map(card).join('')}</div>`:''}
  <div class="sectiontitle"><h2>Keep exploring</h2><button class="btn ghost sm" onclick="nav('explore')">Full library →</button></div>
  <div class="grid">${(fresh.length?fresh:TIPS.filter(eligible)).slice(0,6).map(card).join('')}</div>`;
 }
+const supportNotice=()=>`<div class="notice danger" style="margin-bottom:12px"><b>If you feel unsafe or in crisis, contact local emergency services or a crisis line now.</b> You do not have to handle it alone.</div>`;
+const needsServer=what=>`<div class="empty"><b>${esc(what)} works when Wellwise is online.</b><p class="small">Open Wellwise from its web address to use it.</p></div>`;
 
 function momentPicker(){
  const tab=S.momentTab,selKey=JSON.stringify(S.selected||{});
- const isSel=(kind,id,via)=>selKey===JSON.stringify({kind,id,via});
- const pickBtn=(kind,id,label,via)=>`<button class="pick ${isSel(kind,id,via)?'selected':''}" onclick="selectMoment('${kind}','${id}'${via?`,'${via}'`:''})"><b>${esc(label)}</b></button>`;
+ const isSel=(kind,id,via)=>selKey===JSON.stringify({kind,id,via,label:undefined})||(S.selected&&S.selected.kind===kind&&S.selected.id===id&&S.selected.via===via);
+ const pickBtn=(kind,id,label,via,extra='')=>`<button class="pick ${isSel(kind,id,via)?'selected':''}" onclick="selectMoment('${kind}','${id}'${via?`,'${via}'`:''})"><b>${esc(label)}</b>${extra?`<br><span class="small muted">${esc(extra)}</span>`:''}</button>`;
  let body='';
- if(['environment','calendar','prompt'].includes(tab)){
-  body=`<div class="grid two">${MOMENTS.filter(m=>m.source===tab).map(m=>pickBtn('moment',m.id,m.name)).join('')}</div>`;
-  if(tab==='calendar')body=`<p class="small muted">You choose which calendars Wellwise may read.</p>`+body;
-  if(tab==='environment')body=`<p class="small muted">Uses only your region. No exact location is stored.</p>`+body;
+ if(tab==='near'){
+  if(!API.on)body=needsServer('Near you');
+  else if(!S.nearConsent)body=`<p>Wellwise checks today’s air quality, heat, UV, rain, humidity and pollen where you are, and brings a tip when something stands out.</p><button class="btn" onclick="useLocation()">Use my location</button><p class="small muted spaced">Your location is rounded to about 10 km. Turn it off at any time.</p>`;
+  else if(!S.live)body=`<div class="empty">Checking the air and weather near you…</div>`;
+  else{const lms=liveMoments();body=`<p class="small muted">${S.live.place?esc(S.live.place)+' · ':''}Updated ${fmtTime(S.live.at)}</p>${readingBadges(S.live.reading)}
+   ${lms.length?`<div class="grid two spaced">${lms.map(x=>pickBtn('moment',x.id,x.m.name,'environment',x.reason)).join('')}</div>`:`<div class="empty spaced">Nothing stands out in the air or weather today. Wellwise checks again each day.</div>`}
+   <div class="row spaced"><button class="btn ghost sm" onclick="S.live=null;refreshLive()">Check again</button><button class="btn ghost sm" onclick="stopLocation()">Turn off Near you</button></div>`}
+ }else if(tab==='calendar'){
+  if(!API.on)body=needsServer('Calendar');
+  else{const c=API.calendar,up=c?.upcoming||[];
+   body=API.linked.calendar?`<div class="row between"><span class="badge live">Connected</span><span class="small muted">${c?.synced?'Checked '+fmtTime(c.synced):''}</span></div>
+   <h3 class="spaced">Coming up</h3>${up.length?`<div class="grid two">${up.map(e=>{const m=MOMENTS.find(x=>x.id===e.moment);return m?pickBtn('moment',m.id,e.title||m.name,'calendar',fmtTime(e.start)+' · '+m.name):''}).join('')}</div>`:'<div class="empty">Nothing in the next two weeks needs a tip.</div>'}
+   <p class="small muted spaced">Wellwise reads event titles, places and times, and sends a tip the day before an event that fits.</p><div class="row"><button class="btn ghost sm" onclick="syncCalendar()">Check now</button><button class="btn ghost sm" onclick="disconnectCalendar()">Disconnect</button></div>`
+   :`<p>Connect your calendar once. Wellwise spots flights, appointments, blood tests, late nights, packed meeting days and more, and brings a tip before each one.</p>
+   <label>Your calendar’s secret address (.ics)<input id="calUrl" class="field" placeholder="https://calendar.google.com/calendar/ical/…/basic.ics"></label><div class="row spaced"><button class="btn" ${API.busy?'disabled':''} onclick="connectCalendar()">${API.busy?'Connecting…':'Connect calendar'}</button><label class="btn ghost sm" style="margin:0">Or add an .ics file<input type="file" accept=".ics,text/calendar" style="display:none" onchange="readFile(this,'document')"></label></div>
+   <details class="spaced"><summary>Where to find the address</summary><p class="small"><b>Google Calendar:</b> Settings → your calendar → Integrate calendar → Secret address in iCal format.</p><p class="small"><b>Outlook:</b> Settings → Calendar → Shared calendars → Publish a calendar → ICS link.</p><p class="small"><b>Apple iCloud:</b> Calendar app → share the calendar → Public Calendar → copy the link.</p></details>`}
+ }else if(tab==='prompt'){
+  body=`<div class="grid two">${MOMENTS.filter(m=>m.source==='prompt').map(m=>pickBtn('moment',m.id,m.name)).join('')}</div>`;
  }else if(tab==='share'){
-  body=`<label>Paste a product name, link or order text<textarea id="shareBox" class="field" placeholder="For example: nonstick tawa 28 cm, or: Order confirmed – 1 × cola 6-pack">${esc(S.shareText)}</textarea></label><div class="row spaced"><button class="btn" onclick="findShared()">Find an insight</button><span class="small muted">Tip: use “Share to Wellwise” from any shopping app.</span></div><div class="spaced small muted">Or try one:</div><div class="row" style="margin-top:6px">${PRODUCTS.slice(0,14).map(p=>`<button class="btn ghost sm" onclick="selectMoment('product','${p.id}','share')">${esc(p.name)}</button>`).join('')}</div>`;
+  body=`<label>Paste a product link, an order confirmation or a few words<textarea id="shareBox" class="field" placeholder="For example: https://www.amazon.in/… or: Order confirmed – 1 × nonstick tawa 28 cm">${esc(S.shareText)}</textarea></label><div class="row spaced"><button class="btn" ${API.busy?'disabled':''} onclick="findShared()">${API.busy?'Reading…':'Find an insight'}</button></div>
+  ${API.on?`<div class="drop spaced"><b>Or add a photo or document</b><p class="small muted">A product, a label, a receipt, a prescription, a lab report or a booking.</p><div class="row" style="justify-content:center"><label class="btn alt sm" style="margin:0">Choose a photo<input type="file" accept="image/*" style="display:none" onchange="readFile(this,'photo')"></label><label class="btn alt sm" style="margin:0">Choose a document<input type="file" accept=".pdf,.txt,.eml,.html,.ics,application/pdf,text/*" style="display:none" onchange="readFile(this,'document')"></label></div></div>
+  <p class="small muted spaced">On your phone, add Wellwise to your home screen. Then pick Wellwise in the share menu of any shopping app, browser or gallery.</p>`:''}`;
  }else if(tab==='scan'){
-  body=`<p class="small muted">Scan a barcode or label while you shop.</p><div class="grid two">${PRODUCTS.filter(p=>p.scan).map(p=>pickBtn('product',p.id,'▦  '+p.scan,'scan')).join('')}</div>`;
+  if(!API.on)body=needsServer('Scan');
+  else body=camStream?`<video id="cam" class="camera" playsinline muted></video><div class="row spaced"><button class="btn" onclick="snapCamera()">Read this</button><button class="btn ghost" onclick="stopCamera()">Close camera</button></div><p class="small muted">Hold the barcode inside the frame. Wellwise looks it up in Open Food Facts, Open Beauty Facts and Open Products Facts.</p>`
+   :`<p>Scan a barcode or a label while you shop. Wellwise looks up the product and brings a tip if one fits.</p><div class="row"><button class="btn" onclick="startCamera()">Open camera</button><label class="btn alt" style="margin:0">Take or choose a photo<input type="file" accept="image/*" capture="environment" style="display:none" onchange="readFile(this,'scan')"></label></div>`;
+ }else if(tab==='whatsapp'){
+  if(!API.on)body=needsServer('WhatsApp');
+  else if(API.linked.whatsapp)body=`<div class="row between"><span class="badge live">Linked · ${esc(API.linked.whatsapp)}</span><button class="btn ghost sm" onclick="unlinkWhatsApp()">Unlink</button></div><p class="spaced">Send Wellwise a product link, a photo of a label or barcode, an order confirmation, a lab report or a few words about your day. You get one useful tip back, and it joins your journey here.</p><label class="check" style="max-width:420px"><input type="checkbox" ${S.channel==='WhatsApp'?'checked':''} onchange="S.channel=this.checked?'WhatsApp':'In the app';persist();render()"> Also send my tips to WhatsApp</label>`;
+  else if(!API.features.whatsapp)body=`<div class="empty"><b>WhatsApp is not available yet.</b><p class="small">It will appear here as soon as it is ready.</p></div>`;
+  else body=`<p>Link WhatsApp once. Then forward Wellwise anything: links, photos, order confirmations, bookings or a few words. Tips come back in the chat and join your journey here.</p>${API.wa?`<div class="notice"><p style="margin-top:0">Send this message to <b>${esc(API.wa.number||'Wellwise')}</b> on WhatsApp:</p><p class="metric numeric">LINK ${esc(API.wa.code)}</p><p class="small muted">The code works for 15 minutes.</p>${API.wa.link?`<a class="btn" href="${esc(API.wa.link)}" target="_blank" rel="noopener">Open WhatsApp</a>`:''}<button class="btn ghost sm" style="margin-left:6px" onclick="refreshMe().then(render)">I’ve sent it</button></div>`:`<button class="btn" onclick="linkWhatsApp()">Link WhatsApp</button>`}`;
  }else if(tab==='agent'){
-  body=S.agentConnected?`<label>Connected agent<select class="field" onchange="S.agent=this.value;persist();render()">${AGENTS.map(a=>`<option ${S.agent===a?'selected':''}>${a}</option>`).join('')}</select></label><p class="small muted spaced">Moments from your agent.</p><div class="grid two">${AGENT_SCENARIOS.map(a=>pickBtn('agent',a.id,a.name)).join('')}</div>`
-  :`<div class="empty"><b>Link your AI agent</b><p>If you use a personal AI agent for shopping, travel or your calendar, it can send moments to Wellwise.</p><button class="btn alt sm" onclick="nav('settings')">Go to Settings</button></div>`;
+  if(!API.on)body=`<div class="empty"><b>Link your AI agent</b><p>If you use a personal AI agent for shopping, travel or your calendar, it can send moments to Wellwise once Wellwise is online.</p></div>`;
+  else{const k=API.agentKey;body=`<p>Link your AI agent. If it shops, books or plans for you, it can tell Wellwise what happened. Wellwise picks a tip that fits and saves it to your journey, whichever agent sent it.</p>
+   ${k?`<div class="notice"><b>Your agent key</b><p class="small">Copy it now. It is shown only once.</p><p><code>${esc(k.key)}</code> <button class="btn ghost sm" onclick="copyText('${esc(k.key)}')">Copy</button></p><p class="small"><b>MCP server:</b> <code>${esc(k.mcp)}</code></p><p class="small"><b>REST:</b> <code>POST ${esc(k.api)}/moments</code></p><pre>curl -X POST ${esc(k.api)}/moments \\
+  -H "Authorization: Bearer ${esc(k.key)}" -H "Content-Type: application/json" \\
+  -d '{"agent":"My agent","text":"Ordered: nonstick frying pan 28 cm"}'</pre></div>`
+   :API.linked.agent?`<div class="row between"><span class="badge live">An agent key is active</span><div class="row"><button class="btn ghost sm" onclick="makeAgentKey()">Make a new key</button><button class="btn ghost sm" onclick="revokeAgentKey()">Turn off</button></div></div>`
+   :`<button class="btn" onclick="makeAgentKey()">Create an agent key</button>`}
+   <p class="small muted spaced">Agents can send text, a link, an image or a Wellwise event key. Add the MCP server to any agent that supports MCP, using your key as a Bearer token.</p>`}
+ }else if(tab==='email'){
+  if(!API.on)body=needsServer('Email');
+  else body=API.linked.email?`<p>Forward order confirmations, bookings, prescriptions or test results to:</p><p><code>${esc(API.linked.email)}</code> <button class="btn ghost sm" onclick="copyText('${esc(API.linked.email)}')">Copy</button></p><p class="small muted">Tip: set up a mail rule that forwards order emails from your favourite shops.</p>`
+   :`<p>Get your own Wellwise address. Forward order confirmations, bookings or results to it, and get a tip that fits.</p><button class="btn" onclick="makeEmail()">Get my address</button>`;
  }
- return `<div class="panel"><h2>1. What’s happening?</h2><div class="tabs" role="tablist">${Object.entries(SRC).map(([k,v])=>`<button role="tab" aria-selected="${tab===k}" class="tab ${tab===k?'active':''}" onclick="setTab('${k}')">${v}</button>`).join('')}</div>${body}</div>`;
+ const tabs=Object.entries(TABS).filter(([k])=>k!=='email'||API.features.email);
+ return `<div class="panel"><h2>1. What’s happening?</h2><div class="tabs" role="tablist">${tabs.map(([k,v])=>`<button role="tab" aria-selected="${tab===k}" class="tab ${tab===k?'active':''}" onclick="setTab('${k}')">${v}</button>`).join('')}</div>${body}</div>`;
 }
+function intakeSummary(r){if(!r)return '';const bits=[];if(r.product)bits.push(`<p class="small" style="margin:4px 0"><b>${esc([r.product.brand,r.product.name].filter(Boolean).join(' ')||'Product')}</b>${r.product.quantity?' · '+esc(r.product.quantity):''}${r.product.nutriscore?' · Nutri-Score '+esc(String(r.product.nutriscore).toUpperCase()):''}${r.product.nova?' · NOVA '+esc(r.product.nova):''}</p>`);
+ if(r.matches?.length)bits.push(`<div class="taglist" style="margin:6px 0">${r.matches.slice(0,4).map(m=>`<span class="badge">${esc(m.label)}</span>`).join('')}</div>`);
+ if(r.read?.length)bits.push(`<p class="small muted" style="margin:4px 0">Read with ${esc(r.read.join(', '))}</p>`);
+ if(r.note)bits.push(`<p class="small muted" style="margin:4px 0">${esc(r.note)}</p>`);return bits.join('')}
 function momentPreview(){
  const m=resolveSel(S.selected);
- if(!m)return `<div class="panel"><h2>2. What Wellwise shows</h2><div class="empty">Pick a moment on the left.</div></div>`;
- const {scored,blocked}=candidates(m.event),done=S.delivered[m.key],top=done?TIPMAP[done]:scored[0]?.t;
- const from=m.source==='agent'?m.agent:SRC[m.source];
- return `<div class="panel"><h2>2. What Wellwise shows</h2><div class="bubble"><div class="eyebrow">${esc(from)}</div><p class="small muted" style="margin-bottom:10px">${esc(m.name)}</p>
- ${m.support?`<div class="notice danger" style="margin-bottom:12px"><b>If you feel unsafe or in crisis, please contact local emergency services or a crisis line now.</b> You do not have to handle it alone.</div>`:''}
- ${top?`<div class="card"><p style="margin-top:0">${esc(m.friendly)}</p><h3>${esc(tx(top,'title'))}</h3><p class="small">${esc(tx(top,'why'))}</p><p class="small"><b>${esc(L('tryThis'))}:</b> ${esc(tx(top,'action'))}</p><div class="taglist">${safetyBadge(top)}<span class="badge">${esc(top.grade)} evidence</span></div><div class="row spaced"><button class="btn sm" ${done?'disabled':''} onclick="deliver()">${done?'✓ Saved':'Save and send to my inbox'}</button><button class="btn ghost sm" onclick="nav('tip/${top.id}')">${esc(L('open'))}</button></div></div>`
- :blocked.length?`<div class="notice warn"><b>We will not push a tip here.</b><p class="small">The related tips need a clinician’s input. You can still read them:</p>${blocked.map(b=>`<p class="small" style="margin:4px 0"><a href="#tip/${b.id}">${esc(b.title)}</a></p>`).join('')}</div>`
- :`<div class="notice warn"><b>No strong match.</b><p class="small" style="margin:4px 0 0">Wellwise will not invent a health link for this moment.</p></div>`}
- ${top&&blocked.length?`<p class="small muted spaced">${blocked.length} related tip${blocked.length>1?'s':''} held back because ${blocked.length>1?'they need':'it needs'} a clinician.</p>`:''}
- </div><details class="spaced"><summary>How we chose this</summary><p class="small muted">This tip fits what is happening. We also look at your region, topics, diet, feedback and what you have seen before. Tips that need a clinician are never sent this way.</p>${scored.slice(0,5).map((x,i)=>`<div class="scorerow"><span class="small">${i+1}. ${esc(x.t.title)}<br><span class="muted">${esc(x.why.join(' · ')||'base match')}</span></span></div>`).join('')||'<p class="muted small">No candidates.</p>'}</details></div>`;
+ if(!m)return `<div class="panel"><h2>2. What Wellwise shows</h2><div class="empty">${API.busy?'Reading…':'Share something, scan a product, connect your calendar or tap a moment.'}</div></div>`;
+ const {scored}=candidates(m.event),done=S.delivered[m.key],top=done?TIPMAP[done]:(m.intake&&m.intake.tip&&TIPMAP[m.intake.tip])||scored[0]?.t;
+ const from=VIA[m.source]||SRC[m.source]||'Wellwise';
+ return `<div class="panel"><h2>2. What Wellwise shows</h2><div class="bubble"><div class="eyebrow">${esc(from)}</div><p class="small muted" style="margin-bottom:6px">${esc(m.name)}</p>${intakeSummary(m.intake)}
+ ${m.support?supportNotice():''}
+ ${top?`<p style="margin-top:10px">${esc(m.friendly)}</p>${tipBlock(top,'deliver()',done)}`
+ :`<div class="notice warn" style="margin-top:10px"><b>No strong match.</b><p class="small" style="margin:4px 0 0">Wellwise will not invent a health link for this.</p></div>`}
+ </div><details class="spaced"><summary>How we chose this</summary><p class="small muted">This tip fits what is happening. We also look at your region, topics, diet, feedback and what you have seen before.</p>${scored.slice(0,5).map((x,i)=>`<div class="scorerow"><span class="small">${i+1}. ${esc(x.t.title)}<br><span class="muted">${esc(x.why.join(' · ')||'base match')}</span></span></div>`).join('')||'<p class="muted small">No candidates.</p>'}</details></div>`;
 }
 function moments(){
  const agentEvents=S.events.filter(e=>e.source==='agent');
- return `${header('Moments','Tell Wellwise about your day.','Weather, a purchase, a calendar event or a quick tap. Each one can bring a tip that fits the moment.')}
+ return `${header('Moments','Tell Wellwise about your day.','Live conditions near you, a link or photo you share, a barcode, your calendar, WhatsApp or your AI agent. Each one can bring a tip that fits.')}
  <div class="side spaced">${momentPicker()}${momentPreview()}</div>
- ${S.agentConnected&&agentEvents.length?`<div class="sectiontitle"><h2>One journey across agents</h2></div><div class="panel"><div class="timeline">${agentEvents.slice(0,8).map(e=>`<div class="event"><b>${esc(e.agent)}</b> <span class="muted small">· ${fmtTime(e.at)}</span><p style="margin:2px 0"><a href="#tip/${e.tip}">${esc(TIPMAP[e.tip].title)}</a></p><p class="small muted" style="margin:0">${esc(e.moment)}</p></div>`).join('')}</div></div>`:''}`;
+ ${agentEvents.length?`<div class="sectiontitle"><h2>One journey across agents</h2></div><div class="panel"><div class="timeline">${agentEvents.slice(0,8).map(e=>`<div class="event"><b>${esc(e.agent||'Agent')}</b> <span class="muted small">· ${fmtTime(e.at)}</span><p style="margin:2px 0"><a href="#tip/${e.tip}">${esc(TIPMAP[e.tip]?.title||e.tip)}</a></p><p class="small muted" style="margin:0">${esc(e.moment)}</p></div>`).join('')}</div></div>`:''}`;
 }
 
 function journey(){
  const seen=TIPS.filter(t=>S.seen[t.id]),adopted=TIPS.filter(t=>stat(t.id)==='adopted'),trying=TIPS.filter(t=>stat(t.id)==='trying');
  const ids=new Set(seen.map(t=>t.id)),jEdges=EDGES.filter(e=>ids.has(e.a)&&ids.has(e.b)),nearEdges=EDGES.filter(e=>(ids.has(e.a)!==ids.has(e.b)));
  const sources=[...new Set(Object.values(S.source))];
- return `${header('Your connected knowledge','My journey','What you learned, tried and kept. This is a learning record, not a health score.')}
+ return `${header('Your connected knowledge','My journey','What you learned, tried and kept.')}
  <div class="grid spaced">${[['Seen',seen.length,'Tips you opened or received'],['Trying',trying.length,'Actions you chose to try'],['Habits',adopted.length,'Actions that are part of your life']].map(([x,n,d])=>`<div class="card"><div class="eyebrow">${x}</div><div class="metric numeric spaced">${n}</div><p class="small muted">${d}</p></div>`).join('')}</div>
  <div class="side spaced"><div class="panel"><h2>This week</h2>${recapBlock()}<h3 class="spaced">What you now know</h3>${knowList()}</div>
- <div class="panel"><h2>Where your tips came from</h2>${sources.length?`<div class="taglist">${sources.map(s=>`<span class="badge">${esc(s)}</span>`).join('')}</div><p class="small muted spaced">Your journey stays the same whatever brought the tip: Wellwise itself, a moment, or any agent you connect.</p>`:'<div class="empty">Nothing yet.</div>'}</div></div>
+ <div class="panel"><h2>Where your tips came from</h2>${sources.length?`<div class="taglist">${sources.map(s=>`<span class="badge">${esc(s)}</span>`).join('')}</div><p class="small muted spaced">Your journey stays the same whatever brought the tip: Wellwise itself, a moment, WhatsApp or any agent you link.</p>`:'<div class="empty">Nothing yet.</div>'}</div></div>
  <div class="side spaced"><div class="panel"><h2>Timeline</h2>${seen.length?`<div class="timeline">${seen.slice().sort((a,b)=>S.seen[b.id]-S.seen[a.id]).slice(0,25).map(t=>`<div class="event"><a href="#tip/${t.id}"><b>${esc(tx(t,'title'))}</b></a><p class="small muted" style="margin:2px 0">${esc(S.source[t.id]||'Explore')} · ${fmtDate(S.seen[t.id])}${stat(t.id)?' · '+esc(statusLabel(stat(t.id))):''}</p></div>`).join('')}</div>`:'<div class="empty">Start with today’s tip or a moment.</div>'}</div>
  <div class="panel"><h2>How your tips connect</h2>${jEdges.length?jEdges.slice(0,10).map(e=>`<div class="graphnode" style="margin-bottom:9px"><span class="badge">${esc(e.type)}</span><p style="margin:6px 0"><a href="#tip/${e.a}">${esc(TIPMAP[e.a].title)}</a> ↔ <a href="#tip/${e.b}">${esc(TIPMAP[e.b].title)}</a></p><p class="small muted" style="margin:0">${esc(e.why)}</p></div>`).join(''):'<p class="muted small">When two tips you have seen are linked, the link shows here.</p>'}
- ${nearEdges.length?`<h3 class="spaced">One step away</h3>${nearEdges.slice(0,4).map(e=>{const o=ids.has(e.a)?e.b:e.a;return `<p class="small" style="margin:5px 0"><a href="#tip/${o}">${esc(TIPMAP[o].title)}</a> <span class="muted">· ${esc(e.why)}</span></p>`}).join('')}`:''}
- <p class="small muted spaced">Links explain how tips relate. They do not prove a combined health benefit.</p></div></div>
+ ${nearEdges.length?`<h3 class="spaced">One step away</h3>${nearEdges.slice(0,4).map(e=>{const o=ids.has(e.a)?e.b:e.a;return `<p class="small" style="margin:5px 0"><a href="#tip/${o}">${esc(TIPMAP[o].title)}</a> <span class="muted">· ${esc(e.why)}</span></p>`}).join('')}`:''}</div></div>
  <div class="sectiontitle"><h2>What you’re trying</h2></div><div class="grid">${trying.length?trying.map(card).join(''):'<div class="empty">Tap “I’ll try this” on a tip. We check in after 7 and 30 days.</div>'}</div>
  <div class="sectiontitle"><h2>Your habits</h2></div><div class="grid">${adopted.length?adopted.map(card).join(''):'<div class="empty">Tips you already do, or have turned into habits, show here.</div>'}</div>`;
 }
 
-function exploreList(){let a=TIPS.filter(eligible).filter(inInterests);if(searchCat!=='ALL')a=a.filter(t=>t.category===searchCat);if(searchScope==='LOCAL')a=a.filter(t=>t.scope!=='GLOBAL');if(searchScope==='NEW')a=a.filter(isNew);if(searchSafety!=='ALL')a=a.filter(t=>t.safety===searchSafety);if(searchText){const q=searchText.toLowerCase();a=a.filter(t=>[t.title,t.action,t.why,t.category,...t.tags,...(t.hi?Object.values(t.hi):[])].join(' ').toLowerCase().includes(q))}return a}
-function explore(){const a=exploreList(),total=TIPS.filter(eligible).length;return `${header('The library','Explore every tip.','Search by topic, product or situation.')}
- <div class="panel spaced"><div class="grid four"><input class="field" id="search" placeholder="Search tips…" aria-label="Search tips" value="${esc(searchText)}" oninput="searchText=this.value;updateExplore()"><select class="field" aria-label="Category" onchange="searchCat=this.value;updateExplore()"><option value="ALL">All categories</option>${CATS.map(c=>`<option ${searchCat===c?'selected':''}>${esc(c)}</option>`).join('')}</select><select class="field" aria-label="Region" onchange="searchScope=this.value;updateExplore()"><option value="ALL">All that apply to you</option><option value="LOCAL" ${searchScope==='LOCAL'?'selected':''}>Region-specific only</option><option value="NEW" ${searchScope==='NEW'?'selected':''}>New this month</option></select><select class="field" aria-label="Safety" onchange="searchSafety=this.value;updateExplore()"><option value="ALL">Any safety class</option>${Object.entries(SAFETY).map(([k,v])=>`<option value="${k}" ${searchSafety===k?'selected':''}>${v.label}</option>`).join('')}</select></div><p class="small muted" id="exploreCount">Showing ${a.length} of ${total} tips for ${esc(REGIONS[S.geo])}${S.cats.length?' · filtered by your interests':''}</p></div>
+function exploreList(){let a=TIPS.filter(inInterests);
+ if(searchGeo==='MINE')a=a.filter(eligible);else if(searchGeo==='LOCAL')a=a.filter(t=>t.scope!=='GLOBAL'&&eligible(t));else if(searchGeo!=='ALL')a=a.filter(t=>t.regions.includes(searchGeo));
+ if(searchCat!=='ALL')a=a.filter(t=>t.category===searchCat);
+ if(searchKind==='NEW')a=a.filter(isNew);else if(searchKind==='RARE')a=a.filter(t=>t.familiarity!=='common');else if(searchKind==='COMMON')a=a.filter(t=>t.familiarity==='common');
+ if(searchText){const q=searchText.toLowerCase();a=a.filter(t=>[t.title,t.action,t.why,t.category,...t.tags,...(t.hi?Object.values(t.hi):[])].join(' ').toLowerCase().includes(q))}return a}
+const exploreCount=a=>`Showing ${a.length} of ${TIPS.length} tips · ${searchGeo==='MINE'?'for '+REGIONS[S.geo]:searchGeo==='ALL'?'all regions':searchGeo==='LOCAL'?'specific to '+REGIONS[S.geo]:'for '+REGIONS[searchGeo]}${S.cats.length?' · filtered by your interests':''}`;
+function explore(){const a=exploreList();return `${header('The library','Explore every tip.','Search by topic, product or situation.')}
+ <div class="panel spaced"><div class="grid five"><input class="field" id="search" placeholder="Search tips…" aria-label="Search tips" value="${esc(searchText)}" oninput="searchText=this.value;updateExplore()">
+ <select class="field" aria-label="Category" onchange="searchCat=this.value;updateExplore()"><option value="ALL">All categories</option>${CATS.map(c=>`<option ${searchCat===c?'selected':''}>${esc(c)}</option>`).join('')}</select>
+ <select class="field" aria-label="Region" onchange="searchGeo=this.value;updateExplore()"><option value="MINE" ${searchGeo==='MINE'?'selected':''}>My region: ${esc(REGIONS[S.geo])}</option><option value="LOCAL" ${searchGeo==='LOCAL'?'selected':''}>Only tips specific to my region</option><option value="ALL" ${searchGeo==='ALL'?'selected':''}>All regions</option>${['IN','GB','US'].map(r=>`<option value="${r}" ${searchGeo===r?'selected':''}>${REGIONS[r]}</option>`).join('')}</select>
+ <select class="field" aria-label="Kind of tip" onchange="searchKind=this.value;updateExplore()"><option value="ALL">All tips</option><option value="RARE" ${searchKind==='RARE'?'selected':''}>Lesser known</option><option value="COMMON" ${searchKind==='COMMON'?'selected':''}>Well known</option><option value="NEW" ${searchKind==='NEW'?'selected':''}>New this month</option></select>
+ <button class="btn ghost" onclick="searchText='';searchCat='ALL';searchGeo='MINE';searchKind='ALL';render()">Clear</button></div><p class="small muted" id="exploreCount">${esc(exploreCount(a))}</p></div>
  <div class="grid spaced" id="exploreResults">${a.length?a.map(card).join(''):'<div class="empty">No tips match. Try a broader search.</div>'}</div>`}
-function updateExplore(){const a=exploreList(),total=TIPS.filter(eligible).length;$('exploreResults').innerHTML=a.length?a.map(card).join(''):'<div class="empty">No tips match. Try a broader search.</div>';$('exploreCount').textContent=`Showing ${a.length} of ${total} tips for ${REGIONS[S.geo]}${S.cats.length?' · filtered by your interests':''}`}
+function updateExplore(){const a=exploreList();$('exploreResults').innerHTML=a.length?a.map(card).join(''):'<div class="empty">No tips match. Try a broader search.</div>';$('exploreCount').textContent=exploreCount(a)}
 
-function notifCard(n){const t=TIPMAP[n.tip];if(!t)return '';const from=n.agent||SRC[n.source]||'Wellwise';
- if(n.channel==='WhatsApp preview')return `<div style="margin-bottom:12px"><div class="wa"><b>Wellwise</b><p style="margin:4px 0">${esc(n.message)}</p><p style="margin:4px 0"><b>${esc(tx(t,'title'))}</b><br>${esc(tx(t,'action'))}</p><p class="small" style="margin:4px 0"><a href="#tip/${t.id}">Read more on Wellwise</a></p><div class="meta">${fmtTime(n.at)} ✓✓</div></div><p class="small muted" style="margin:4px 0 0">WhatsApp preview · via ${esc(from)}</p></div>`;
- return `<div class="detail" style="margin-bottom:10px"><span class="badge">${esc(n.channel)}</span><p style="margin:8px 0 2px"><b>${esc(tx(t,'title'))}</b></p><p class="small" style="margin:0 0 6px">${esc(n.message)}</p><p class="small muted">${fmtTime(n.at)} · via ${esc(from)}</p><button class="btn alt sm" onclick="nav('tip/${t.id}')">Open tip</button></div>`}
-function inbox(){const sched=S.frequency==='off'||S.frequency==='contextual';
+function notifCard(n){const t=TIPMAP[n.tip];if(!t)return '';const from=n.agent||VIA[n.source]||'Wellwise';
+ if(n.channel==='WhatsApp')return `<div style="margin-bottom:12px"><div class="wa"><b>Wellwise</b><p style="margin:4px 0">${esc(n.message)}</p><p style="margin:4px 0"><b>${esc(tx(t,'title'))}</b><br>${esc(tx(t,'action'))}</p><p class="small" style="margin:4px 0"><a href="#tip/${t.id}">Read more on Wellwise</a></p><div class="meta">${fmtTime(n.at)} ✓✓</div></div><p class="small muted" style="margin:4px 0 0">Sent to WhatsApp · via ${esc(from)}</p></div>`;
+ return `<div class="detail" style="margin-bottom:10px"><span class="badge">${esc(from)}</span><p style="margin:8px 0 2px"><b>${esc(tx(t,'title'))}</b></p><p class="small" style="margin:0 0 6px">${esc(n.message)}</p><p class="small muted">${fmtTime(n.at)} · ${esc(n.moment||'')}</p><button class="btn alt sm" onclick="nav('tip/${t.id}')">Open tip</button></div>`}
+function inbox(){
  return `${header('Inbox','Your tips, delivered your way.','Choose when and where tips reach you.')}
  <div class="side spaced"><div class="panel"><h2>Delivery</h2>
  <label>How often<select class="field" onchange="S.frequency=this.value;persist();render()">${[['off','Off'],['daily','Daily tip only'],['weekly','Weekly tip only'],['contextual','Moments only'],['both','Daily tip and moments']].map(([v,t])=>`<option value="${v}" ${S.frequency===v?'selected':''}>${t}</option>`).join('')}</select></label><div class="gap"></div>
- <label>Where<select class="field" onchange="S.channel=this.value;persist();render()">${CHANNELS.map(x=>`<option ${S.channel===x?'selected':''}>${x}</option>`).join('')}</select></label><div class="gap"></div>
+ <label>Where<select class="field" onchange="S.channel=this.value;persist();render()"><option ${S.channel==='In the app'?'selected':''}>In the app</option><option ${S.channel==='WhatsApp'?'selected':''} ${API.linked.whatsapp?'':'disabled'}>WhatsApp${API.linked.whatsapp?'':' (link it in Moments first)'}</option></select></label><div class="gap"></div>
  <label>Surprise level<select class="field" onchange="S.discovery=this.value;persist();render()">${[['focused','Stick to my interests'],['balanced','Balanced'],['exploratory','Surprise me sometimes']].map(([v,t])=>`<option value="${v}" ${S.discovery===v?'selected':''}>${t}</option>`).join('')}</select></label>
- <div class="notice spaced small">${S.frequency==='off'?'No tips will be sent.':S.frequency==='contextual'?'Tips arrive only when a moment fits.':S.frequency==='weekly'?'One tip each week.':S.frequency==='daily'?'One tip each day.':'One tip each day, plus tips when a moment fits.'} The surprise level changes which tip a moment brings.</div>
- <button class="btn alt spaced" onclick="queueTip()" ${sched?'disabled':''}>Preview a ${S.frequency==='weekly'?'weekly':'daily'} tip</button>${sched?'<p class="small muted">Scheduled tips are off for this setting.</p>':''}</div>
- <div class="panel"><h2>Inbox</h2>${S.notifications.length?S.notifications.slice(0,25).map(notifCard).join(''):'<div class="empty">Save a tip from Moments, or preview a scheduled tip.</div>'}</div></div>`}
-function queueTip(){const t=dailyTip();markSeen(t.id,'Wellwise '+(S.frequency==='weekly'?'weekly':'daily')+' tip');S.notifications.unshift({id:'sch-'+now(),tip:t.id,at:now(),message:S.frequency==='weekly'?'Your Wellwise tip for the week':'Your Wellwise tip for today',source:null,agent:null,channel:S.channel});persist();render();toast('Preview added to your inbox')}
+ <div class="notice spaced small">${S.frequency==='off'?'No tips will be sent.':S.frequency==='contextual'?'Tips arrive only when a moment fits: your calendar, the air and weather near you, WhatsApp or your agent.':S.frequency==='weekly'?'One tip each Monday.':S.frequency==='daily'?'One tip each morning.':'One tip each morning, plus tips when a moment fits.'} The surprise level changes which tip a moment brings.</div></div>
+ <div class="panel"><h2>Inbox</h2>${S.notifications.length?S.notifications.slice(0,25).map(notifCard).join(''):'<div class="empty">Tips you save, and tips Wellwise sends you, show here.</div>'}</div></div>`}
+/* Without the server, the daily tip still lands in the inbox once a day. */
+function localDaily(){if(API.on||!['daily','both'].includes(S.frequency))return;const d=new Date(now()).toISOString().slice(0,10);if(S.lastDaily===d)return;const t=dailyTip();S.lastDaily=d;S.notifications.unshift({id:'day-'+d,tip:t.id,at:now(),message:'Your Wellwise tip for today',source:'daily',agent:null,channel:'In the app',moment:'Your daily tip'});S.notifications=S.notifications.slice(0,100);persist()}
 
-function settings(){return `${header('Settings','Make Wellwise yours.','Everything here is optional. You can use Wellwise without sharing anything about your health.')}
- <div class="panel spaced"><h2>Region and language</h2><div class="formgrid"><label>Region<select class="field" id="geo">${Object.entries(REGIONS).map(([v,n])=>`<option value="${v}" ${S.geo===v?'selected':''}>${n}</option>`).join('')}</select></label><label>Language<select class="field" onchange="setLang(this.value)"><option value="en" ${S.lang==='en'?'selected':''}>English</option><option value="hi" ${S.lang==='hi'?'selected':''}>हिंदी (preview)</option></select></label></div>${S.lang==='hi'?`<p class="small muted">Hindi preview: the main labels and ${TIPS.filter(t=>t.hi).length} tips are translated. Other text stays in English for now.</p>`:''}
+function settings(){const ln=API.linked;return `${header('Settings','Make Wellwise yours.','Everything here is optional. You can use Wellwise without sharing anything about your health.')}
+ <div class="panel spaced"><h2>Region and language</h2><div class="formgrid"><label>Region<select class="field" id="geo"><option value="AUTO" ${S.geoAuto?'selected':''}>Automatic${S.live?.region?' ('+esc(REGIONS[S.live.region])+')':' (from Near you)'}</option>${Object.entries(REGIONS).map(([v,n])=>`<option value="${v}" ${!S.geoAuto&&S.geo===v?'selected':''}>${n}</option>`).join('')}</select></label><label>Language<select class="field" onchange="setLang(this.value)"><option value="en" ${S.lang==='en'?'selected':''}>English</option><option value="hi" ${S.lang==='hi'?'selected':''}>हिंदी (preview)</option></select></label></div>${S.lang==='hi'?`<p class="small muted">Hindi preview: the main labels and ${TIPS.filter(t=>t.hi).length} tips are translated. Other text stays in English for now.</p>`:''}
  <h3 class="spaced">Topics you care about</h3><p class="small muted">Pick none to see everything.</p><div class="checks">${CATS.map(c=>`<label class="check"><input type="checkbox" class="catcheck" value="${esc(c)}" ${S.cats.includes(c)?'checked':''}> ${esc(c)}</label>`).join('')}</div>
- <h3 class="spaced">About you</h3><div class="formgrid"><label>Age range<select id="age" class="field">${['','Under 18','18–29','30–44','45–59','60+'].map(x=>`<option value="${esc(x)}" ${S.age===x?'selected':''}>${x||'Prefer not to say'}</option>`).join('')}</select></label><label>Diet<select id="diet" class="field">${['','Omnivore','Vegetarian','Vegan','Pescatarian','Other'].map(x=>`<option value="${esc(x)}" ${S.diet===x?'selected':''}>${x||'Prefer not to say'}</option>`).join('')}</select></label></div><p class="small muted">Diet changes which tips rise first. For example, “Vegan” brings B12 and fortified-food tips forward. </p>
+ <h3 class="spaced">About you</h3><div class="formgrid"><label>Age range<select id="age" class="field">${['','Under 18','18–29','30–44','45–59','60+'].map(x=>`<option value="${esc(x)}" ${S.age===x?'selected':''}>${x||'Prefer not to say'}</option>`).join('')}</select></label><label>Diet<select id="diet" class="field">${['','Omnivore','Vegetarian','Vegan','Pescatarian','Other'].map(x=>`<option value="${esc(x)}" ${S.diet===x?'selected':''}>${x||'Prefer not to say'}</option>`).join('')}</select></label></div><p class="small muted">Diet changes which tips rise first. For example, “Vegan” brings B12 and fortified-food tips forward.</p>
  <div class="row spaced"><button class="btn" onclick="savePrefs()">Save</button><button class="btn ghost" onclick="clearPrefs()">Clear</button></div></div>
- <div class="panel spaced"><h2>Link a personal agent</h2><p>If you use an AI agent for shopping, travel or your calendar, it can send moments to Wellwise. Your journey stays in one place, whichever agent you use.</p><label class="check" style="max-width:420px"><input type="checkbox" ${S.agentConnected?'checked':''} onchange="S.agentConnected=this.checked;if(!this.checked&&S.momentTab==='agent')S.momentTab='environment';persist();render()"> Link an agent</label>${S.agentConnected?`<div class="gap"></div><label style="max-width:420px">Agent<select class="field" onchange="S.agent=this.value;persist();render()">${AGENTS.map(a=>`<option ${S.agent===a?'selected':''}>${a}</option>`).join('')}</select></label><button class="btn alt sm spaced" onclick="S.momentTab='agent';persist();nav('moments')">Try agent moments →</button>`:''}</div>
- <div class="panel spaced"><div class="eyebrow">Coming soon</div><h2>Health details</h2><p>Conditions, medicines and allergies could filter out unsafe tips. This is coming soon.</p><div class="formgrid"><label>Conditions<input disabled class="field" placeholder="Coming later"></label><label>Medicines<input disabled class="field" placeholder="Coming later"></label></div></div>
- ${addTipsPanel()}
- <div class="panel spaced"><h2>Prototype tools</h2><p class="small muted">Date: <b>${new Date(now()).toLocaleDateString(undefined,{day:'numeric',month:'long',year:'numeric'})}</b>${S.offsetDays?` (${S.offsetDays} days ahead)`:''}. Jump ahead to see the 7- and 30-day check-ins.</p><div class="row"><button class="btn alt sm" onclick="S.offsetDays+=7;persist();toast('Moved 7 days ahead');nav('discover')">Jump ahead 7 days</button><button class="btn ghost sm" onclick="S.offsetDays=0;persist();render()" ${S.offsetDays?'':'disabled'}>Back to today</button><button class="btn ghost sm" onclick="nav('lab')">How your feedback helps →</button></div><div class="row spaced"><button class="btn ghost sm" onclick="exportData()">Export my data</button><button class="btn ghost sm" onclick="resetAll()">Reset all data</button></div><div class="notice spaced small"><b>Stays on this device.</b> Settings, moments and your journey are kept in this browser only. Nothing is uploaded.</div></div>`}
-function savePrefs(){S.geo=$('geo').value;S.cats=[...document.querySelectorAll('.catcheck:checked')].map(x=>x.value);S.age=$('age').value;S.diet=$('diet').value;persist();toast('Saved');nav('discover')}
-function clearPrefs(){Object.assign(S,{geo:'GLOBAL',cats:[],age:'',diet:''});persist();render();toast('Cleared')}
-function exportData(){const blob=new Blob([JSON.stringify({exportedAt:new Date().toISOString(),version:3,state:S},null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='wellwise-v3-demo-data.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
-function resetAll(){if(confirm('Reset all Wellwise data in this browser?')){try{localStorage.removeItem(KEY)}catch(e){}location.hash='#discover';location.reload()}}
-
-function synth(){return Object.values(SRC).map((k,i)=>{const n=120+i*11;let ok=0;const rate=[50,62,58,55,47,52][i];for(let j=0;j<n;j++)if(hash(k+'|'+j)%100<rate)ok++;return{kind:k,count:n,ok,pct:Math.round(100*ok/n)}})}
-function lab(){const rows=synth(),total=rows.reduce((a,b)=>a+b.count,0),ok=rows.reduce((a,b)=>a+b.ok,0);
- return `${header('Your feedback','How your feedback helps','When you rate a tip, Wellwise learns which tips help in which moments. Only with your consent, and never with personal details.')}
- <div class="notice warn spaced"><b>Sample figures.</b> These numbers are examples, not real results.</div>
- <div class="grid spaced"><div class="card"><div class="eyebrow">Sample ratings</div><div class="metric spaced numeric">${total}</div></div><div class="card"><div class="eyebrow">Rated useful</div><div class="metric spaced numeric">${Math.round(ok/total*100)}%</div></div><div class="card"><div class="eyebrow">Tip links in the library</div><div class="metric spaced numeric">${EDGES.length}</div></div></div>
- <div class="side spaced"><div class="panel"><h2>Usefulness by moment type</h2><div class="bars">${rows.map(r=>`<div class="barrow"><b>${esc(r.kind)}</b><div class="bar"><i style="width:${r.pct}%"></i></div><span class="numeric">${r.pct}%</span></div>`).join('')}</div></div>
- <div class="panel"><h2>The rules</h2><div class="detail"><b>Personal data stays personal</b>Only “useful / not useful” per tip and moment type would be shared, and only with consent.</div><div class="detail spaced"><b>Popularity never changes evidence</b>A popular tip does not get a better evidence grade.</div><div class="detail spaced"><b>Safety comes first</b>Feedback can never make a clinician-only tip fire.</div></div></div>
- <div class="panel spaced"><h2>Example: ranking for “I’m cooking”</h2><label class="check" style="max-width:460px"><input type="checkbox" ${S.learning?'checked':''} onchange="S.learning=this.checked;persist();render()"> Apply sample feedback</label><div class="grid two spaced">${[['Before feedback','ww-061','ww-062'],['After feedback','ww-062','ww-061']].map((x,i)=>`<div class="detail" style="${(+S.learning===i)?'border:2px solid #277954':''}"><div class="eyebrow">${x[0]}</div><p>1. ${esc(TIPMAP[x[1]].title)}</p><p>2. ${esc(TIPMAP[x[2]].title)}</p></div>`).join('')}</div></div>`}
+ ${API.on?`<div class="panel spaced"><h2>Connected</h2>${[['Near you',S.nearConsent?'On':'Off','near'],['Calendar',ln.calendar?'Connected':'Not connected','calendar'],['WhatsApp',ln.whatsapp?'Linked · '+ln.whatsapp:'Not linked','whatsapp'],['Your agent',ln.agent?'Key active':'Not linked','agent'],...(API.features.email?[['Email',ln.email||'Not set up','email']]:[])].map(([n,v,tab])=>`<div class="status"><span><b>${n}</b><br><span class="small muted">${esc(v)}</span></span><button class="btn ghost sm" onclick="S.momentTab='${tab}';persist();nav('moments')">Manage</button></div>`).join('')}</div>`:''}
+ <div class="panel spaced"><h2>Your data</h2><p class="small muted">${API.on?'Your settings and journey are saved to your Wellwise account on this device, so they survive a cleared browser.':'Your settings and journey are kept in this browser.'}</p>
+ <div class="row"><button class="btn ghost sm" onclick="exportData()">Export my data</button>${API.on?'<button class="btn ghost sm" onclick="deviceCode()">Use Wellwise on another device</button>':''}<button class="btn ghost sm" onclick="resetAll()">Delete all my data</button></div>
+ ${API.on?`<details class="spaced"><summary>Have a code from another device?</summary><div class="row spaced"><input id="joinCode" class="field" style="max-width:180px" inputmode="numeric" placeholder="6-digit code"><button class="btn alt sm" onclick="joinDevice()">Use this code</button></div></details>`:''}</div>`}
+function savePrefs(){const g=$('geo').value;S.geoAuto=g==='AUTO';S.geo=S.geoAuto?(S.live?.region||S.geo):g;S.cats=[...document.querySelectorAll('.catcheck:checked')].map(x=>x.value);S.age=$('age').value;S.diet=$('diet').value;persist();toast('Saved');nav('discover')}
+function clearPrefs(){Object.assign(S,{geo:S.live?.region||'GLOBAL',geoAuto:true,cats:[],age:'',diet:''});persist();render();toast('Cleared')}
+function exportData(){const blob=new Blob([JSON.stringify({exportedAt:new Date().toISOString(),version:4,state:S},null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='wellwise-my-data.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+async function resetAll(){if(!confirm('Delete all your Wellwise data? This cannot be undone.'))return;if(API.on)await api('/api/me',{method:'DELETE',body:{}}).catch(()=>{});try{localStorage.removeItem(KEY)}catch(e){}location.hash='#discover';location.reload()}
+async function deviceCode(){try{const r=await api('/api/device-code',{method:'POST',body:{}});alert(`On your other device, open Wellwise → Settings → Your data, and enter ${r.code}. The code works for 10 minutes.`)}catch(e){toast(e.message)}}
+async function joinDevice(){const code=($('joinCode')?.value||'').trim();try{await api('/api/device-join',{method:'POST',body:{code}});S.updatedAt=0;try{localStorage.removeItem(KEY)}catch(e){}location.reload()}catch(e){toast(e.message)}}
 
 function tipPage(t){
- const edges=rel(t.id),note=t.notes?.[S.geo]||'',sf=SAFETY[t.safety];
+ const edges=rel(t.id),note=t.notes?.[S.geo]||'';
  return `<p class="small"><a href="#explore">← Library</a></p>${header(t.category,tx(t,'title'),tx(t,'why'))}
- <div class="taglist spaced"><span class="badge ${sf.cls}">${sf.label}</span><span class="badge" title="${esc(GRADE_NOTE[t.grade])}">${esc(t.grade)} evidence</span>${isNew(t)?'<span class="badge new">New</span>':''}<span class="badge">${t.scope==='GLOBAL'?'Applies widely':esc(REGIONS[t.scope])+' only'}</span>${S.source[t.id]?`<span class="badge">Came from: ${esc(S.source[t.id])}</span>`:''}</div>
- <p class="small muted" style="margin-top:10px">${esc(GRADE_NOTE[t.grade])} Not yet reviewed by a clinician.</p>
- ${safetyNotice(t)}
+ <div class="taglist spaced">${knownBadge(t)}<span class="badge" title="${esc(GRADE_NOTE[t.grade])}">${esc(t.grade)} evidence</span>${isNew(t)?'<span class="badge new">New</span>':''}<span class="badge">${t.scope==='GLOBAL'?'Applies widely':esc(REGIONS[t.scope])+' only'}</span>${S.source[t.id]?`<span class="badge">Came from: ${esc(S.source[t.id])}</span>`:''}</div>
+ <p class="small muted" style="margin-top:10px">${esc(GRADE_NOTE[t.grade])}</p>
+ ${t.familiarity==='common'?`<div class="notice spaced"><b>You may know this one already.</b><p class="small" style="margin:4px 0 0">It is common advice, and it is here because it does a lot of good${edges.length?` and connects to ${edges.length} other tip${edges.length>1?'s':''} below. Together they show the bigger picture.`:'.'}</p></div>`:''}
  <div class="detailgrid spaced"><div class="detail"><b>${esc(L('tryThis'))}</b>${esc(tx(t,'action'))}</div><div class="detail"><b>${esc(L('why'))}</b>${esc(tx(t,'why'))}</div><div class="detail"><b>${esc(L('considerations'))}</b>${esc(t.caution)}</div><div class="detail"><b>${esc(L('timeline'))}</b>${esc(t.timeline)}</div>${note?`<div class="detail"><b>${esc(L('localNote'))} · ${esc(REGIONS[S.geo])}</b>${esc(note)}</div>`:''}</div>
  <div class="row spaced"><button class="btn ${stat(t.id)==='trying'?'':'alt'}" onclick="setStatus('${t.id}','trying')">${esc(stat(t.id)==='trying'?L('trying'):L('willTry'))}</button><button class="btn ${stat(t.id)==='adopted'?'':'ghost'}" onclick="setStatus('${t.id}','adopted')">${esc(stat(t.id)==='adopted'?L('adopted'):L('already'))}</button><button class="btn ghost" onclick="setStatus('${t.id}','not-relevant')">${stat(t.id)==='not-relevant'?'✓ ':''}${esc(L('notForMe'))}</button><button class="btn ghost" onclick="shareTip('${t.id}')">${hosted()?'Share ↗':'Copy tip'}</button></div>
  <div class="row" style="margin-top:10px"><span class="small muted">Was this useful?</span><button class="btn sm ${S.feedback[t.id]==='useful'?'':'ghost'}" onclick="vote('${t.id}','useful')">👍 ${esc(L('useful'))}</button><button class="btn sm ${S.feedback[t.id]==='not-useful'?'':'ghost'}" onclick="vote('${t.id}','not-useful')">👎 ${esc(L('notUseful'))}</button></div>
- <div class="panel spaced"><div class="eyebrow">Connections</div><h2>How this tip links to others</h2>${edges.length?`<div class="graphrow"><div class="graphnode center"><b>${esc(tx(t,'title'))}</b><p class="small" style="margin:4px 0 0">This tip</p></div>${edges.slice(0,6).map(e=>`<div class="graphnode"><span class="badge ${e.type==='potential-conflict'?'danger':''}">${esc(e.type)}</span><p style="margin:6px 0"><a href="#tip/${e.other}"><b>${esc(TIPMAP[e.other].title)}</b></a></p><p class="small muted" style="margin:0">${esc(e.why)}</p></div>`).join('')}</div>`:`<div class="empty">No links written for this tip yet.</div>`}<p class="small muted spaced">Links explain how tips relate. They do not prove a combined health benefit.</p></div>
- ${t.sponsor?`<div class="sponsored spaced"><div class="row between"><span class="badge sponsor">Sponsored</span><span class="small muted">Shown because of this tip’s topic, not because of you</span></div><h3 style="margin-top:10px">${esc(t.sponsor.name)}</h3><p class="small"><b>Our sponsor standard:</b> ${esc(t.sponsor.criteria)}</p><p class="small muted" style="margin:0">Sponsors never choose which tip appears or change what it says. They see no personal data.</p></div>`:''}
+ <div class="panel spaced"><div class="eyebrow">Connections</div><h2>How this tip links to others</h2>${edges.length?`<div class="graphrow"><div class="graphnode center"><b>${esc(tx(t,'title'))}</b><p class="small" style="margin:4px 0 0">This tip</p></div>${edges.slice(0,6).map(e=>`<div class="graphnode"><span class="badge">${esc(e.type)}</span><p style="margin:6px 0"><a href="#tip/${e.other}"><b>${esc(TIPMAP[e.other].title)}</b></a></p><p class="small muted" style="margin:0">${esc(e.why)}</p></div>`).join('')}</div>`:`<div class="empty">No links written for this tip yet.</div>`}</div>
  <div class="panel spaced"><h3>Sources</h3><p class="small muted">${t.sourceLevel==='tip'?'The first link backs this tip directly. Others cover the wider topic.':'These links cover the wider topic.'}</p><div class="sourcelinks">${t.sources.map((s,i)=>`<a href="${esc(s)}" target="_blank" rel="noopener noreferrer">${i===0&&t.sourceLevel==='tip'?'Tip source':'Topic source'}: ${esc(new URL(s).hostname)} ↗</a>`).join('')}</div></div>`;
 }
 
-
-/* ---------- adding tips: same rules as build_wellwise.py ---------- */
-const V_SAFETY=['general','check','clinician'],V_GRADES=['Strong','Moderate','Limited','Safety practice'],V_EDGES=['complements','reinforces','shared-goal','depends-on','potential-conflict'],V_STATUS=['draft','live','retired'];
-function nextId(used){const n=used.reduce((m,i)=>Math.max(m,parseInt(i.slice(3))||0),0)+1;return 'ww-'+String(n).padStart(3,'0')}
-function normalizeTip(raw,used){const t={...raw},cat=CATEGORIES.find(c=>c.name===t.category),today=new Date(now()).toISOString().slice(0,10);
- if(!t.id)t.id=nextId(used);t.scope=t.scope||'GLOBAL';t.regions=t.regions||(t.scope==='GLOBAL'?[...CONTENT.REGIONS]:[t.scope]);
- t.safety=t.safety||'general';t.status=t.status||'live';t.added=t.added||today;t.triggerKeys=t.triggerKeys||[];t.notes=t.notes||{};
- t.review=t.review||{status:'not-reviewed',by:null,date:null};t.sourceLevel=t.sourceLevel||'tip';t.sourceChecked=t.sourceChecked||today;
- if(cat){t.grade=t.grade||cat.defaultGrade;t.timeline=t.timeline||cat.defaultTimeline;const extra=(t.tags||[]).filter(x=>x!==cat.tag);t.tags=[cat.tag,...extra];t.concepts=[cat.concept,...extra]}
- return t}
-function validatePack(pack){
- const errors=[],warnings=[],used=ALLTIPS.map(t=>t.id),tips=[],titles=Object.fromEntries(ALLTIPS.map(t=>[t.title.toLowerCase(),t.id]));
- if(!pack||!Array.isArray(pack.tips))return{tips,edges:[],errors:['The file needs a "tips" list.'],warnings};
- for(const raw of pack.tips){const t=normalizeTip(raw,used),id=t.id;used.push(id);tips.push(t);
-  for(const f of ['title','category','action','why','caution'])if(!t[f])errors.push(`${id}: missing “${f}”`);
-  if(!Array.isArray(t.sources)||!t.sources.length)errors.push(`${id}: add at least one source`);
-  else t.sources.forEach(u=>{if(!/^https:\/\//.test(u))errors.push(`${id}: source must start with https:// (${u})`)});
-  if(!/^ww-\d{3,}$/.test(id))errors.push(`${id}: id must look like ww-201`);
-  if(ALLTIPS.some(x=>x.id===id)||tips.filter(x=>x.id===id).length>1)errors.push(`${id}: id already used`);
-  if(!CATEGORIES.some(c=>c.name===t.category))errors.push(`${id}: unknown category “${t.category}”`);
-  if(!V_SAFETY.includes(t.safety))errors.push(`${id}: safety must be general, check or clinician`);
-  if(!V_GRADES.includes(t.grade))errors.push(`${id}: unknown evidence grade “${t.grade}”`);
-  if(!V_STATUS.includes(t.status))errors.push(`${id}: status must be draft, live or retired`);
-  if(t.scope!=='GLOBAL'&&!CONTENT.REGIONS.includes(t.scope))errors.push(`${id}: unknown region “${t.scope}”`);
-  const k=(t.title||'').toLowerCase();if(titles[k]&&titles[k]!==id)warnings.push(`${id}: same title as ${titles[k]}`);titles[k]=id;
-  if(t.safety!=='clinician'){const unk=t.triggerKeys.filter(x=>!ALL_EVENTS.has(x));if(unk.length)warnings.push(`${id}: no moment uses ${unk.join(', ')} yet`);if(!t.triggerKeys.some(x=>ALL_EVENTS.has(x)))warnings.push(`${id}: no moment can bring this tip. It still shows in the library and as a daily tip.`)}
-  if(!t.hi)warnings.push(`${id}: no Hindi text yet`)}
- const ids=new Set([...ALLTIPS.map(t=>t.id),...tips.map(t=>t.id)]),edges=pack.edges||[];
- for(const e of edges){if(!ids.has(e.a)||!ids.has(e.b))errors.push(`Link ${e.a}–${e.b}: unknown tip`);if(!V_EDGES.includes(e.type))errors.push(`Link ${e.a}–${e.b}: unknown type “${e.type}”`);if(!e.why)errors.push(`Link ${e.a}–${e.b}: missing “why”`)}
- return{tips,edges,errors,warnings}}
-function readPack(input){const f=input.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{let pack;try{pack=JSON.parse(r.result)}catch(e){importReport={name:f.name,tips:[],edges:[],errors:['This is not valid JSON.'],warnings:[]};render();return}importReport={name:f.name,...validatePack(pack)};render()};r.readAsText(f)}
-function addPack(){if(!importReport||importReport.errors.length)return;const ov=loadOverlay();ov.tips.push(...importReport.tips);ov.edges.push(...importReport.edges);saveOverlay(ov);const n=importReport.tips.length;importReport=null;applyContent(CONTENT);render();toast(`Added ${n} tip${n>1?'s':''}`)}
-function removeAdded(){if(!confirm('Remove all tips you added on this device?'))return;saveOverlay({tips:[],edges:[]});applyContent(CONTENT);render();toast('Added tips removed')}
-function downloadTemplate(){const tpl={pack:'My new tips',tips:[{title:'Short title, verb first',category:CATEGORIES[0].name,action:'One clear thing to do',why:'Why it helps, in one sentence',caution:'Who should take care, or when not to do it',sources:['https://example.org/page-that-backs-this-tip'],safety:'general',triggerKeys:['prompt:grocery'],notes:{IN:'Optional local note'},hi:{title:'',action:'',why:''}}],edges:[{a:'ww-201',b:'ww-003',type:'complements',why:'How the two tips relate'}],_help:{categories:CATEGORIES.map(c=>c.name),safety:V_SAFETY,grades:V_GRADES,linkTypes:V_EDGES,triggerKeys:[...ALL_EVENTS].sort(),optional:'id, scope, regions, grade, timeline, status (draft|live|retired), tags, sponsor'}};
- const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(tpl,null,2)],{type:'application/json'}));a.download='wellwise-tip-pack-template.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
-function addTipsPanel(){const ov=loadOverlay(),r=importReport;
- return `<div class="panel spaced"><h2>Add tips</h2><p class="small muted">Add a tip pack (.json). Wellwise checks each tip, fills in the defaults and adds it to the library, moments and links. The app does not change.</p>
- <div class="row"><label class="btn alt sm" style="display:inline-block;margin:0">Choose a tip pack<input type="file" accept=".json,application/json" onchange="readPack(this)" style="display:none"></label><button class="btn ghost sm" onclick="downloadTemplate()">Download a blank pack</button>${ov.tips.length?`<button class="btn ghost sm" onclick="removeAdded()">Remove ${ov.tips.length} added tip${ov.tips.length>1?'s':''}</button>`:''}</div>
- ${r?`<div class="notice ${r.errors.length?'danger':'warn'} spaced"><b>${esc(r.name)}: ${r.tips.length} tip${r.tips.length===1?'':'s'}, ${r.edges.length} link${r.edges.length===1?'':'s'}</b>
-  ${r.errors.length?`<p class="small" style="margin:6px 0 2px"><b>Fix these first:</b></p><ul class="small">${r.errors.map(e=>`<li>${esc(e)}</li>`).join('')}</ul>`:''}
-  ${r.warnings.length?`<p class="small" style="margin:6px 0 2px"><b>Worth a look:</b></p><ul class="small">${r.warnings.map(e=>`<li>${esc(e)}</li>`).join('')}</ul>`:''}
-  ${r.errors.length?'':`<button class="btn sm" onclick="addPack()">Add ${r.tips.length} tip${r.tips.length===1?'':'s'}</button>`}</div>`:''}
- <p class="small muted spaced">Tips added here stay on this device. To add them for everyone, run the same pack through the build script.</p></div>`}
-async function checkForNewContent(){if(!hosted())return;try{const r=await fetch('wellwise-content.json',{cache:'no-cache'});if(!r.ok)return;const c=await r.json();if(c&&Array.isArray(c.TIPS)&&+c.contentVersion>+CONTENT.contentVersion){CONTENT=c;applyContent(c);render();toast('The library has new tips')}}catch(e){}}
+async function checkForNewContent(){if(!hosted()||typeof fetch!=='function')return;try{const r=await fetch('wellwise-content.json',{cache:'no-cache'});if(!r.ok)return;const c=await r.json();if(c&&Array.isArray(c.TIPS)&&+c.contentVersion>+CONTENT.contentVersion){CONTENT=c;applyContent(c);render();toast('The library has new tips')}}catch(e){}}
 /* ---------- shell ---------- */
 const NAV=['discover','moments','journey','explore','inbox','settings'];
 function currentPath(){return decodeURIComponent(location.hash.slice(1))||'discover'}
 function nav(p){if(location.hash==='#'+p){route()}else{location.hash='#'+p}window.scrollTo(0,0)}
-function route(){const p=currentPath();if(p.startsWith('tip/')&&TIPMAP[p.slice(4)])markSeen(p.slice(4),'Explore');render()}
+async function route(){const p=currentPath();if(p.startsWith('tip/')&&TIPMAP[p.slice(4)])markSeen(p.slice(4),'Explore');
+ if(camStream&&!(p==='moments'&&S.momentTab==='scan'))stopCamera();
+ const im=p.match(/^moments\/intake\/(in-[a-f0-9]+)$/);
+ if(im){S.momentTab='share';history.replaceState(null,'','#moments');try{const r=await api('/api/intake/'+im[1]);keepIntake(r,'share')}catch(e){toast('We could not open what you shared')}}
+ if(p==='moments'&&S.momentTab==='calendar'&&!API.calendar)loadCalendar();
+ render()}
 function render(){
  document.documentElement.lang=S.lang==='hi'?'hi':'en';
- const path=currentPath();let page=path.startsWith('tip/')?'tip':path;
- if(![...NAV,'lab','tip'].includes(page))page='discover';
+ const path=currentPath();let page=path.startsWith('tip/')?'tip':path.startsWith('moments')?'moments':path;
+ if(![...NAV,'tip'].includes(page))page='discover';
  const count=TIPS.filter(eligible).length,unread=S.notifications.length;
- $('nav').innerHTML=NAV.map(k=>`<button class="navbtn ${page===k||(page==='lab'&&k==='settings')?'active':''}" onclick="nav('${k}')">${esc(L(k))}${k==='explore'?' · '+count:''}${k==='inbox'&&unread?' · '+Math.min(unread,99):''}</button>`).join('');
+ $('nav').innerHTML=NAV.map(k=>`<button class="navbtn ${page===k?'active':''}" onclick="nav('${k}')">${esc(L(k))}${k==='explore'?' · '+count:''}${k==='inbox'&&unread?' · '+Math.min(unread,99):''}</button>`).join('');
  const t=page==='tip'?TIPMAP[path.slice(4)]:null;
- $('main').innerHTML=page==='tip'?(t?tipPage(t):'<div class="empty">Tip not found.</div>'):{discover,moments,journey,explore,inbox,settings,lab}[page]();
- $('footer').innerHTML=`Prototype · Sample data and simulated connections · Your data stays in this browser · Tips are not yet reviewed by a clinician · <a href="#lab">How your feedback helps</a>`;
+ $('main').innerHTML=page==='tip'?(t?tipPage(t):'<div class="empty">Tip not found.</div>'):{discover,moments,journey,explore,inbox,settings}[page]();
+ $('footer').innerHTML=`${esc(DISCLAIMER)}`;
 }
 window.addEventListener('hashchange',()=>{route();window.scrollTo(0,0)});
+localDaily();
 route();
 checkForNewContent();
+connect();
+if(hosted()&&'serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
 </body>
 </html>

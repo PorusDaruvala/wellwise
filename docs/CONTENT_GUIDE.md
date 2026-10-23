@@ -4,13 +4,13 @@ The app and the tips are separate. You add tips by adding data. You do not chang
 
 ## Add tips in four steps
 
-1. **Write a pack** in `content/packs/`. Name it by date and topic, for example `2026-11-monsoon.json`. Copy `content/packs/2026-10-sample-pack.json`, or download a blank pack from the app (Settings → Add tips).
+1. **Write a pack** in `content/packs/`. Name it by date and topic, for example `2026-11-monsoon.json`. Download a blank pack from the admin console (`/admin`), or copy the shape from `content/schema/tip-pack.schema.json`.
 
    For each tip, write only these fields:
    - `title`, `category`, `action`, `why`, `caution`
    - `sources`: one or more `https://` links. The first link must back this exact tip.
 
-   Everything else is optional. The build fills in the id, region, safety class, grade, timeline, tags, status and date added. The full shape is in `content/schema/tip-pack.schema.json`.
+   Everything else is optional. The build fills in the id, region, familiarity, grade, timeline, tags, status and date added. The full shape is in `content/schema/tip-pack.schema.json`.
 
 2. **Check it:** `python3 scripts/build.py --check content/packs/your-pack.json`
    - ✗ is an error. The pack will not go in until you fix it.
@@ -38,21 +38,30 @@ Style: short sentences, active voice, one meaning per word. Warm and human.
 - Prefer official and clinical bodies: WHO, NHS, CDC, NIH, FDA, EPA, USPSTF, AHA, AAD, national regulators.
 - If no page backs the exact tip, rewrite the tip to match what the source says, or leave the tip out.
 
-## Safety class
+## How well known is it?
 
-| Class | Use when | Effect |
+Set `familiarity` on every tip.
+
+| Value | Use when | Effect |
 |---|---|---|
-| `general` | Safe for almost everyone. | Normal. |
-| `check` | Safe for most people, but some should take care. | Shows a "Check first" notice. |
-| `clinician` | Touches on medicines, interactions or test results. | Never fires from a moment. Shows "Talk to a clinician". |
+| `common` | Most adults have heard it (eat vegetables, wear sunscreen). | Shows "Well known" and a note that it is repeated because it matters and links to other tips. |
+| `lesser-known` | Most people have not heard it, or not in this form. The default. | Shows "Lesser known". Comes first in "Keep exploring". |
 
-When unsure, choose the stricter class.
+Favour lesser-known areas: products and materials, ingredients and labels, clothing, the gut, kidneys and metabolism, eyes, ears and teeth, sexual and reproductive health, and mental wellbeing.
+
+## No safety classes
+
+Tips about medicines, tests and results are welcome and can come from any moment (D-010). Do not add warning tags. Say who should take care in the tip's `caution` line, using what the source says. The general medical disclaimer is in the app footer.
 
 ## Moments and reach
 
 A tip reaches people from a moment only if one of its `triggerKeys` matches an event in `MOMENTS`, `PRODUCTS` or `AGENT_SCENARIOS`. The build warns you when no moment can bring a tip.
 
-To add a moment, add it to `MOMENTS` (or a product to `PRODUCTS`) in the content file. Then use its `event` key in tips.
+To add a moment, add it to `MOMENTS` (or a product to `PRODUCTS`) in the content file, with `keywords` so links, messages, calendar entries and documents can find it. Then use its `event` key in tips.
+
+## Add tips on a running server
+
+Open `/admin`, sign in with the admin token, and upload a pack. The server runs the same checks and the tips go live at once. To keep them, download the merged library or run the pack through `scripts/build.py --merge` and commit.
 
 ## Change or remove a tip
 

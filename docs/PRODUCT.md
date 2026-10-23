@@ -25,7 +25,7 @@ Good health advice is everywhere, but it arrives at the wrong time. A tip about 
 
 ## What makes it defensible
 
-- **Trust.** Every tip has its own source, an evidence grade, a safety class and, later, a named clinical reviewer. Trust is costly to build and easy to lose, so it is hard to copy.
+- **Trust.** Every tip has its own source, an evidence grade, a familiarity label and, later, a named clinical reviewer. Trust is costly to build and easy to lose, so it is hard to copy.
 - **Neutrality.** One agent platform cannot credibly hold a user's record across rival agents. An independent service can.
 - **History.** A user's journey, and consented feedback on which tips help in which moments, build up over time. A new competitor starts with none.
 
@@ -33,13 +33,13 @@ Good health advice is everywhere, but it arrives at the wrong time. A tip about 
 
 | Area | State |
 |---|---|
-| Library | 203 tips across 10 categories. Every tip has a tip-level source. |
-| Links between tips | 83, each with a written reason. |
-| Moments | 30 moments plus 37 shareable products. 173 tips can come from a moment. |
-| Safety | 10 tips are clinician-only and never fire from a moment. |
+| Library | 251 tips across 15 categories; 204 lesser known, 47 well known. Every tip has a tip-level source. |
+| Links between tips | 105, each with a written reason. |
+| Moments | 51 moments and 64 products. Every live tip can come from a moment. |
+| Sources of moments | Live air and weather near you, links, photos, documents, barcodes, calendars, WhatsApp, email and AI agents (REST and MCP). |
 | Languages | English. Hindi preview: main labels and 11 tips. |
-| Channels | Push, email and WhatsApp, as previews only. |
-| Data | Stays in the browser. No accounts, no backend. |
+| Channels | In the app and WhatsApp. |
+| Data | An account per browser on the Wellwise server, joinable across devices, exportable and deletable. |
 | Review | No tip is clinically reviewed yet. |
 
 ## How it could make money
@@ -56,7 +56,7 @@ These options can combine. None is built beyond a demo slot.
 | Risk | What we do about it |
 |---|---|
 | Agent platforms build their own health tips | Win on trust and neutrality, which cost more to copy than to license. |
-| Health-advice regulation as scope grows | Safety classes from day one. Clinician-only tips never fire from moments. |
+| Health-advice regulation as scope grows | Tight sourcing, a clear medical disclaimer, and clinical review of the library (N1). |
 | Purchase-triggered tips feel judgmental | Opt-in moments. Friendly wording ("Something useful about your new pan"). |
 | Ads damage trust | Topic-only targeting, a sponsor firewall, clear labels. |
 | Retention | The journey, check-ins and weekly recap give a reason to return. |
