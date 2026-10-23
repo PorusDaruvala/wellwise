@@ -132,6 +132,54 @@ const { privateIp } = require('../server/net.js');
     await call('GET', '/api/me'); r = await call('POST', '/api/device-join', { code: dc });
     check('device code joins the same account', r.status === 200 && cookie === mine);
 
+    // connector sign-in for AI assistants (OAuth 2.1 + PKCE)
+    r = await call('POST', '/mcp', { jsonrpc: '2.0', id: 9, method: 'tools/list' }, { 'content-type': 'application/json', cookie: '' });
+    check('MCP without sign-in points to OAuth', r.status === 401 && /resource_metadata=.*oauth-protected-resource/.test(r.headers.get('www-authenticate') || ''));
+    const prm = (await call('GET', '/.well-known/oauth-protected-resource')).data, asm = (await call('GET', '/.well-known/oauth-authorization-server')).data;
+    check('OAuth metadata', prm.resource.endsWith('/mcp') && asm.code_challenge_methods_supported.includes('S256') && !!asm.registration_endpoint);
+    const reg = (await call('POST', '/oauth/register', { client_name: 'Claude', redirect_uris: ['https://claude.ai/api/mcp/auth_callback'] })).data;
+    check('assistant registers itself', /^wwc_/.test(reg.client_id));
+    check('bad redirect refused', (await call('POST', '/oauth/register', { redirect_uris: ['javascript:alert(1)'] })).status === 400);
+    const verifier = crypto.randomBytes(32).toString('hex'), challenge = crypto.createHash('sha256').update(verifier).digest('base64url');
+    const aq = new URLSearchParams({ response_type: 'code', client_id: reg.client_id, redirect_uri: 'https://claude.ai/api/mcp/auth_callback', code_challenge: challenge, code_challenge_method: 'S256', state: 'xyz' });
+    const signedIn = cookie; cookie = '';
+    r = await call('GET', '/oauth/authorize?' + aq); check('new browser is asked for a device code', /6-digit code/.test(r.data));
+    cookie = signedIn;
+    r = await call('GET', '/oauth/authorize?' + aq); check('signed-in browser sees Allow', /Connect Claude to Wellwise\?/.test(r.data) && r.headers.get('x-frame-options') === 'DENY');
+    const csrf = (r.data.match(/name="csrf" value="([a-f0-9]+)"/) || [])[1];
+    const approve = new URLSearchParams({ ...Object.fromEntries(aq), csrf, decision: 'allow' });
+    check('forged approval refused', !/code=/.test((await call('POST', '/oauth/authorize', new URLSearchParams({ ...Object.fromEntries(aq), csrf: 'nope', decision: 'allow' }).toString(), { 'content-type': 'application/x-www-form-urlencoded' })).headers.get('location') || ''));
+    r = await call('POST', '/oauth/authorize', approve.toString(), { 'content-type': 'application/x-www-form-urlencoded' });
+    const loc = new URL(r.headers.get('location') || 'https://x/'), code = loc.searchParams.get('code');
+    check('Allow returns to the assistant with a code', r.status === 302 && loc.host === 'claude.ai' && loc.searchParams.get('state') === 'xyz' && !!code);
+    const tokenForm = v => new URLSearchParams({ grant_type: 'authorization_code', code, redirect_uri: 'https://claude.ai/api/mcp/auth_callback', client_id: reg.client_id, code_verifier: v }).toString();
+    check('wrong PKCE verifier refused', (await call('POST', '/oauth/token', tokenForm('wrong'), { 'content-type': 'application/x-www-form-urlencoded' })).status === 400);
+    r = await call('POST', '/oauth/authorize', approve.toString(), { 'content-type': 'application/x-www-form-urlencoded' });
+    const code2 = new URL(r.headers.get('location')).searchParams.get('code');
+    const tok = (await call('POST', '/oauth/token', new URLSearchParams({ grant_type: 'authorization_code', code: code2, redirect_uri: 'https://claude.ai/api/mcp/auth_callback', client_id: reg.client_id, code_verifier: verifier }).toString(), { 'content-type': 'application/x-www-form-urlencoded' })).data;
+    check('token issued', /^wwo_/.test(tok.access_token) && /^wwr_/.test(tok.refresh_token));
+    r = await call('POST', '/mcp', { jsonrpc: '2.0', id: 10, method: 'tools/call', params: { name: 'wellwise_send_moment', arguments: { agent: 'Claude', text: 'Booked a flight to Singapore' } } }, { 'content-type': 'application/json', authorization: 'Bearer ' + tok.access_token, cookie: '' });
+    check('signed-in assistant can send a moment', !!r.data.result?.structuredContent?.tip);
+    const refreshed = (await call('POST', '/oauth/token', { grant_type: 'refresh_token', refresh_token: tok.refresh_token, client_id: reg.client_id })).data;
+    check('token refresh', /^wwo_/.test(refreshed.access_token) && refreshed.access_token !== tok.access_token);
+    const agents = (await call('GET', '/api/agents')).data;
+    check('connected assistants listed', agents.connected.some(c => c.name === 'Claude'));
+    await call('DELETE', '/api/agents/' + reg.client_id, {});
+    check('disconnect revokes access', (await call('POST', '/mcp', { jsonrpc: '2.0', id: 11, method: 'tools/list' }, { 'content-type': 'application/json', authorization: 'Bearer ' + refreshed.access_token, cookie: '' })).status === 401);
+
+    // scheduled tips follow each person's own clock
+    const clock = require('../server/clock.js');
+    const zones = Array.from({ length: 25 }, (_, i) => 'Etc/GMT' + (i - 12 >= 0 ? '+' : '') + (i - 12)).map(z => z.replace('+-', '-').replace('GMT+0', 'GMT'));
+    const morning = zones.find(z => { const h = clock.local(z).hour; return h >= 9 && h <= 20 }), night = zones.find(z => clock.local(z).hour < 6);
+    const tzUser = async zone => { cookie = ''; await call('GET', '/api/me'); await call('PUT', '/api/state', { state: { frequency: 'daily', tz: zone, updatedAt: 1 } }); return cookie };
+    const cA = await tzUser(morning), cB = await tzUser(night);
+    await app.tick();
+    cookie = cA; const dA = (await call('GET', '/api/inbox')).data.items.filter(i => i.source === 'daily').length;
+    cookie = cB; const dB = (await call('GET', '/api/inbox')).data.items.filter(i => i.source === 'daily').length;
+    check(`daily tip at 8:00 local (${morning} yes, ${night} not yet)`, dA === 1 && dB === 0);
+    check('calendar times use the event time zone', require('../server/calendar.js').parse('BEGIN:VEVENT\nUID:1\nDTSTART;TZID=Asia/Kolkata:20261101T233000\nSUMMARY:x\nEND:VEVENT', 'Europe/London')[0].start === Date.UTC(2026, 10, 1, 18, 0));
+    cookie = signedIn;
+
     // admin console
     check('admin needs a token', (await call('GET', '/api/admin/status')).status === 401);
     const A = { authorization: 'Bearer admin-secret' };

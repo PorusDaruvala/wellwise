@@ -71,7 +71,12 @@ check('no safety tags',!/Check first|Talk to a clinician|clinician’s input|hel
 go('settings');check('no add-tips in settings',!/Add tips|tip pack/i.test(txt()));check('no prototype tools',!/Prototype tools|Jump ahead/.test(txt()));
 check('disclaimer in footer',/not a substitute for medical advice/.test(w.document.getElementById('footer').textContent)&&/certified healthcare provider/.test(w.document.getElementById('footer').textContent));
 go('tip/ww-126');check('sponsor slot',/Sponsored/.test(txt()));
-go('settings');check('health details panel',/Health details/.test(txt()));
+go('settings');check('health details panel',/Health details/.test(txt())&&/tips that matter most to you/.test(txt())&&!/unsafe/.test(txt()));
+// online-only tabs, as they look when the server is there
+w.eval("API.on=true;API.linked={};API.features={}");go('moments');w.eval("setTab('calendar')");check('calendar sign-in shown as coming soon',/Connect Google Calendar/.test(txt())&&/Coming soon/.test(txt()));
+w.eval("setTab('agent')");check('agent connector address',/\/mcp/.test(txt())&&/Add custom connector/.test(txt()));
+w.eval("API.on=false");
+check('travel tips moved',['ww-059','ww-191','ww-196'].every(id=>w.eval(`TIPMAP['${id}'].category`)==='Travel health'));
 
 // new tips from a pack
 w.eval("S.offsetDays=0;persist();TIPS[0].added=new Date().toISOString().slice(0,10)");go('discover');check('new section shows',/New in Wellwise/.test(txt()));

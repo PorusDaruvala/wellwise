@@ -2732,7 +2732,7 @@
   {
    "id": "ww-059",
    "title": "Travel across time zones strategically",
-   "category": "Sleep & recovery",
+   "category": "Travel health",
    "action": "Shift light exposure and schedules gradually when practical",
    "why": "Timing cues can ease jet lag",
    "caution": "Medical conditions can affect travel planning",
@@ -2744,7 +2744,6 @@
     "OTHER"
    ],
    "tags": [
-    "sleep",
     "travel"
    ],
    "timeline": "You may notice changes within days; persistent sleep problems may need several weeks of a consistent approach.",
@@ -2757,7 +2756,7 @@
     "travel:long_trip"
    ],
    "concepts": [
-    "sleep_recovery",
+    "travel_health",
     "travel"
    ],
    "grade": "Moderate",
@@ -8433,7 +8432,7 @@
   {
    "id": "ww-191",
    "title": "Review travel vaccination needs",
-   "category": "Everyday health",
+   "category": "Travel health",
    "action": "Check destination-specific recommendations before departure",
    "why": "Risks vary substantially across destinations",
    "caution": "Some vaccines need lead time",
@@ -8445,7 +8444,6 @@
     "OTHER"
    ],
    "tags": [
-    "everyday",
     "travel"
    ],
    "timeline": "The action can start today; the relevant outcome may take days to weeks, or may not be directly measurable.",
@@ -8457,7 +8455,7 @@
     "travel:international_trip"
    ],
    "concepts": [
-    "everyday_health",
+    "travel_health",
     "travel"
    ],
    "grade": "Strong",
@@ -8648,7 +8646,7 @@
   {
    "id": "ww-196",
    "title": "Build a healthier travel routine",
-   "category": "Everyday health",
+   "category": "Travel health",
    "action": "Plan water, food and movement during long trips",
    "why": "Small preparations reduce disruption",
    "caution": "Motion and clot risk depend on individual factors",
@@ -8660,9 +8658,8 @@
     "OTHER"
    ],
    "tags": [
-    "everyday",
-    "movement",
-    "travel"
+    "travel",
+    "movement"
    ],
    "timeline": "The action can start today; the relevant outcome may take days to weeks, or may not be directly measurable.",
    "sources": [
@@ -8673,7 +8670,7 @@
     "travel:long_trip"
    ],
    "concepts": [
-    "everyday_health",
+    "travel_health",
     "movement",
     "travel"
    ],

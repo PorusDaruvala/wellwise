@@ -145,7 +145,7 @@ const I18N={
  hi:{discover:'खोजें',moments:'पल',journey:'मेरी यात्रा',explore:'लाइब्रेरी',inbox:'इनबॉक्स',settings:'सेटिंग्स',tryThis:'यह आज़माएँ',why:'यह क्यों ज़रूरी है',considerations:'ध्यान रखें',timeline:'नतीजे कब दिख सकते हैं',localNote:'स्थानीय बात',willTry:'आज़माना है',trying:'✓ आज़मा रहे हैं',already:'पहले से कर रहे हैं',adopted:'✓ आदत बन गई',notForMe:'मेरे लिए नहीं',open:'और पढ़ें →',dailyEyebrow:'आज की जानकारी',heroTitle:'सही समय पर, काम की बात जानें।',heroSub:'आपके दिन से जुड़ी छोटी, भरोसेमंद जानकारियाँ।',useful:'काम का',notUseful:'काम का नहीं'}
 };
 
-const DEFAULTS={geo:'GLOBAL',geoAuto:true,cats:[],age:'',diet:'',lang:'en',statuses:{},statusAt:{},seen:{},source:{},feedback:{},checkins:{},notifications:[],events:[],delivered:{},channel:CHANNELS[0],frequency:'both',discovery:'balanced',offsetDays:0,momentTab:'near',selected:null,shareText:'',nearConsent:false,live:null,inboxSince:0,lastDaily:'',tap:null,intakes:{},updatedAt:0};
+const DEFAULTS={geo:'GLOBAL',geoAuto:true,cats:[],age:'',diet:'',lang:'en',statuses:{},statusAt:{},seen:{},source:{},feedback:{},checkins:{},notifications:[],events:[],delivered:{},channel:CHANNELS[0],frequency:'both',discovery:'balanced',offsetDays:0,momentTab:'near',selected:null,shareText:'',nearConsent:false,live:null,inboxSince:0,lastDaily:'',tap:null,intakes:{},tz:'',updatedAt:0};
 let S;try{S=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){S={}}
 S={...DEFAULTS,...S};
 if(!CHANNELS.includes(S.channel))S.channel=/whatsapp/i.test(S.channel)?'WhatsApp':CHANNELS[0];
@@ -181,7 +181,9 @@ async function api(path,opts={}){
 async function connect(){
  if(!hosted()||typeof fetch!=='function')return;
  try{const me=await api('/api/me');API.on=true;API.features=me.features||{};API.linked=me.linked||{};
-  const remote=me.state||{};if((remote.updatedAt||0)>(S.updatedAt||0)){const keep={momentTab:S.momentTab,selected:S.selected};S={...DEFAULTS,...remote,...keep};delete S._server;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}else pushState();
+  const tz=(()=>{try{return Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){return ''}})();
+  const remote=me.state||{};if((remote.updatedAt||0)>(S.updatedAt||0)){const keep={momentTab:S.momentTab,selected:S.selected};S={...DEFAULTS,...remote,...keep};delete S._server;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+  if(tz&&S.tz!==tz){S.tz=tz;persist()}else pushState();
   await pullInbox();if(S.nearConsent)refreshLive();render();
   setInterval(pullInbox,60e3);window.addEventListener('focus',pullInbox);
  }catch(e){API.on=false}}
@@ -230,7 +232,7 @@ function resolveSel(sel){
 }
 function selectMoment(kind,id,via,label){S.selected={kind,id,via,label};const m=resolveSel(S.selected);if(m)delete S.delivered[m.key];persist();render()}
 function openMoment(id){S.selected={kind:'moment',id};const m=MOMENTS.find(x=>x.id===id);if(m)S.momentTab=m.source==='environment'?'near':m.source;persist();nav('moments')}
-function setTab(t){if(t==='environment')t='near';S.momentTab=t;persist();render();if(t==='calendar')loadCalendar()}
+function setTab(t){if(t==='environment')t='near';S.momentTab=t;persist();render();if(t==='calendar')loadCalendar();if(t==='agent')loadAgents()}
 function matchProduct(text){return ENGINE.matchProduct(PRODUCTS,text)}
 /* The same tip lands once in the journey and inbox, whichever button saved it. */
 function saveTip(key,tipId,moment,source,message){
@@ -267,7 +269,17 @@ async function shrinkImage(f){
  if(!/^image\//.test(f.type)||typeof createImageBitmap!=='function')return {data:await fileToB64(f),mediaType:f.type||'image/jpeg'};
  const bmp=await createImageBitmap(f),k=Math.min(1,1600/Math.max(bmp.width,bmp.height)),c=document.createElement('canvas');c.width=Math.round(bmp.width*k);c.height=Math.round(bmp.height*k);c.getContext('2d').drawImage(bmp,0,0,c.width,c.height);
  return {data:c.toDataURL('image/jpeg',.85).split(',')[1],mediaType:'image/jpeg'}}
-async function barcodeIn(source){try{if(!('BarcodeDetector' in window))return null;const d=new BarcodeDetector({formats:['ean_13','ean_8','upc_a','upc_e']});const r=await d.detect(source);return r[0]?.rawValue||null}catch(e){return null}}
+let zxingLoad=null;
+function loadZxing(){if(window.ZXing)return Promise.resolve(window.ZXing);if(!zxingLoad)zxingLoad=new Promise((ok,no)=>{const s=document.createElement('script');s.src='vendor/zxing.min.js';s.onload=()=>ok(window.ZXing);s.onerror=()=>{zxingLoad=null;no(new Error('Barcode reader did not load'))};document.head.appendChild(s)});return zxingLoad}
+function zxingRead(Z,source){
+ const w=source.videoWidth||source.naturalWidth||source.width,h=source.videoHeight||source.naturalHeight||source.height;if(!w||!h)return null;
+ const k=Math.min(1,1280/Math.max(w,h)),c=document.createElement('canvas');c.width=Math.round(w*k);c.height=Math.round(h*k);c.getContext('2d').drawImage(source,0,0,c.width,c.height);
+ const hints=new Map();hints.set(Z.DecodeHintType.POSSIBLE_FORMATS,[Z.BarcodeFormat.EAN_13,Z.BarcodeFormat.EAN_8,Z.BarcodeFormat.UPC_A,Z.BarcodeFormat.UPC_E]);hints.set(Z.DecodeHintType.TRY_HARDER,true);
+ const r=new Z.MultiFormatReader();r.setHints(hints);
+ try{return r.decode(new Z.BinaryBitmap(new Z.HybridBinarizer(new Z.HTMLCanvasElementLuminanceSource(c)))).getText()}catch(e){return null}}
+async function barcodeIn(source){
+ try{if('BarcodeDetector' in window){const d=new BarcodeDetector({formats:['ean_13','ean_8','upc_a','upc_e']});const r=await d.detect(source);if(r[0]?.rawValue)return r[0].rawValue}}catch(e){}
+ try{return zxingRead(await loadZxing(),source)}catch(e){return null}}
 async function readFile(input,via){
  const f=input.files[0];if(!f)return;input.value='';
  if(!API.on){toast('Reading files needs a connection to Wellwise');return}
@@ -279,8 +291,7 @@ let camStream=null,camTimer=null;
 async function startCamera(){
  if(!navigator.mediaDevices?.getUserMedia){toast('This browser cannot open the camera. Take a photo instead.');return}
  try{camStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});render();const v=$('cam');v.srcObject=camStream;await v.play();
-  if(!('BarcodeDetector' in window)){toast('Point at the label, then tap “Read this”.');return}
-  camTimer=setInterval(async()=>{const code=await barcodeIn(v);if(code){stopCamera();toast('Barcode found');sendIntake({barcode:code},'scan')}},500)}
+  let busy=false;camTimer=setInterval(async()=>{if(busy||!camStream)return;busy=true;const code=await barcodeIn(v);busy=false;if(code&&camStream){stopCamera();toast('Barcode found');sendIntake({barcode:code},'scan')}},'BarcodeDetector' in window?500:800)}
  catch(e){toast('The camera is blocked. You can allow it in your browser settings.')}}
 function stopCamera(){clearInterval(camTimer);camStream?.getTracks().forEach(t=>t.stop());camStream=null;if(S.momentTab==='scan')render()}
 async function snapCamera(){const v=$('cam');if(!v)return;const c=document.createElement('canvas');c.width=v.videoWidth;c.height=v.videoHeight;c.getContext('2d').drawImage(v,0,0);stopCamera();sendIntake({image:{data:c.toDataURL('image/jpeg',.85).split(',')[1],mediaType:'image/jpeg'}},'scan')}
@@ -293,6 +304,8 @@ async function syncCalendar(){try{API.calendar=await api('/api/calendar/sync',{m
 async function disconnectCalendar(){await api('/api/calendar',{method:'DELETE',body:{}}).catch(()=>{});API.calendar=null;await refreshMe();render();toast('Calendar disconnected')}
 async function linkWhatsApp(){try{API.wa=await api('/api/whatsapp',{method:'POST',body:{}});render()}catch(e){toast(e.message)}}
 async function unlinkWhatsApp(){await api('/api/whatsapp',{method:'DELETE',body:{}}).catch(()=>{});if(S.channel==='WhatsApp')S.channel=CHANNELS[0];persist();await refreshMe();render();toast('WhatsApp unlinked')}
+async function loadAgents(){if(!API.on)return;try{API.agents=await api('/api/agents');render()}catch(e){}}
+async function disconnectAgent(id){await api('/api/agents/'+id,{method:'DELETE',body:{}}).catch(()=>{});await loadAgents();toast('Disconnected')}
 async function makeAgentKey(){if(API.linked.agent&&!confirm('Make a new key? The old key stops working.'))return;try{API.agentKey=await api('/api/agent-key',{method:'POST',body:{}});await refreshMe();render()}catch(e){toast(e.message)}}
 async function revokeAgentKey(){await api('/api/agent-key',{method:'DELETE',body:{}}).catch(()=>{});API.agentKey=null;await refreshMe();render();toast('Agent key turned off')}
 async function makeEmail(){try{API.email=await api('/api/email',{method:'POST',body:{}});await refreshMe();render()}catch(e){toast(e.message)}}
@@ -361,6 +374,8 @@ function momentPicker(){
    <h3 class="spaced">Coming up</h3>${up.length?`<div class="grid two">${up.map(e=>{const m=MOMENTS.find(x=>x.id===e.moment);return m?pickBtn('moment',m.id,e.title||m.name,'calendar',fmtTime(e.start)+' · '+m.name):''}).join('')}</div>`:'<div class="empty">Nothing in the next two weeks needs a tip.</div>'}
    <p class="small muted spaced">Wellwise reads event titles, places and times, and sends a tip the day before an event that fits.</p><div class="row"><button class="btn ghost sm" onclick="syncCalendar()">Check now</button><button class="btn ghost sm" onclick="disconnectCalendar()">Disconnect</button></div>`
    :`<p>Connect your calendar once. Wellwise spots flights, appointments, blood tests, late nights, packed meeting days and more, and brings a tip before each one.</p>
+   <div class="row"><button class="btn alt" disabled>Connect Google Calendar</button><button class="btn alt" disabled>Connect Outlook</button><span class="badge">Coming soon</span></div>
+   <p class="small muted spaced">Until then, paste your calendar’s address below.</p>
    <label>Your calendar’s secret address (.ics)<input id="calUrl" class="field" placeholder="https://calendar.google.com/calendar/ical/…/basic.ics"></label><div class="row spaced"><button class="btn" ${API.busy?'disabled':''} onclick="connectCalendar()">${API.busy?'Connecting…':'Connect calendar'}</button><label class="btn ghost sm" style="margin:0">Or add an .ics file<input type="file" accept=".ics,text/calendar" style="display:none" onchange="readFile(this,'document')"></label></div>
    <details class="spaced"><summary>Where to find the address</summary><p class="small"><b>Google Calendar:</b> Settings → your calendar → Integrate calendar → Secret address in iCal format.</p><p class="small"><b>Outlook:</b> Settings → Calendar → Shared calendars → Publish a calendar → ICS link.</p><p class="small"><b>Apple iCloud:</b> Calendar app → share the calendar → Public Calendar → copy the link.</p></details>`}
  }else if(tab==='prompt'){
@@ -380,7 +395,13 @@ function momentPicker(){
   else body=`<p>Link WhatsApp once. Then forward Wellwise anything: links, photos, order confirmations, bookings or a few words. Tips come back in the chat and join your journey here.</p>${API.wa?`<div class="notice"><p style="margin-top:0">Send this message to <b>${esc(API.wa.number||'Wellwise')}</b> on WhatsApp:</p><p class="metric numeric">LINK ${esc(API.wa.code)}</p><p class="small muted">The code works for 15 minutes.</p>${API.wa.link?`<a class="btn" href="${esc(API.wa.link)}" target="_blank" rel="noopener">Open WhatsApp</a>`:''}<button class="btn ghost sm" style="margin-left:6px" onclick="refreshMe().then(render)">I’ve sent it</button></div>`:`<button class="btn" onclick="linkWhatsApp()">Link WhatsApp</button>`}`;
  }else if(tab==='agent'){
   if(!API.on)body=`<div class="empty"><b>Link your AI agent</b><p>If you use a personal AI agent for shopping, travel or your calendar, it can send moments to Wellwise once Wellwise is online.</p></div>`;
-  else{const k=API.agentKey;body=`<p>Link your AI agent. If it shops, books or plans for you, it can tell Wellwise what happened. Wellwise picks a tip that fits and saves it to your journey, whichever agent sent it.</p>
+  else{const k=API.agentKey,ag=API.agents,mcp=ag?.mcp||location.origin+'/mcp';body=`<p>Link your AI agent. If it shops, books or plans for you, it can tell Wellwise what happened. Wellwise picks a tip that fits and saves it to your journey, whichever agent sent it.</p>
+   <h3 class="spaced">Connect Claude, ChatGPT or another assistant</h3>
+   <p class="small">Add this address as a connector in your assistant, then sign in to Wellwise when it asks.</p>
+   <p><code>${esc(mcp)}</code> <button class="btn ghost sm" onclick="copyText('${esc(mcp)}')">Copy</button></p>
+   <details><summary>How to add it</summary><p class="small"><b>Claude:</b> Settings → Connectors → Add custom connector. Paste the address, choose Add, then Connect. A Wellwise page opens: choose Allow.</p><p class="small"><b>ChatGPT and others:</b> add a new connector or MCP server, paste the address, and sign in when asked.</p><p class="small">If the sign-in page asks for a code, open Wellwise on your phone or computer, go to Settings → Your data → Use Wellwise on another device, and enter the code it shows.</p></details>
+   ${ag?.connected?.length?`<div class="spaced">${ag.connected.map(c=>`<div class="status"><span><b>${esc(c.name)}</b><br><span class="small muted">Connected ${fmtDate(c.since)}</span></span><button class="btn ghost sm" onclick="disconnectAgent('${esc(c.id)}')">Disconnect</button></div>`).join('')}</div>`:''}
+   <h3 class="spaced">Or use a key</h3><p class="small muted">For agents you build or run yourself.</p>
    ${k?`<div class="notice"><b>Your agent key</b><p class="small">Copy it now. It is shown only once.</p><p><code>${esc(k.key)}</code> <button class="btn ghost sm" onclick="copyText('${esc(k.key)}')">Copy</button></p><p class="small"><b>MCP server:</b> <code>${esc(k.mcp)}</code></p><p class="small"><b>REST:</b> <code>POST ${esc(k.api)}/moments</code></p><pre>curl -X POST ${esc(k.api)}/moments \\
   -H "Authorization: Bearer ${esc(k.key)}" -H "Content-Type: application/json" \\
   -d '{"agent":"My agent","text":"Ordered: nonstick frying pan 28 cm"}'</pre></div>`
@@ -466,7 +487,7 @@ function settings(){const ln=API.linked;return `${header('Settings','Make Wellwi
  <h3 class="spaced">Topics you care about</h3><p class="small muted">Pick none to see everything.</p><div class="checks">${CATS.map(c=>`<label class="check"><input type="checkbox" class="catcheck" value="${esc(c)}" ${S.cats.includes(c)?'checked':''}> ${esc(c)}</label>`).join('')}</div>
  <h3 class="spaced">About you</h3><div class="formgrid"><label>Age range<select id="age" class="field">${['','Under 18','18–29','30–44','45–59','60+'].map(x=>`<option value="${esc(x)}" ${S.age===x?'selected':''}>${x||'Prefer not to say'}</option>`).join('')}</select></label><label>Diet<select id="diet" class="field">${['','Omnivore','Vegetarian','Vegan','Pescatarian','Other'].map(x=>`<option value="${esc(x)}" ${S.diet===x?'selected':''}>${x||'Prefer not to say'}</option>`).join('')}</select></label></div><p class="small muted">Diet changes which tips rise first. For example, “Vegan” brings B12 and fortified-food tips forward.</p>
  <div class="row spaced"><button class="btn" onclick="savePrefs()">Save</button><button class="btn ghost" onclick="clearPrefs()">Clear</button></div></div>
- <div class="panel spaced"><div class="eyebrow">Coming soon</div><h2>Health details</h2><p>Conditions, medicines and allergies could filter out unsafe tips. This is coming soon.</p><div class="formgrid"><label>Conditions<input disabled class="field" placeholder="Coming later"></label><label>Medicines<input disabled class="field" placeholder="Coming later"></label></div></div>
+ <div class="panel spaced"><div class="eyebrow">Coming soon</div><h2>Health details</h2><p>Add conditions, medicines and allergies, and Wellwise will bring the tips that matter most to you. This is coming soon.</p><div class="formgrid"><label>Conditions<input disabled class="field" placeholder="Coming later"></label><label>Medicines<input disabled class="field" placeholder="Coming later"></label></div></div>
  ${API.on?`<div class="panel spaced"><h2>Connected</h2>${[['Near you',S.nearConsent?'On':'Off','near'],['Calendar',ln.calendar?'Connected':'Not connected','calendar'],['WhatsApp',ln.whatsapp?'Linked · '+ln.whatsapp:'Not linked','whatsapp'],['Your agent',ln.agent?'Key active':'Not linked','agent'],...(API.features.email?[['Email',ln.email||'Not set up','email']]:[])].map(([n,v,tab])=>`<div class="status"><span><b>${n}</b><br><span class="small muted">${esc(v)}</span></span><button class="btn ghost sm" onclick="S.momentTab='${tab}';persist();nav('moments')">Manage</button></div>`).join('')}</div>`:''}
  <div class="panel spaced"><h2>Your data</h2><p class="small muted">${API.on?'Your settings and journey are saved to your Wellwise account on this device, so they survive a cleared browser.':'Your settings and journey are kept in this browser.'}</p>
  <div class="row"><button class="btn ghost sm" onclick="exportData()">Export my data</button>${API.on?'<button class="btn ghost sm" onclick="deviceCode()">Use Wellwise on another device</button>':''}<button class="btn ghost sm" onclick="resetAll()">Delete all my data</button></div>
@@ -502,6 +523,7 @@ async function route(){const p=currentPath();if(p.startsWith('tip/')&&TIPMAP[p.s
  const im=p.match(/^moments\/intake\/(in-[a-f0-9]+)$/);
  if(im){S.momentTab='share';history.replaceState(null,'','#moments');try{const r=await api('/api/intake/'+im[1]);keepIntake(r,'share')}catch(e){toast('We could not open what you shared')}}
  if(p==='moments'&&S.momentTab==='calendar'&&!API.calendar)loadCalendar();
+ if(p==='moments'&&S.momentTab==='agent'&&!API.agents)loadAgents();
  render()}
 function render(){
  document.documentElement.lang=S.lang==='hi'?'hi':'en';

@@ -20,6 +20,8 @@ OUTPUT = os.path.join(DIST, 'index.html')
 PACK_DIR = os.path.join(ROOT, 'content', 'packs')
 ENGINE = os.path.join(ROOT, 'src', 'engine.js')
 STATIC = ['admin.html', 'manifest.webmanifest', 'sw.js', 'icon.svg']
+# Open-source barcode reader (ZXing, Apache-2.0) for browsers without a built-in one, such as Safari on iPhone.
+ZXING = os.path.join(ROOT, 'node_modules', '@zxing', 'library')
 
 FAMILIARITY = {'common', 'lesser-known'}
 GRADES = {'Strong', 'Moderate', 'Limited', 'Safety practice'}
@@ -143,6 +145,12 @@ def build_html(content):
     open(OUTPUT, 'w', encoding='utf-8').write(html)
     for name in STATIC:
         shutil.copyfile(os.path.join(ROOT, 'src', name), os.path.join(DIST, name))
+    if os.path.exists(os.path.join(ZXING, 'umd', 'index.min.js')):
+        os.makedirs(os.path.join(DIST, 'vendor'), exist_ok=True)
+        shutil.copyfile(os.path.join(ZXING, 'umd', 'index.min.js'), os.path.join(DIST, 'vendor', 'zxing.min.js'))
+        shutil.copyfile(os.path.join(ZXING, 'LICENSE'), os.path.join(DIST, 'vendor', 'zxing-LICENSE.txt'))
+    else:
+        print('! Barcode reader not found. Run npm install before the build, or barcode photos will not work on iPhone.')
     # Published next to the app so a live site can pick up new tips without a rebuild.
     json.dump(content, open(os.path.join(DIST, 'wellwise-content.json'), 'w', encoding='utf-8'), ensure_ascii=False)
     return len(html)

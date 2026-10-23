@@ -22,6 +22,15 @@
 - 21 new moments and 27 new products. Every live tip (251 of 251) can now come from a moment, up from 173.
 - Moments have keywords, so text, calendar entries, messages and documents can find them.
 - The sample pack is merged.
+- Travel tips ww-059, ww-191 and ww-196 moved into Travel health.
+
+### Later the same day
+- Hosting on Railway: `Dockerfile` and `railway.json`, with steps in `docs/DEPLOY.md`.
+- Barcode scanning works on every browser, including iPhone, through a bundled open-source reader.
+- Daily, weekly and near-you tips arrive at the person's own local time. Calendar times use each event's time zone.
+- Connect Claude, ChatGPT or another assistant with one address and a sign-in. Connected assistants can be disconnected.
+- Calendar: "Connect Google Calendar" and "Connect Outlook" shown as coming soon.
+- The Health details panel now says what it will do: bring the tips that matter most to you.
 - 21 more sourced tips (ww-252 to ww-272) in four more categories: Ageing & older adults, Children & parenting, Work & screen life, and Travel health, with new moments for older parents, children, night shifts and high-altitude trips.
 
 

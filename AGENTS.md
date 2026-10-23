@@ -30,7 +30,7 @@ Read this before you change anything. These rules apply to Claude, Copilot, Curs
 - Operator features (adding tips, stats, test tools) belong in `/admin`, never in the app.
 
 ### Code
-- The app stays a single HTML file built by `scripts/build.py`. It must still work opened on its own, with server features switched off.
+- The app stays a single HTML file built by `scripts/build.py`. It must still work opened on its own, with server features switched off. The only extra file it loads is the bundled barcode reader in `dist/vendor/`, from the same server.
 - Matching and ranking live in `src/engine.js`, shared by the app and the server. The rules in `candidates()` are product decisions. Change them only with a matching entry in `docs/DECISIONS.md`.
 - Moments come from integrations, links, photos, documents and barcodes, not forms (D-012). Do not add simulated data.
 - Claude may only map input to existing event keys (D-013).

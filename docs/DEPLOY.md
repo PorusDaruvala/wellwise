@@ -13,15 +13,27 @@ Node 22.9 or newer is needed (for the built-in SQLite and `--env-file-if-exists`
 
 Near you, links, barcodes, calendars, agents and the admin console work with no keys at all. Photos and documents need `ANTHROPIC_API_KEY`. WhatsApp and email need their accounts below.
 
-## Host it
+## Host it on Railway
 
-Any host that runs a long-lived Node process with a persistent disk works (Render, Fly.io, Railway, a small VM). Steps:
+The repository has a `Dockerfile` and `railway.json`, so Railway builds and starts Wellwise with no build settings. It checks `/api/health` before each release goes live.
 
-1. Build: `python3 scripts/build.py && npm ci --omit=dev`
-2. Start: `npm start`
-3. Mount a persistent volume and set `WELLWISE_DB` to a file on it.
-4. Set `WELLWISE_PUBLIC_URL` to the public https address, and `WELLWISE_ADMIN_TOKEN` to a long random string.
-5. Serve over https. Camera, location and the share menu need it.
+1. Push `main` to GitHub.
+2. Sign in at railway.com with GitHub. Choose **New Project → Deploy from GitHub repo**, and pick the Wellwise repository.
+3. Open the service. Under **Settings → Networking**, choose **Generate Domain**. Copy the address, for example `https://wellwise-production.up.railway.app`.
+4. Add a volume to the service, mounted at `/data`. This is where accounts and journeys are kept. Without it, every redeploy wipes them.
+5. Under **Variables**, add:
+   - `WELLWISE_PUBLIC_URL`: the address from step 3
+   - `WELLWISE_ADMIN_TOKEN`: a long random string, for `/admin`
+   - `WELLWISE_SECRET`: another long random string
+   - `ANTHROPIC_API_KEY`: your key, for photos and documents
+   - WhatsApp and email settings, when you have them (below)
+6. Railway redeploys. Open the address on your phone. Every push to `main` deploys again.
+
+Share the address with testers. Each tester's browser gets its own account automatically.
+
+## Host it elsewhere
+
+Any Docker host with a persistent disk works. Build the `Dockerfile`, mount a volume at `/data`, set the variables above, and serve over https. Camera, location and the share menu need https.
 
 GitHub Pages (the existing workflow) still publishes `dist/` as a static site. That copy runs offline-only: keyword matching and a local daily tip, without accounts or integrations.
 
@@ -40,7 +52,9 @@ Use an inbound email service that posts JSON (Postmark's inbound webhook format 
 
 ## Agents
 
-People create a key in Moments → Your agent. Agents then call:
+**Assistants with connectors (Claude, ChatGPT and others):** people paste `<public url>/mcp` into their assistant as a custom connector. The assistant registers itself, opens a Wellwise approval page, and gets a token when the person chooses Allow (OAuth 2.1 with PKCE and dynamic client registration). If the approval page opens in a browser that has not used Wellwise, it asks for the 6-digit code from Settings → Your data → Use Wellwise on another device. People can disconnect an assistant in Moments → Your agent.
+
+**Agents you run yourself:** people create a key in Moments → Your agent. Agents then call:
 
 - REST: `POST /api/agent/v1/moments` with `{"text"|"url"|"event"|"image", "agent": "Name"}` and `Authorization: Bearer wwk_…`
 - MCP (streamable HTTP, JSON responses): `POST /mcp` with the same key. Tools: `wellwise_find_tip`, `wellwise_send_moment`, `wellwise_journey`.

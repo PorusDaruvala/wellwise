@@ -38,6 +38,8 @@ dist/ ──► server/ (Node, SQLite) ──► the browser
 | `whatsapp.js` | Webhook signature check, media download, replies, delivery inside and outside the 24-hour window. |
 | `content.js` | The live library and pack checks (same rules as `scripts/build.py`). |
 | `net.js` | Fetches shared links with private-address blocking, redirects checked, size and time limits. |
+| `oauth.js` | Connector sign-in for AI assistants: dynamic registration, PKCE codes, access and refresh tokens, the approval page. |
+| `clock.js` | Each person's local date and hour, and time-zone conversion for calendar times. |
 
 ### HTTP surface
 
@@ -47,15 +49,17 @@ dist/ ──► server/ (Node, SQLite) ──► the browser
 | `/api/me`, `/api/state`, `/api/inbox`, `/api/feedback` | The person (cookie) | Account, synced state, delivered tips, ratings. |
 | `/api/live`, `/api/intake`, `/api/calendar`, `/api/whatsapp`, `/api/agent-key`, `/api/email`, `/api/device-*` | The person | Integrations. |
 | `POST /share` | Other apps | Web Share Target. Redirects to `#moments/intake/<id>`. |
-| `/api/agent/v1/*`, `POST /mcp` | Agents (Bearer key) | `moments`, `tips`, `events`; MCP tools `wellwise_find_tip`, `wellwise_send_moment`, `wellwise_journey`. |
+| `/api/agent/v1/*`, `POST /mcp` | Agents (Bearer key or OAuth token) | `moments`, `tips`, `events`; MCP tools `wellwise_find_tip`, `wellwise_send_moment`, `wellwise_journey`. |
+| `/.well-known/oauth-*`, `/oauth/register`, `/oauth/authorize`, `/oauth/token` | AI assistants | Connector sign-in. |
+| `/api/agents` | The person | Connected assistants; disconnect one. |
 | `/webhooks/whatsapp`, `/webhooks/email` | Meta, email provider | Inbound messages. |
 | `/api/admin/*` | Operators (Bearer admin token) | Status, packs, merged library, reader test, run scheduler. |
 
 ### Scheduler (`tick()`, every 10 minutes)
 
 - Re-reads each connected calendar every 30 minutes. Sends one tip within 24 hours of an event that fits.
-- Once a day, after 7:00, sends a near-you tip if the person's live conditions bring one.
-- Once a day, after 8:00, sends the daily tip (or Mondays for weekly).
+- Once a day, after 7:00 in the person's own time zone, sends a near-you tip if their live conditions bring one.
+- Once a day, after 8:00 local time, sends the daily tip (or Mondays for weekly). The app sends the browser's time zone with the account.
 - Sends 7- and 30-day check-ins for tips the person is trying.
 - Every delivery is deduplicated per person (`inbox.dedupe`). Frequency "off" sends nothing.
 
@@ -123,7 +127,8 @@ Changing these rules is a product decision. Record it in `DECISIONS.md`.
 
 ## Known limits
 
-- Calendar times with a time zone are read as server-local time; recurring events count only their first date.
+- Recurring calendar events count only their first date.
 - WhatsApp tips outside the 24-hour window need an approved template (`WHATSAPP_TEMPLATE`).
-- Photos and PDFs need `ANTHROPIC_API_KEY`. Without it, photos work only when the browser can read a barcode.
+- Photos and PDFs need `ANTHROPIC_API_KEY`. Without it, photos still work when they show a barcode.
+- Barcodes are read by the browser's own reader where there is one, and by the bundled ZXing reader (`dist/vendor/zxing.min.js`, Apache-2.0) everywhere else, including iPhone.
 - The pack checks exist in Python and JavaScript. Keep them in step.

@@ -12,10 +12,12 @@ const ics = require('./calendar.js');
 const wa = require('./whatsapp.js');
 const llm = require('./llm.js');
 const { fetchPublic } = require('./net.js');
+const oauth = require('./oauth.js');
+const clock = require('./clock.js');
 
 const ROOT = path.join(__dirname, '..');
-const STATIC = { '/': 'index.html', '/index.html': 'index.html', '/admin': 'admin.html', '/manifest.webmanifest': 'manifest.webmanifest', '/sw.js': 'sw.js', '/icon.svg': 'icon.svg' };
-const TYPES = { '.html': 'text/html; charset=utf-8', '.webmanifest': 'application/manifest+json', '.js': 'text/javascript; charset=utf-8', '.svg': 'image/svg+xml', '.json': 'application/json' };
+const STATIC = { '/': 'index.html', '/index.html': 'index.html', '/admin': 'admin.html', '/manifest.webmanifest': 'manifest.webmanifest', '/sw.js': 'sw.js', '/icon.svg': 'icon.svg', '/vendor/zxing.min.js': 'vendor/zxing.min.js', '/vendor/zxing-LICENSE.txt': 'vendor/zxing-LICENSE.txt' };
+const TYPES = { '.txt': 'text/plain; charset=utf-8', '.html': 'text/html; charset=utf-8', '.webmanifest': 'application/manifest+json', '.js': 'text/javascript; charset=utf-8', '.svg': 'image/svg+xml', '.json': 'application/json' };
 const SOURCE_LABEL = { share: 'Share', scan: 'Scan', photo: 'Photo', document: 'Document', calendar: 'Calendar', environment: 'Near you', whatsapp: 'WhatsApp', email: 'Email', agent: 'Your agent', daily: 'Daily tip', weekly: 'Weekly tip', checkin: 'Check-in', prompt: 'Quick check-in' };
 
 function createApp(opts = {}) {
@@ -23,6 +25,9 @@ function createApp(opts = {}) {
   const db = open(opts.db || process.env.WELLWISE_DB || path.join(ROOT, 'data', 'wellwise.db'));
   const lib = createLibrary(db, opts.content || path.join(dist, 'wellwise-content.json'));
   const adminToken = opts.adminToken ?? process.env.WELLWISE_ADMIN_TOKEN ?? '';
+  const oa = oauth.setup(db);
+  const SECRET = process.env.WELLWISE_SECRET || crypto.randomBytes(32).toString('hex');
+  const sign = (...xs) => crypto.createHmac('sha256', SECRET).update(xs.join('|')).digest('hex');
   const publicUrl = (req) => (process.env.WELLWISE_PUBLIC_URL || `${req?.headers['x-forwarded-proto'] || 'http'}://${req?.headers.host || 'localhost:8787'}`).replace(/\/$/, '');
   let baseUrl = process.env.WELLWISE_PUBLIC_URL || '';
   const tipUrl = id => `${baseUrl}/#tip/${id}`;
@@ -85,9 +90,9 @@ function createApp(opts = {}) {
   async function syncCalendar(u) {
     const page = await fetchPublic(u.calendar_url.replace(/^webcal:/i, 'https:'), { maxBytes: 5e6 });
     if (page.status >= 400) throw new Error('The calendar address returned an error');
-    const events = ics.parse(page.body.toString('utf8'));
+    const events = ics.parse(page.body.toString('utf8'), u.state.tz);
     if (!events.length && !/BEGIN:VCALENDAR/.test(page.body.slice(0, 500).toString())) throw new Error('That address is not a calendar feed (.ics)');
-    const found = ics.classify(lib.current(), events);
+    const found = ics.classify(lib.current(), events, { tz: u.state.tz });
     db.clearCal(u.id);
     for (const e of found) db.upsertCalEvent(u.id, e);
     db.setField(u.id, 'calendar_synced', Date.now());
@@ -95,11 +100,10 @@ function createApp(opts = {}) {
   }
 
   /* ---------- scheduler: calendar, near you, daily tips, check-ins ---------- */
-  const today = () => new Date().toISOString().slice(0, 10);
   async function tick() {
     const content = lib.current();
     for (const u of db.allUsers()) {
-      const s = u.state || {}, freq = s.frequency || 'both';
+      const s = u.state || {}, freq = s.frequency || 'both', here = clock.local(s.tz);
       try {
         if (u.calendar_url && (!u.calendar_synced || Date.now() - u.calendar_synced > 30 * 60e3)) await syncCalendar(u).catch(e => console.error('calendar', u.id, e.message));
         if (freq !== 'off' && freq !== 'daily' && freq !== 'weekly') {
@@ -107,22 +111,22 @@ function createApp(opts = {}) {
             if (e.start > Date.now() + 24 * 3600e3) continue;
             const m = content.MOMENTS.find(x => x.id === e.moment); if (!m) continue;
             const pick = intake.pickTip(content, [{ kind: 'moment', id: m.id, event: m.event, label: m.name }], s);
-            if (pick) await deliver(u, pick, 'calendar', { moment: `${e.title} · ${new Date(e.start).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })}`, dedupe: 'cal:' + e.uid, message: m.friendly });
+            if (pick) await deliver(u, pick, 'calendar', { moment: `${e.title} · ${clock.shortDate(e.start, s.tz)}`, dedupe: 'cal:' + e.uid, message: m.friendly });
           }
-          if (u.lat != null && new Date().getHours() >= 7) {
+          if (u.lat != null && here.hour >= 7) {
             const c = await live.conditions(db, u.lat, u.lon).catch(() => null);
             const lm = c && c.moments[0], m = lm && content.MOMENTS.find(x => x.id === lm.id);
             const pick = m && intake.pickTip(content, [{ kind: 'moment', id: m.id, event: m.event, label: m.name }], s);
-            if (pick) await deliver(u, pick, 'environment', { moment: `${m.name} · ${lm.reason}${c.place ? ' · ' + c.place : ''}`, dedupe: `live:${today()}`, message: m.friendly });
+            if (pick) await deliver(u, pick, 'environment', { moment: `${m.name} · ${lm.reason}${c.place ? ' · ' + c.place : ''}`, dedupe: `live:${here.date}`, message: m.friendly });
           }
         }
-        if ((freq === 'daily' || freq === 'both') && new Date().getHours() >= 8) {
+        if ((freq === 'daily' || freq === 'both') && here.hour >= 8) {
           const t = E.dailyTip(content.live, s);
-          if (t) await deliver(u, { tip: t, match: null }, 'daily', { moment: 'Your daily tip', dedupe: 'daily:' + today(), message: 'Your Wellwise tip for today' });
+          if (t) await deliver(u, { tip: t, match: null }, 'daily', { moment: 'Your daily tip', dedupe: 'daily:' + here.date, message: 'Your Wellwise tip for today' });
         }
-        if (freq === 'weekly' && new Date().getDay() === 1) {
+        if (freq === 'weekly' && here.weekday === 1 && here.hour >= 8) {
           const t = E.dailyTip(content.live, s);
-          if (t) await deliver(u, { tip: t, match: null }, 'weekly', { moment: 'Your weekly tip', dedupe: 'weekly:' + today(), message: 'Your Wellwise tip for the week' });
+          if (t) await deliver(u, { tip: t, match: null }, 'weekly', { moment: 'Your weekly tip', dedupe: 'weekly:' + here.date, message: 'Your Wellwise tip for the week' });
         }
         for (const [tid, st] of Object.entries(s.statuses || {})) {
           const at = (s.statusAt || {})[tid], t = content.byId[tid]; if (st !== 'trying' || !at || !t) continue;
@@ -136,7 +140,23 @@ function createApp(opts = {}) {
   }
 
   /* ---------- agent API and MCP ---------- */
-  function agentUser(req) { const k = (req.headers.authorization || '').replace(/^Bearer\s+/i, ''); return db.userByAgentKey(k) }
+  /* Agents sign in with a personal key (wwk_…) or an OAuth token from the connector sign-in (wwo_…). */
+  function agentUser(req) {
+    const k = (req.headers.authorization || '').replace(/^Bearer\s+/i, '').trim();
+    if (k.startsWith('wwo_')) { const uid = oa.userFor(k); return uid ? db.userById(uid) : null }
+    return db.userByAgentKey(k);
+  }
+  const formOrJson = async req => { const b = (await readBody(req, 1e5)).toString(); if (/json/.test(req.headers['content-type'] || '')) { try { return JSON.parse(b || '{}') } catch (e) { return {} } } return Object.fromEntries(new URLSearchParams(b)) };
+  const AUTH_FIELDS = ['client_id', 'redirect_uri', 'state', 'code_challenge', 'code_challenge_method', 'scope', 'resource'];
+  function authHidden(q, uid) { const v = Object.fromEntries(AUTH_FIELDS.map(k => [k, q[k] || ''])); return AUTH_FIELDS.map(k => `<input type="hidden" name="${k}" value="${oauth.esc(v[k])}">`).join('') + `<input type="hidden" name="csrf" value="${sign(uid || 'anon', v.client_id, v.redirect_uri, v.code_challenge)}">` }
+  function authCheck(q) {
+    const client = oa.client(q.client_id);
+    if (!client) return { error: 'This assistant is not registered with Wellwise. Try adding the connector again.' };
+    if (!client.redirect_uris.includes(q.redirect_uri)) return { error: 'This sign-in link is not valid. Try adding the connector again.' };
+    if (q.code_challenge_method !== 'S256' || !q.code_challenge) return { error: 'This assistant must use a secure sign-in (PKCE).' };
+    return { client };
+  }
+  const htmlHeaders = { 'content-type': 'text/html; charset=utf-8', 'x-frame-options': 'DENY', 'content-security-policy': "frame-ancestors 'none'" };
   async function agentMoment(u, body, deliverIt = true) {
     const content = lib.current(); let pick = null, r = null;
     if (body.event) { const m = [...content.PRODUCTS, ...content.MOMENTS].find(x => x.event === body.event); if (!m) return { error: 'Unknown event key. See GET /api/agent/v1/events.' }; pick = intake.pickTip(content, [{ kind: content.PRODUCTS.includes(m) ? 'product' : 'moment', id: m.id, event: m.event, label: m.name }], prefsOf(u)) }
@@ -182,7 +202,8 @@ function createApp(opts = {}) {
   /* ---------- router ---------- */
   async function handle(req, res) {
     const url = new URL(req.url, 'http://x'), p = url.pathname, m = req.method;
-    if (!baseUrl) baseUrl = publicUrl(req);
+    // Learn the public address from real visitors, not from the host's health check.
+    if (!process.env.WELLWISE_PUBLIC_URL && p !== '/api/health' && req.headers.host) baseUrl = publicUrl(req);
     try {
       if (m === 'GET' && STATIC[p]) {
         const f = path.join(dist, STATIC[p]); if (!fs.existsSync(f)) return fail(res, 404, 'Run python3 scripts/build.py first');
@@ -190,6 +211,33 @@ function createApp(opts = {}) {
       }
       if (m === 'GET' && p === '/wellwise-content.json') return send(res, 200, lib.publicJSON(), { 'cache-control': 'no-cache' });
       if (m === 'GET' && p === '/api/health') return send(res, 200, { ok: true, features: features() });
+
+      /* ---- connector sign-in for AI assistants (OAuth 2.1 + PKCE + dynamic registration) ---- */
+      if (m === 'GET' && p.startsWith('/.well-known/oauth-protected-resource')) return send(res, 200, { resource: baseUrl + '/mcp', authorization_servers: [baseUrl], bearer_methods_supported: ['header'], scopes_supported: ['wellwise'], resource_name: 'Wellwise' });
+      if (m === 'GET' && (p.startsWith('/.well-known/oauth-authorization-server') || p.startsWith('/.well-known/openid-configuration'))) return send(res, 200, { issuer: baseUrl, authorization_endpoint: baseUrl + '/oauth/authorize', token_endpoint: baseUrl + '/oauth/token', registration_endpoint: baseUrl + '/oauth/register', response_types_supported: ['code'], grant_types_supported: ['authorization_code', 'refresh_token'], code_challenge_methods_supported: ['S256'], token_endpoint_auth_methods_supported: ['none'], scopes_supported: ['wellwise'] });
+      if (m === 'POST' && p === '/oauth/register') { if (limited('reg:' + (req.socket.remoteAddress || ''), 20)) return fail(res, 429, 'Slow down'); const r = oa.register(await formOrJson(req)); return send(res, r.error ? 400 : 201, r) }
+      if (m === 'POST' && p === '/oauth/token') { const r = oa.exchange(await formOrJson(req)); return send(res, r.error ? 400 : 200, r) }
+      if (p === '/oauth/authorize') {
+        const q = m === 'GET' ? Object.fromEntries(url.searchParams) : await formOrJson(req);
+        const { client, error } = authCheck(q);
+        if (error) return send(res, 400, oauth.page('Sign-in problem', `<h1>Something is not right</h1><p>${oauth.esc(error)}</p>`), htmlHeaders);
+        const u = me(req, res, false);
+        if (m === 'POST') {
+          if (q.decision === 'code') {
+            const uid = db.useCode(String(q.device_code || '').trim(), 'device'), other = uid && db.userById(uid);
+            if (!other) return send(res, 200, oauth.codePage(client, authHidden(q, null), 'That code did not work. Codes last 10 minutes.'), htmlHeaders);
+            res.setHeader('set-cookie', sessionCookie(req, other.token));
+            return send(res, 200, oauth.approvePage(client, authHidden(q, other.id)), htmlHeaders);
+          }
+          if (!u || q.csrf !== sign(u.id, q.client_id, q.redirect_uri, q.code_challenge)) return send(res, 200, u ? oauth.approvePage(client, authHidden(q, u.id), 'Please try again.') : oauth.codePage(client, authHidden(q, null)), htmlHeaders);
+          const back = new URL(q.redirect_uri);
+          if (q.decision === 'allow') back.searchParams.set('code', oa.issueCode(u.id, client.id, q.redirect_uri, q.code_challenge));
+          else back.searchParams.set('error', 'access_denied');
+          if (q.state) back.searchParams.set('state', q.state);
+          res.writeHead(302, { location: back.href }); return res.end();
+        }
+        return send(res, 200, u ? oauth.approvePage(client, authHidden(q, u.id)) : oauth.codePage(client, authHidden(q, null)), htmlHeaders);
+      }
 
       /* share target: other apps share a link, text or photo straight into Wellwise */
       if (m === 'POST' && p === '/share') {
@@ -207,7 +255,7 @@ function createApp(opts = {}) {
         const u = me(req, res);
         if (m === 'GET' && p === '/api/me') return send(res, 200, { id: u.id, state: u.state, linked: summaryOf(u), features: features() });
         if (m === 'PUT' && p === '/api/state') { const b = await json(req); const st = { ...(b.state || {}), _server: u.state._server || {} }; db.saveState(u.id, st); return send(res, 200, { ok: true }) }
-        if (m === 'DELETE' && p === '/api/me') { db.deleteUser(u.id); return send(res, 200, { ok: true }, { 'set-cookie': 'ww=; Path=/; Max-Age=0' }) }
+        if (m === 'DELETE' && p === '/api/me') { oa.revokeAll(u.id); db.deleteUser(u.id); return send(res, 200, { ok: true }, { 'set-cookie': 'ww=; Path=/; Max-Age=0' }) }
         if (m === 'GET' && p === '/api/inbox') return send(res, 200, { items: db.inboxSince(u.id, +url.searchParams.get('since') || 0) });
         if (m === 'POST' && p === '/api/feedback') { const b = await json(req); db.vote(u.id, String(b.tip), b.source, b.vote === 'useful' || b.vote === 'not-useful' ? b.vote : null); return send(res, 200, { ok: true }) }
         if (m === 'GET' && p === '/api/live') {
@@ -244,6 +292,8 @@ function createApp(opts = {}) {
           if (m === 'POST') { const c = db.newCode(u.id, 'whatsapp'), num = (wa.env().number || '').replace(/\D/g, ''); return send(res, 200, { code: c, number: wa.env().number || null, link: num ? `https://wa.me/${num}?text=${encodeURIComponent('LINK ' + c)}` : null, enabled: wa.enabled() }) }
           if (m === 'DELETE') { db.setField(u.id, 'phone', null); return send(res, 200, { ok: true }) }
         }
+        if (m === 'GET' && p === '/api/agents') return send(res, 200, { mcp: baseUrl + '/mcp', connected: oa.connected(u.id).map(c => ({ id: c.client_id, name: c.name, since: c.since })) });
+        if (m === 'DELETE' && (mm = p.match(/^\/api\/agents\/(wwc_[a-f0-9]+)$/))) { oa.revoke(u.id, mm[1]); return send(res, 200, { ok: true }) }
         if (p === '/api/agent-key') {
           if (m === 'POST') { const k = 'wwk_' + db.id(20); db.setField(u.id, 'agent_key', k); return send(res, 200, { key: k, api: baseUrl + '/api/agent/v1', mcp: baseUrl + '/mcp' }) }
           if (m === 'DELETE') { db.setField(u.id, 'agent_key', null); return send(res, 200, { ok: true }) }
@@ -260,7 +310,7 @@ function createApp(opts = {}) {
       /* ---- agents: REST and MCP, with a personal key ---- */
       if (p.startsWith('/api/agent/v1/') || p === '/mcp') {
         const u = agentUser(req);
-        if (!u) return fail(res, 401, 'Send your Wellwise agent key as: Authorization: Bearer wwk_…');
+        if (!u) return send(res, 401, { error: 'Sign in to Wellwise, or send your agent key as: Authorization: Bearer wwk_…' }, { 'www-authenticate': `Bearer resource_metadata="${baseUrl}/.well-known/oauth-protected-resource"` });
         if (limited('ag:' + u.id, 30)) return fail(res, 429, 'Slow down');
         if (p === '/mcp') {
           if (m !== 'POST') return send(res, 405, 'Use POST', { allow: 'POST' });
