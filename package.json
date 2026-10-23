@@ -1,0 +1,14 @@
+{
+  "name": "wellwise",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Wellwise: useful health insights, sparked by everyday moments",
+  "scripts": {
+    "build": "python3 scripts/build.py",
+    "test": "node tests/app.test.js",
+    "check": "python3 scripts/build.py && node tests/app.test.js"
+  },
+  "devDependencies": {
+    "jsdom": "^24.0.0"
+  }
+}

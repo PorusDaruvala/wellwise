@@ -1,0 +1,47 @@
+{
+  "pack": "October 2026 sample pack",
+  "tips": [
+    {
+      "id": "ww-201",
+      "title": "Set up one cleaner-air room",
+      "category": "Air, water & environment",
+      "action": "Pick one room, close it off, and run a correctly sized air purifier there on smoky or high-AQI days",
+      "why": "One well-filtered room gives you a place to breathe cleaner air when the whole home cannot be filtered",
+      "caution": "Keep the room cool enough in hot weather. A purifier does not remove all gases.",
+      "sources": ["https://www.epa.gov/wildfires/how-create-cleaner-air-room-home"],
+      "triggerKeys": ["weather:poor_air_quality", "weather:wildfire_smoke", "commerce:air_purifier"],
+      "notes": {"IN": "Useful during winter smog in many north Indian cities."},
+      "hi": {
+        "title": "घर में एक साफ़ हवा वाला कमरा बनाएँ",
+        "action": "धुएँ या ज़्यादा AQI वाले दिनों में एक कमरा बंद करें और उसमें सही आकार का एयर प्यूरीफ़ायर चलाएँ",
+        "why": "जब पूरे घर की हवा साफ़ न हो सके, तब एक कमरा साँस लेने के लिए साफ़ जगह देता है"
+      }
+    },
+    {
+      "id": "ww-202",
+      "title": "Keep a simple blood pressure log",
+      "category": "Prevention & tests",
+      "action": "Write down each home reading with the date and time, and bring the log to your next appointment",
+      "why": "A written record shows your doctor a pattern, not one reading on one day",
+      "caution": "Seek urgent care for a very high reading with symptoms such as chest pain or weakness.",
+      "sources": ["https://www.cdc.gov/high-blood-pressure/measure/index.html"],
+      "triggerKeys": ["commerce:blood_pressure_monitor", "calendar:appointment"]
+    },
+    {
+      "id": "ww-203",
+      "title": "Learn the signs of heat illness",
+      "category": "Air, water & environment",
+      "action": "Before a hot day, read the warning signs of heat exhaustion and heat stroke, and know what to do for each",
+      "why": "Heat illness can get worse quickly, and early action prevents harm",
+      "caution": "Heat stroke is an emergency. Call for help at once.",
+      "sources": ["https://www.cdc.gov/climate-health/php/resources/protect-yourself-from-the-dangers-of-extreme-heat.html"],
+      "triggerKeys": ["weather:heat_warning", "prompt:outdoors"]
+    }
+  ],
+  "edges": [
+    {"a": "ww-201", "b": "ww-163", "type": "depends-on", "why": "A cleaner-air room works only with a purifier sized for that room."},
+    {"a": "ww-201", "b": "ww-165", "type": "complements", "why": "Both reduce the smoke you breathe at home."},
+    {"a": "ww-202", "b": "ww-121", "type": "reinforces", "why": "A log turns single readings into a trend."},
+    {"a": "ww-203", "b": "ww-168", "type": "complements", "why": "Planning around heat and knowing the warning signs work together."}
+  ]
+}
