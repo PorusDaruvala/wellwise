@@ -15,13 +15,14 @@
 - Explore has a region filter again (my region, region-specific, all, or one country) and a lesser-known / well-known filter.
 - Every tip is labelled "Well known" or "Lesser known". Well-known tips say why they are repeated.
 - No safety classes, "Check first" tags or clinician notices. One medical disclaimer in the footer. Medicine and test tips can come from moments.
-- Adding tips, stats and test tools moved to an admin console at /admin. "Prototype tools", the sample-data feedback page and demo sponsor slots are gone.
+- Adding tips, stats and test tools moved to an admin console at /admin. "Prototype tools" and the sample-data feedback page are gone. The demo sponsor slots and the Health details panel stay.
 
 ### Content
 - 48 new sourced tips (ww-204 to ww-251), mostly lesser known, in five new categories: Clothing & textiles, Ingredients & labels, Gut, kidneys & metabolism, Eyes, ears & teeth, and Sexual & reproductive health; plus mental wellbeing (including Tele MANAS, 988 and NHS Talking Therapies), lead in cookware and kajal, mercury in skin creams, air fresheners and laundry pods.
 - 21 new moments and 27 new products. Every live tip (251 of 251) can now come from a moment, up from 173.
 - Moments have keywords, so text, calendar entries, messages and documents can find them.
 - The sample pack is merged.
+- 21 more sourced tips (ww-252 to ww-272) in four more categories: Ageing & older adults, Children & parenting, Work & screen life, and Travel health, with new moments for older parents, children, night shifts and high-altitude trips.
 
 
 ## 3.0.0 · 2026-10-23

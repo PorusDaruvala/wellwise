@@ -70,7 +70,8 @@ const pages=['discover','moments','journey','explore','inbox','settings','tip/ww
 check('no safety tags',!/Check first|Talk to a clinician|clinician’s input|held back|Not yet reviewed/.test(pages));
 go('settings');check('no add-tips in settings',!/Add tips|tip pack/i.test(txt()));check('no prototype tools',!/Prototype tools|Jump ahead/.test(txt()));
 check('disclaimer in footer',/not a substitute for medical advice/.test(w.document.getElementById('footer').textContent)&&/certified healthcare provider/.test(w.document.getElementById('footer').textContent));
-check('no sponsor demo',!/Sponsored/.test(pages));
+go('tip/ww-126');check('sponsor slot',/Sponsored/.test(txt()));
+go('settings');check('health details panel',/Health details/.test(txt()));
 
 // new tips from a pack
 w.eval("S.offsetDays=0;persist();TIPS[0].added=new Date().toISOString().slice(0,10)");go('discover');check('new section shows',/New in Wellwise/.test(txt()));

@@ -33,9 +33,9 @@ Good health advice is everywhere, but it arrives at the wrong time. A tip about 
 
 | Area | State |
 |---|---|
-| Library | 251 tips across 15 categories; 204 lesser known, 47 well known. Every tip has a tip-level source. |
-| Links between tips | 105, each with a written reason. |
-| Moments | 51 moments and 64 products. Every live tip can come from a moment. |
+| Library | 272 tips across 19 categories; 222 lesser known, 50 well known. Every tip has a tip-level source. |
+| Links between tips | 118, each with a written reason. |
+| Moments | 55 moments and 68 products. Every live tip can come from a moment. |
 | Sources of moments | Live air and weather near you, links, photos, documents, barcodes, calendars, WhatsApp, email and AI agents (REST and MCP). |
 | Languages | English. Hindi preview: main labels and 11 tips. |
 | Channels | In the app and WhatsApp. |

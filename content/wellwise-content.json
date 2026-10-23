@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "contentVersion": 202610231555,
+ "contentVersion": 202610231631,
  "REGIONS": [
   "US",
   "IN",
@@ -171,6 +171,50 @@
    "know": [
     "thing worth knowing about sexual and reproductive health",
     "things worth knowing about sexual and reproductive health"
+   ]
+  },
+  {
+   "name": "Ageing & older adults",
+   "tag": "ageing",
+   "concept": "ageing_older_adults",
+   "defaultGrade": "Strong",
+   "defaultTimeline": "Some steps protect you straight away; others, like screening, matter over years.",
+   "know": [
+    "thing worth knowing about healthy ageing",
+    "things worth knowing about healthy ageing"
+   ]
+  },
+  {
+   "name": "Children & parenting",
+   "tag": "children",
+   "concept": "children_parenting",
+   "defaultGrade": "Safety practice",
+   "defaultTimeline": "Most of these protect a child from the moment you start.",
+   "know": [
+    "way to keep children safe and well",
+    "ways to keep children safe and well"
+   ]
+  },
+  {
+   "name": "Work & screen life",
+   "tag": "work",
+   "concept": "work_screen_life",
+   "defaultGrade": "Moderate",
+   "defaultTimeline": "You may feel the difference within days; habits take a few weeks to settle.",
+   "know": [
+    "way to work and use screens well",
+    "ways to work and use screens well"
+   ]
+  },
+  {
+   "name": "Travel health",
+   "tag": "travel",
+   "concept": "travel_health",
+   "defaultGrade": "Safety practice",
+   "defaultTimeline": "These steps matter before and during a trip; some need starting days or weeks ahead.",
+   "know": [
+    "way to stay well when you travel",
+    "ways to stay well when you travel"
    ]
   }
  ],
@@ -3168,7 +3212,11 @@
    "notes": {},
    "status": "live",
    "added": "2026-01-01",
-   "familiarity": "lesser-known"
+   "familiarity": "lesser-known",
+   "sponsor": {
+    "name": "PureTap filters",
+    "criteria": "Only filters certified for a named contaminant."
+   }
   },
   {
    "id": "ww-070",
@@ -3730,7 +3778,11 @@
    "notes": {},
    "status": "live",
    "added": "2026-01-01",
-   "familiarity": "common"
+   "familiarity": "common",
+   "sponsor": {
+    "name": "Sunday Shade sunscreen",
+    "criteria": "Only products labelled broad-spectrum."
+   }
   },
   {
    "id": "ww-083",
@@ -5615,7 +5667,11 @@
    "notes": {},
    "status": "live",
    "added": "2026-01-01",
-   "familiarity": "lesser-known"
+   "familiarity": "lesser-known",
+   "sponsor": {
+    "name": "Cuffwell monitors",
+    "criteria": "Only cuffs listed on an independent validation register."
+   }
   },
   {
    "id": "ww-127",
@@ -7191,7 +7247,11 @@
    "notes": {},
    "status": "live",
    "added": "2026-01-01",
-   "familiarity": "lesser-known"
+   "familiarity": "lesser-known",
+   "sponsor": {
+    "name": "ClearRoom purifiers",
+    "criteria": "Only purifiers that publish a tested CADR for a stated room size."
+   }
   },
   {
    "id": "ww-164",
@@ -8112,7 +8172,11 @@
    "notes": {},
    "status": "live",
    "added": "2026-01-01",
-   "familiarity": "lesser-known"
+   "familiarity": "lesser-known",
+   "sponsor": {
+    "name": "Gumline floss",
+    "criteria": "Any interdental product. No health claims beyond plaque removal."
+   }
   },
   {
    "id": "ww-185",
@@ -8533,7 +8597,11 @@
    "notes": {},
    "status": "live",
    "added": "2026-01-01",
-   "familiarity": "lesser-known"
+   "familiarity": "lesser-known",
+   "sponsor": {
+    "name": "TrueTemp thermometers",
+    "criteria": "Only probe thermometers with a stated accuracy range."
+   }
   },
   {
    "id": "ww-195",
@@ -10916,6 +10984,885 @@
    "concepts": [
     "air_water_environment"
    ]
+  },
+  {
+   "id": "ww-252",
+   "title": "Build strength and balance to prevent falls",
+   "category": "Ageing & older adults",
+   "grade": "Strong",
+   "action": "Do strength and balance exercises each week, add night lights and grab bars, and have your medicines and eyes checked",
+   "why": "More than one in four people over 65 fall each year, and exercise, safer homes and medicine reviews cut the risk",
+   "caution": "The more medicines you take, the more likely a fall. Ask which ones could make you dizzy.",
+   "sources": [
+    "https://www.nia.nih.gov/health/falls-and-falls-prevention/falls-and-fractures-older-adults-causes-and-prevention",
+    "https://www.nia.nih.gov/health/falls-and-falls-prevention/six-tips-help-prevent-falls"
+   ],
+   "triggerKeys": [
+    "health:older_adult",
+    "prompt:checkup",
+    "health:prescription",
+    "home:old_house"
+   ],
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Some steps protect you straight away; others, like screening, matter over years.",
+   "tags": [
+    "ageing"
+   ],
+   "concepts": [
+    "ageing_older_adults"
+   ]
+  },
+  {
+   "id": "ww-253",
+   "title": "Get the shingles vaccine from 50",
+   "category": "Ageing & older adults",
+   "grade": "Strong",
+   "action": "If you are 50 or older, ask about two doses of the shingles vaccine, 2 to 6 months apart, even if you have had shingles",
+   "why": "Shingles becomes more common and more painful with age, and the vaccine protects against it",
+   "caution": "Arm soreness and tiredness for 2 to 3 days are common. Which ages are offered it free differs by country.",
+   "sources": [
+    "https://www.cdc.gov/shingles/vaccines/index.html"
+   ],
+   "triggerKeys": [
+    "health:older_adult",
+    "prompt:checkup",
+    "health:preventive_visit"
+   ],
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Some steps protect you straight away; others, like screening, matter over years.",
+   "tags": [
+    "ageing"
+   ],
+   "concepts": [
+    "ageing_older_adults"
+   ]
+  },
+  {
+   "id": "ww-254",
+   "title": "Ask for a bone density scan at 65",
+   "category": "Ageing & older adults",
+   "grade": "Strong",
+   "action": "Women 65 and over should ask for a DXA bone density scan; younger women past menopause should ask if they have risk factors",
+   "why": "Osteoporosis has no symptoms until a bone breaks, and finding it early allows treatment that prevents fractures",
+   "caution": "Men can get osteoporosis too. Ask if you have had a fracture from a minor fall or take long-term steroids.",
+   "sources": [
+    "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/osteoporosis-screening"
+   ],
+   "triggerKeys": [
+    "health:older_adult",
+    "prompt:checkup",
+    "health:menopause"
+   ],
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Some steps protect you straight away; others, like screening, matter over years.",
+   "tags": [
+    "ageing"
+   ],
+   "concepts": [
+    "ageing_older_adults"
+   ]
+  },
+  {
+   "id": "ww-255",
+   "title": "Treat hearing loss, for your brain too",
+   "category": "Ageing & older adults",
+   "grade": "Moderate",
+   "action": "Get your hearing tested if you often ask people to repeat themselves, and try hearing aids if they are advised",
+   "why": "Hearing loss is linked to faster memory decline, and hearing aids slowed decline in people at higher risk",
+   "caution": "The research on hearing aids and memory is still developing. Better hearing helps conversations either way.",
+   "sources": [
+    "https://www.nia.nih.gov/health/hearing-and-hearing-loss/hearing-loss-common-problem-older-adults",
+    "https://www.nih.gov/news-events/nih-research-matters/hearing-aids-slow-cognitive-decline-people-high-risk"
+   ],
+   "triggerKeys": [
+    "health:older_adult",
+    "prompt:loud",
+    "commerce:headphones"
+   ],
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Some steps protect you straight away; others, like screening, matter over years.",
+   "tags": [
+    "ageing"
+   ],
+   "concepts": [
+    "ageing_older_adults"
+   ]
+  },
+  {
+   "id": "ww-256",
+   "title": "Bring every medicine to your check-up",
+   "category": "Ageing & older adults",
+   "grade": "Moderate",
+   "action": "Take a bag with every pill, eye drop, vitamin, herbal remedy and laxative you use to your next appointment",
+   "why": "Medicines and supplements can interact more as you age, and some cause confusion or falls",
+   "caution": "Do not stop a prescribed medicine on your own. Ask first.",
+   "sources": [
+    "https://order.nia.nih.gov/sites/default/files/2021-06/talking-with-your-doctor.pdf"
+   ],
+   "triggerKeys": [
+    "health:older_adult",
+    "calendar:appointment",
+    "health:prescription"
+   ],
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Some steps protect you straight away; others, like screening, matter over years.",
+   "tags": [
+    "ageing"
+   ],
+   "concepts": [
+    "ageing_older_adults"
+   ]
+  },
+  {
+   "id": "ww-257",
+   "title": "Check on older people twice a day in a heatwave",
+   "category": "Ageing & older adults",
+   "grade": "Safety practice",
+   "action": "In a heatwave, visit or call older relatives and neighbours twice a day, and check they are drinking and staying cool",
+   "why": "Older adults feel heat less and are at higher risk of heat illness; a fan alone is not enough in real heat",
+   "caution": "People on water pills or fluid limits should ask their doctor how much to drink.",
+   "sources": [
+    "https://www.cdc.gov/heat-health/risk-factors/heat-and-older-adults-aged-65.html"
+   ],
+   "triggerKeys": [
+    "weather:heat_warning",
+    "health:older_adult"
+   ],
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Some steps protect you straight away; others, like screening, matter over years.",
+   "tags": [
+    "ageing"
+   ],
+   "concepts": [
+    "ageing_older_adults"
+   ]
+  },
+  {
+   "id": "ww-258",
+   "title": "Put babies to sleep on their back, in their own space",
+   "category": "Children & parenting",
+   "familiarity": "common",
+   "grade": "Strong",
+   "action": "Place your baby on their back for every sleep, on a firm, flat cot mattress with nothing else in it, in your room",
+   "why": "This is the best way to lower the risk of sudden infant death",
+   "caution": "Bumpers, pillows and soft toys are not recommended. If you fall asleep feeding in bed, move the baby back to their own space.",
+   "sources": [
+    "https://safetosleep.nichd.nih.gov/reduce-risk/FAQ"
+   ],
+   "triggerKeys": [
+    "commerce:baby",
+    "prompt:childcare"
+   ],
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Most of these protect a child from the moment you start.",
+   "tags": [
+    "children"
+   ],
+   "concepts": [
+    "children_parenting"
+   ]
+  },
+  {
+   "id": "ww-259",
+   "title": "Keep button batteries out of reach",
+   "category": "Children & parenting",
+   "grade": "Safety practice",
+   "action": "Keep spare and used button batteries locked away, and tape shut battery covers on remotes, toys and scales",
+   "why": "A swallowed button battery can burn through a child’s throat in about two hours",
+   "caution": "If you think a child has swallowed one, go to the emergency department at once. Do not make them vomit.",
+   "sources": [
+    "https://www.cuh.nhs.uk/patient-information/button-battery-ingestion-in-children-advice-for-parents-and-carers/",
+    "https://www.cpsc.gov/Newsroom/News-Releases/2014/CPSC-Joins-International-Effort-to-Prevent-Button-Battery-Related-Injuries-and-Deaths"
+   ],
+   "triggerKeys": [
+    "commerce:button_battery",
+    "prompt:childcare"
+   ],
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Most of these protect a child from the moment you start.",
+   "tags": [
+    "children"
+   ],
+   "concepts": [
+    "children_parenting"
+   ]
+  },
+  {
+   "id": "ww-260",
+   "title": "Skip screens under 2, and keep them under an hour to 4",
+   "category": "Children & parenting",
+   "grade": "Moderate",
+   "action": "Avoid screen time for babies and 1-year-olds, and keep it under an hour a day for 2- to 4-year-olds",
+   "why": "Young children grow up healthier with more active play, reading and sleep, and less time sitting",
+   "caution": "Video calls with family are interactive, which is different from watching.",
+   "sources": [
+    "https://www.who.int/news/item/24-04-2019-to-grow-up-healthy-children-need-to-sit-less-and-play-more"
+   ],
+   "triggerKeys": [
+    "prompt:childcare",
+    "prompt:screens"
+   ],
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Most of these protect a child from the moment you start.",
+   "tags": [
+    "children"
+   ],
+   "concepts": [
+    "children_parenting"
+   ]
+  },
+  {
+   "id": "ww-261",
+   "title": "Measure children’s medicine with a syringe, not a spoon",
+   "category": "Children & parenting",
+   "grade": "Safety practice",
+   "action": "Give liquid medicine with the syringe or cup that came with it, or a pharmacy oral syringe, never a kitchen spoon",
+   "why": "Kitchen spoons vary in size, which leads to giving too much or too little",
+   "caution": "Do not use a dosing device from a different product. Ask a pharmacist if the dose is unclear.",
+   "sources": [
+    "https://www.fda.gov/files/drugs/published/Dosage-Delivery-Devices-for-Orally-Ingested-OTC-Liquid-Drug-Products.pdf"
+   ],
+   "triggerKeys": [
+    "commerce:child_medicine",
+    "prompt:childcare",
+    "health:household_illness"
+   ],
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Most of these protect a child from the moment you start.",
+   "tags": [
+    "children"
+   ],
+   "concepts": [
+    "children_parenting"
+   ]
+  },
+  {
+   "id": "ww-262",
+   "title": "Keep children rear-facing in the car as long as the seat allows",
+   "category": "Children & parenting",
+   "grade": "Strong",
+   "action": "Keep your child in a rear-facing car seat until they reach the seat’s top height or weight limit",
+   "why": "Rear-facing is the best way to protect a young child’s head, neck and spine in a crash",
+   "caution": "Check your seat’s manual for its limits, and keep children in the back seat until at least age 12.",
+   "sources": [
+    "https://www.nhtsa.gov/vehicle-safety/car-seats-and-booster-seats"
+   ],
+   "triggerKeys": [
+    "commerce:car_seat",
+    "travel:long_trip",
+    "prompt:childcare"
+   ],
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Most of these protect a child from the moment you start.",
+   "tags": [
+    "children"
+   ],
+   "concepts": [
+    "children_parenting"
+   ]
+  },
+  {
+   "id": "ww-263",
+   "title": "Stay within arm’s reach of children near water",
+   "category": "Children & parenting",
+   "grade": "Strong",
+   "action": "Pick one adult to watch each child in or near water, including the bath, within arm’s reach and off the phone",
+   "why": "Drowning is the leading cause of death in children aged 1 to 4, and it happens quickly and quietly",
+   "caution": "Swimming lessons and lifeguards do not replace close watching.",
+   "sources": [
+    "https://www.cdc.gov/drowning/prevention/index.html"
+   ],
+   "triggerKeys": [
+    "prompt:childcare",
+    "prompt:outdoors",
+    "activity:workout",
+    "weather:heat_warning"
+   ],
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "Most of these protect a child from the moment you start.",
+   "tags": [
+    "children"
+   ],
+   "concepts": [
+    "children_parenting"
+   ]
+  },
+  {
+   "id": "ww-264",
+   "title": "Take short screen breaks often",
+   "category": "Work & screen life",
+   "grade": "Moderate",
+   "action": "Break from screen work for 5 to 10 minutes every hour, and move or look away rather than switch to your phone",
+   "why": "Short, frequent breaks help more than long, rare ones",
+   "caution": "If your job is intensive keyboard work, use breaks for tasks that rest your hands and arms.",
+   "sources": [
+    "https://www.hse.gov.uk/msd/dse/work-routine.htm"
+   ],
+   "triggerKeys": [
+    "calendar:desk_day",
+    "prompt:desk",
+    "prompt:screens"
+   ],
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "You may feel the difference within days; habits take a few weeks to settle.",
+   "tags": [
+    "work"
+   ],
+   "concepts": [
+    "work_screen_life"
+   ]
+  },
+  {
+   "id": "ww-265",
+   "title": "Make your bedroom pitch dark after a night shift",
+   "category": "Work & screen life",
+   "grade": "Moderate",
+   "action": "Use blackout blinds or an eye mask, block light under the door, use earplugs, and go straight to bed when you get home",
+   "why": "Daylight keeps your body clock awake, and night workers get less and lighter sleep",
+   "caution": "If you are very sleepy after a shift, do not drive.",
+   "sources": [
+    "https://www.cdc.gov/niosh/work-hour-training-for-nurses/longhours/mod9/05.html",
+    "https://www.cdc.gov/niosh/work-hour-training-for-nurses/longhours/mod6/02.html"
+   ],
+   "triggerKeys": [
+    "health:shift_work",
+    "prompt:cant_sleep"
+   ],
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "You may feel the difference within days; habits take a few weeks to settle.",
+   "tags": [
+    "work"
+   ],
+   "concepts": [
+    "work_screen_life"
+   ]
+  },
+  {
+   "id": "ww-266",
+   "title": "Nap before a night shift",
+   "category": "Work & screen life",
+   "grade": "Moderate",
+   "action": "If you can, take a nap before you leave for a night shift",
+   "why": "A nap adds to your total sleep and may help you stay alert through the night",
+   "caution": "Keep the nap early enough that you are fully awake before you start.",
+   "sources": [
+    "https://www.cdc.gov/niosh/work-hour-training-for-nurses/longhours/mod9/05.html"
+   ],
+   "triggerKeys": [
+    "health:shift_work"
+   ],
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "You may feel the difference within days; habits take a few weeks to settle.",
+   "tags": [
+    "work"
+   ],
+   "concepts": [
+    "work_screen_life"
+   ]
+  },
+  {
+   "id": "ww-267",
+   "title": "Put your phone out of reach when you drive",
+   "category": "Work & screen life",
+   "familiarity": "common",
+   "grade": "Strong",
+   "action": "Turn on Do Not Disturb or put your phone out of reach before you drive, and pull over to read or reply",
+   "why": "Texting takes your eyes, hands and mind off the road and raises crash risk several times over",
+   "caution": "Hands-free calls still distract your mind.",
+   "sources": [
+    "https://www.nhtsa.gov/campaign/distracted-driving",
+    "https://www.nhtsa.gov/book/countermeasures-that-work/distracted-driving/understanding-problem"
+   ],
+   "triggerKeys": [
+    "travel:long_trip",
+    "health:shift_work"
+   ],
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "You may feel the difference within days; habits take a few weeks to settle.",
+   "tags": [
+    "work"
+   ],
+   "concepts": [
+    "work_screen_life"
+   ]
+  },
+  {
+   "id": "ww-268",
+   "title": "Get up and move on long journeys",
+   "category": "Travel health",
+   "grade": "Moderate",
+   "action": "On trips over four hours, walk around every 1 to 2 hours, and flex your ankles and calves while seated",
+   "why": "Sitting still for a long time slows blood flow in the legs and can cause a blood clot",
+   "caution": "Recent surgery, pregnancy, a past clot or being older raises the risk. Ask a doctor before a long trip.",
+   "sources": [
+    "https://www.cdc.gov/blood-clots/risk-factors/travel.html"
+   ],
+   "triggerKeys": [
+    "travel:time_zone",
+    "travel:long_trip",
+    "travel:international_trip"
+   ],
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "These steps matter before and during a trip; some need starting days or weeks ahead.",
+   "tags": [
+    "travel"
+   ],
+   "concepts": [
+    "travel_health"
+   ]
+  },
+  {
+   "id": "ww-269",
+   "title": "Boil it, cook it, peel it when you travel",
+   "category": "Travel health",
+   "familiarity": "common",
+   "grade": "Safety practice",
+   "action": "Where tap water is unsafe, drink sealed or boiled water, eat food served steaming hot, and peel fruit yourself",
+   "why": "Up to 70% of travellers get travellers’ diarrhoea on a two-week trip, depending on where they go",
+   "caution": "These rules help but do not remove all risk. Ice and washed salads are common sources.",
+   "sources": [
+    "https://wwwnc.cdc.gov/travel/yellowbook/2024/preparing/travelers-diarrhea",
+    "https://www.cdc.gov/typhoid-fever/prevention/index.html"
+   ],
+   "triggerKeys": [
+    "travel:international_trip"
+   ],
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "These steps matter before and during a trip; some need starting days or weeks ahead.",
+   "tags": [
+    "travel"
+   ],
+   "concepts": [
+    "travel_health"
+   ]
+  },
+  {
+   "id": "ww-270",
+   "title": "Climb slowly at altitude",
+   "category": "Travel health",
+   "grade": "Strong",
+   "action": "Above 2,500 m, spend 2 to 3 nights acclimatising, then raise your sleeping height by no more than 500 m a night",
+   "why": "Going up slowly is the best protection against altitude sickness",
+   "caution": "If you have to fly or drive straight up high, ask a doctor about acetazolamide before you go.",
+   "sources": [
+    "https://www.cdc.gov/yellow-book/hcp/environmental-hazards-risks/high-altitude-travel-and-altitude-illness.html"
+   ],
+   "triggerKeys": [
+    "travel:altitude",
+    "travel:international_trip"
+   ],
+   "notes": {
+    "IN": "Leh and Ladakh are about 3,500 m. Flying in means arriving high in one step, so rest for the first days."
+   },
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "These steps matter before and during a trip; some need starting days or weeks ahead.",
+   "tags": [
+    "travel"
+   ],
+   "concepts": [
+    "travel_health"
+   ]
+  },
+  {
+   "id": "ww-271",
+   "title": "Start malaria tablets before you go",
+   "category": "Travel health",
+   "grade": "Strong",
+   "action": "Before visiting a malaria area, see a travel clinic for antimalarial tablets to take before, during and after the trip",
+   "why": "No tablet gives 100% protection, but the right one, plus bite prevention, greatly lowers the risk",
+   "caution": "Some tablets start 2 weeks before travel. Any fever during or after the trip needs urgent care.",
+   "sources": [
+    "https://www.cdc.gov/malaria/prevention/index.html"
+   ],
+   "triggerKeys": [
+    "travel:international_trip"
+   ],
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "These steps matter before and during a trip; some need starting days or weeks ahead.",
+   "tags": [
+    "travel"
+   ],
+   "concepts": [
+    "travel_health"
+   ]
+  },
+  {
+   "id": "ww-272",
+   "title": "Pack medicines in your hand luggage, with prescriptions",
+   "category": "Travel health",
+   "grade": "Safety practice",
+   "action": "Carry medicines in their original labelled boxes in your hand luggage, with extra for delays and copies of your prescriptions",
+   "why": "Checked bags get lost, and border officials may ask for original containers",
+   "caution": "Some medicines allowed at home are restricted abroad. Check before you travel.",
+   "sources": [
+    "https://wwwnc.cdc.gov/travel/page/travel-abroad-with-medicine"
+   ],
+   "triggerKeys": [
+    "travel:international_trip",
+    "travel:time_zone",
+    "health:prescription"
+   ],
+   "scope": "GLOBAL",
+   "regions": [
+    "US",
+    "IN",
+    "GB",
+    "OTHER"
+   ],
+   "familiarity": "lesser-known",
+   "status": "live",
+   "added": "2026-10-23",
+   "notes": {},
+   "review": {
+    "status": "not-reviewed",
+    "by": null,
+    "date": null
+   },
+   "sourceLevel": "tip",
+   "sourceChecked": "2026-10-23",
+   "timeline": "These steps matter before and during a trip; some need starting days or weeks ahead.",
+   "tags": [
+    "travel"
+   ],
+   "concepts": [
+    "travel_health"
+   ]
   }
  ],
  "EDGES": [
@@ -11548,6 +12495,84 @@
    "b": "ww-168",
    "type": "complements",
    "why": "Planning around heat and knowing the warning signs work together."
+  },
+  {
+   "a": "ww-252",
+   "b": "ww-024",
+   "type": "reinforces",
+   "why": "Balance practice is one of the main ways to prevent falls."
+  },
+  {
+   "a": "ww-256",
+   "b": "ww-110",
+   "type": "complements",
+   "why": "A medicine list and a bag of what you take make the review complete."
+  },
+  {
+   "a": "ww-255",
+   "b": "ww-198",
+   "type": "reinforces",
+   "why": "Acting on hearing changes matters even more in later life."
+  },
+  {
+   "a": "ww-254",
+   "b": "ww-040",
+   "type": "complements",
+   "why": "Resistance exercise and treatment both protect ageing bones."
+  },
+  {
+   "a": "ww-257",
+   "b": "ww-168",
+   "type": "complements",
+   "why": "Planning around heat and checking on others work together."
+  },
+  {
+   "a": "ww-261",
+   "b": "ww-224",
+   "type": "shared-goal",
+   "why": "Both prevent paracetamol dosing mistakes."
+  },
+  {
+   "a": "ww-259",
+   "b": "ww-210",
+   "type": "shared-goal",
+   "why": "Both keep small, dangerous household items away from young children."
+  },
+  {
+   "a": "ww-264",
+   "b": "ww-022",
+   "type": "reinforces",
+   "why": "Breaks from the screen are also breaks from sitting."
+  },
+  {
+   "a": "ww-264",
+   "b": "ww-231",
+   "type": "complements",
+   "why": "Short breaks and distance focusing both rest your eyes."
+  },
+  {
+   "a": "ww-265",
+   "b": "ww-057",
+   "type": "reinforces",
+   "why": "Light in the bedroom matters most when you sleep by day."
+  },
+  {
+   "a": "ww-268",
+   "b": "ww-059",
+   "type": "complements",
+   "why": "Moving on the flight and planning for jet lag both make long trips easier."
+  },
+  {
+   "a": "ww-271",
+   "b": "ww-191",
+   "type": "complements",
+   "why": "Malaria tablets and travel vaccines are usually sorted at the same clinic visit."
+  },
+  {
+   "a": "ww-272",
+   "b": "ww-110",
+   "type": "depends-on",
+   "why": "An up-to-date medicine list is what you copy for your trip."
   }
  ],
  "MOMENTS": [
@@ -12220,6 +13245,69 @@
     "hot flushes",
     "hot flashes",
     "night sweats"
+   ]
+  },
+  {
+   "id": "p-older",
+   "source": "prompt",
+   "name": "I'm looking after an older parent",
+   "event": "health:older_adult",
+   "friendly": "Here is something useful for later life.",
+   "keywords": [
+    "older parent",
+    "elderly parent",
+    "grandparent",
+    "retirement",
+    "turning 65",
+    "over 65"
+   ]
+  },
+  {
+   "id": "p-child",
+   "source": "prompt",
+   "name": "I'm looking after a baby or child",
+   "event": "prompt:childcare",
+   "friendly": "Here is something useful for looking after children.",
+   "keywords": [
+    "newborn",
+    "toddler",
+    "childminder",
+    "new baby",
+    "babysitting",
+    "school run"
+   ]
+  },
+  {
+   "id": "cal-night",
+   "source": "calendar",
+   "name": "Night shift",
+   "event": "health:shift_work",
+   "friendly": "Here is how to sleep and stay alert around night shifts.",
+   "keywords": [
+    "night shift",
+    "nights",
+    "overnight shift",
+    "graveyard shift"
+   ]
+  },
+  {
+   "id": "cal-trek",
+   "source": "calendar",
+   "name": "High-altitude trip",
+   "event": "travel:altitude",
+   "friendly": "Going high? Here is how to avoid altitude sickness.",
+   "keywords": [
+    "trek",
+    "trekking",
+    "himalaya",
+    "ladakh",
+    "leh",
+    "altitude",
+    "everest",
+    "kilimanjaro",
+    "machu picchu",
+    "cusco",
+    "andes"
    ]
   }
  ],
@@ -13008,6 +14096,62 @@
    ],
    "event": "commerce:skin_lightening",
    "object": "your skin cream"
+  },
+  {
+   "id": "baby",
+   "name": "Baby sleep and nursery",
+   "keywords": [
+    "crib",
+    "cot",
+    "bassinet",
+    "moses basket",
+    "baby monitor",
+    "baby sleeping bag",
+    "nappies",
+    "diapers",
+    "pram",
+    "stroller"
+   ],
+   "event": "commerce:baby",
+   "object": "your baby things"
+  },
+  {
+   "id": "battery",
+   "name": "Button batteries",
+   "keywords": [
+    "button battery",
+    "button batteries",
+    "coin battery",
+    "cr2032",
+    "lr44"
+   ],
+   "event": "commerce:button_battery",
+   "object": "your button batteries"
+  },
+  {
+   "id": "carseat",
+   "name": "Car seat",
+   "keywords": [
+    "car seat",
+    "booster seat",
+    "isofix"
+   ],
+   "event": "commerce:car_seat",
+   "object": "your car seat"
+  },
+  {
+   "id": "childmed",
+   "name": "Children’s medicine",
+   "keywords": [
+    "calpol",
+    "infant paracetamol",
+    "children’s paracetamol",
+    "children's paracetamol",
+    "kids ibuprofen",
+    "oral syringe"
+   ],
+   "event": "commerce:child_medicine",
+   "object": "your child’s medicine"
   }
  ]
 }

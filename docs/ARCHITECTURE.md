@@ -88,6 +88,7 @@ dist/ ──► server/ (Node, SQLite) ──► the browser
 | `triggerKeys` | Event keys that let a moment bring this tip. |
 | `notes` | Optional regional note per region code. |
 | `hi` | Optional Hindi `title`, `action` and `why`. |
+| `sponsor` | Optional demo sponsor `name` and sponsor standard (`criteria`). Shown on the tip page, labelled, topic-only (D-006). |
 | `status` | `draft` (hidden), `live`, or `retired` (hidden from discovery, kept in journeys). |
 | `added` | ISO date. Drives the "New" badge for 30 days. |
 | `review` | Clinical review status. Stays `not-reviewed` until a human clinician signs off. |

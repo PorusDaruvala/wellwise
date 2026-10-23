@@ -54,7 +54,11 @@
               "Ingredients & labels",
               "Gut, kidneys & metabolism",
               "Eyes, ears & teeth",
-              "Sexual & reproductive health"
+              "Sexual & reproductive health",
+              "Ageing & older adults",
+              "Children & parenting",
+              "Work & screen life",
+              "Travel health"
             ]
           },
           "action": {
@@ -171,6 +175,21 @@
             ],
             "default": "lesser-known",
             "description": "common: widely known but worth repeating. lesser-known: most people have not heard it."
+          },
+          "sponsor": {
+            "type": "object",
+            "required": [
+              "name",
+              "criteria"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "criteria": {
+                "type": "string"
+              }
+            }
           }
         }
       }

@@ -69,5 +69,9 @@ One entry per product or technical decision. Add new entries at the bottom. Do n
 **Why:** People notice when an app tells them what they already know. Saying so, and showing the bigger picture, keeps trust. New content goes mainly into lesser-known areas: products and materials, ingredients, clothing, the inner body, eyes and ears, sexual and reproductive health, and mental wellbeing.
 
 ### D-016 · Admin tools leave the app · 2026-10-23
-**Decision:** Adding tips, reach reports, feedback numbers and test tools move to a separate admin console (`/admin`, behind `WELLWISE_ADMIN_TOKEN`). The "Prototype tools", "Add tips" and "How your feedback helps" sample-data page are removed from the app. Demo sponsor slots are removed until a real sponsor exists (D-006 still applies then).
+**Decision:** Adding tips, reach reports, feedback numbers and test tools move to a separate admin console (`/admin`, behind `WELLWISE_ADMIN_TOKEN`). The "Prototype tools", "Add tips" and "How your feedback helps" sample-data page are removed from the app.
 **Why:** These are operator jobs, not user features.
+
+### D-017 · Keep the demo sponsor slots and the health details panel · 2026-10-23
+**Decision:** The six labelled demo sponsor slots stay on their tips, to show the future ad format (D-006). The "Health details · Coming soon" panel stays in Settings.
+**Why:** Both show where the product is going. Removing them was not agreed.
