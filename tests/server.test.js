@@ -191,6 +191,22 @@ const { privateIp } = require('../server/net.js');
     const after = (await call('GET', '/wellwise-content.json')).data;
     check('valid pack goes live', r.data.added === 1 && after.TIPS.length === before.TIPS.length + 1 && after.contentVersion >= before.contentVersion);
 
+    // a public address set without https:// still gives assistants absolute sign-in links
+    process.env.WELLWISE_PUBLIC_URL = 'wellwise-production.up.railway.app/';
+    const app2 = createApp({ db: ':memory:' }); delete process.env.WELLWISE_PUBLIC_URL;
+    await new Promise(r => app2.server.listen(0, '127.0.0.1', r));
+    const base2 = `http://127.0.0.1:${app2.server.address().port}`;
+    const probe = await realFetch(base2 + '/mcp', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'initialize' }) });
+    const meta = (probe.headers.get('www-authenticate') || '').match(/resource_metadata="([^"]+)"/)?.[1];
+    check('sign-in pointer is an absolute https link', probe.status === 401 && meta === 'https://wellwise-production.up.railway.app/.well-known/oauth-protected-resource');
+    const prm2 = await (await realFetch(base2 + '/.well-known/oauth-protected-resource/mcp')).json();
+    const asm2 = await (await realFetch(base2 + '/.well-known/oauth-authorization-server')).json();
+    check('metadata addresses are absolute', prm2.resource === 'https://wellwise-production.up.railway.app/mcp' && prm2.authorization_servers[0] === 'https://wellwise-production.up.railway.app' && asm2.registration_endpoint === 'https://wellwise-production.up.railway.app/oauth/register');
+    const pre = await realFetch(base2 + '/mcp', { method: 'OPTIONS', headers: { origin: 'https://claude.ai', 'access-control-request-method': 'POST' } });
+    check('browser pre-check allowed', pre.status === 204 && pre.headers.get('access-control-allow-origin') === '*' && /www-authenticate/.test(pre.headers.get('access-control-expose-headers') || ''));
+    check('trailing slash on the connector works', (await realFetch(base2 + '/mcp/', { method: 'POST', headers: { 'content-type': 'application/json' }, body: '{}' })).status === 401);
+    app2.server.close();
+
     // guards
     check('private addresses are blocked', privateIp('127.0.0.1') && privateIp('10.1.2.3') && privateIp('192.168.0.9') && privateIp('::1') && !privateIp('8.8.8.8'));
     r = await call('DELETE', '/api/me', {}); check('delete my data', r.status === 200);

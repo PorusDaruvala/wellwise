@@ -28,8 +28,11 @@ function createApp(opts = {}) {
   const oa = oauth.setup(db);
   const SECRET = process.env.WELLWISE_SECRET || crypto.randomBytes(32).toString('hex');
   const sign = (...xs) => crypto.createHmac('sha256', SECRET).update(xs.join('|')).digest('hex');
-  const publicUrl = (req) => (process.env.WELLWISE_PUBLIC_URL || `${req?.headers['x-forwarded-proto'] || 'http'}://${req?.headers.host || 'localhost:8787'}`).replace(/\/$/, '');
-  let baseUrl = process.env.WELLWISE_PUBLIC_URL || '';
+  // The public address, always absolute. "wellwise.example.com" in the settings becomes "https://wellwise.example.com".
+  const absolute = u => { u = String(u || '').trim().replace(/\/+$/, ''); return !u ? '' : /^https?:\/\//i.test(u) ? u : 'https://' + u };
+  const ENV_URL = absolute(process.env.WELLWISE_PUBLIC_URL);
+  const publicUrl = (req) => ENV_URL || `${String(req?.headers['x-forwarded-proto'] || 'http').split(',')[0].trim()}://${req?.headers.host || 'localhost:8787'}`;
+  let baseUrl = ENV_URL;
   const tipUrl = id => `${baseUrl}/#tip/${id}`;
 
   /* ---------- helpers ---------- */
@@ -201,9 +204,19 @@ function createApp(opts = {}) {
 
   /* ---------- router ---------- */
   async function handle(req, res) {
-    const url = new URL(req.url, 'http://x'), p = url.pathname, m = req.method;
+    const url = new URL(req.url, 'http://x'), m = req.method;
+    let p = url.pathname;
+    if (p === '/mcp/') p = '/mcp';
     // Learn the public address from real visitors, not from the host's health check.
-    if (!process.env.WELLWISE_PUBLIC_URL && p !== '/api/health' && req.headers.host) baseUrl = publicUrl(req);
+    if (!ENV_URL && p !== '/api/health' && req.headers.host) baseUrl = publicUrl(req);
+    // Assistants reach the connector and its sign-in from other sites, so these paths allow cross-origin calls.
+    if (p === '/mcp' || p === '/mcp/' || p.startsWith('/.well-known/') || p === '/oauth/token' || p === '/oauth/register') {
+      res.setHeader('access-control-allow-origin', '*');
+      res.setHeader('access-control-allow-headers', 'authorization, content-type, mcp-protocol-version, mcp-session-id');
+      res.setHeader('access-control-allow-methods', 'GET, POST, OPTIONS');
+      res.setHeader('access-control-expose-headers', 'www-authenticate, mcp-session-id');
+      if (m === 'OPTIONS') { res.writeHead(204); return res.end() }
+    }
     try {
       if (m === 'GET' && STATIC[p]) {
         const f = path.join(dist, STATIC[p]); if (!fs.existsSync(f)) return fail(res, 404, 'Run python3 scripts/build.py first');

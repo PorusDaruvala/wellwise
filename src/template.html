@@ -28,8 +28,14 @@ pre{background:#f2f6f1;border:1px solid var(--line);border-radius:10px;padding:1
 .topinner{display:flex;align-items:center;gap:18px;min-height:66px}
 .brand{font-size:26px;font-weight:850;letter-spacing:-1.3px;text-decoration:none;color:var(--ink)}.brand span{color:var(--green)}
 nav{margin-left:auto;display:flex;gap:3px;flex-wrap:wrap}
-.navbtn{background:none;border:0;padding:9px 11px;border-radius:9px;color:var(--muted);font-weight:650;font-size:13px}
+.navbtn{background:none;border:0;padding:9px 11px;border-radius:9px;color:var(--muted);font-weight:650;font-size:13px;display:inline-flex;align-items:center;gap:6px}
+.navbtn svg{width:17px;height:17px;flex:none}
 .navbtn.active{background:var(--pale);color:var(--green)}
+.icons{display:flex;gap:2px;margin-left:6px}
+.iconbtn{position:relative;background:none;border:0;width:40px;height:40px;border-radius:10px;color:var(--muted);display:inline-flex;align-items:center;justify-content:center}
+.iconbtn svg{width:21px;height:21px}.iconbtn.active{background:var(--pale);color:var(--green)}
+.dot{position:absolute;top:4px;right:3px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--green);color:#fff;font-size:10.5px;font-weight:800;line-height:17px;text-align:center}
+.tabbar{display:none}
 main{padding-top:28px;padding-bottom:70px}
 .card,.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 7px 20px #203c2b07}
 .panel{padding:26px}
@@ -99,16 +105,22 @@ details{border:1px solid var(--line);padding:13px;border-radius:11px;background:
 .camera{width:100%;max-height:340px;border-radius:12px;background:#0b1a13;object-fit:cover}
 .drop{border:1.5px dashed #b9d3c0;border-radius:12px;padding:16px;text-align:center;background:#fbfdfa}
 .status{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.status:last-child{border:0}
-@media(max-width:860px){.grid,.four,.five{grid-template-columns:repeat(2,minmax(0,1fr))}.tapgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.side{grid-template-columns:1fr}.topinner{flex-wrap:wrap;padding:9px 0;gap:4px}nav{order:2;width:100%;overflow-x:auto;flex-wrap:nowrap}.navbtn{white-space:nowrap}.panel{padding:20px}}
+@media(max-width:860px){.grid,.four,.five{grid-template-columns:repeat(2,minmax(0,1fr))}.tapgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.side{grid-template-columns:1fr}.panel{padding:20px}}
+@media(max-width:700px){#nav{display:none}.icons{margin-left:auto}.topinner{min-height:56px}
+ .tabbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:6;background:#fbfcf9;border-top:1px solid var(--line);padding:4px 4px calc(4px + env(safe-area-inset-bottom))}
+ .tabbar button{flex:1;background:none;border:0;padding:6px 2px 5px;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--muted);font-size:11px;font-weight:700;border-radius:10px}
+ .tabbar button svg{width:22px;height:22px}.tabbar button.active{color:var(--green)}.tabbar button.active svg{stroke-width:2.4}
+ main{padding-bottom:40px}.footer{padding-bottom:calc(90px + env(safe-area-inset-bottom))}.toast{bottom:calc(78px + env(safe-area-inset-bottom))}}
 @media(max-width:540px){.wrap{padding:0 16px}.grid,.two,.four,.five,.detailgrid,.formgrid,.checks{grid-template-columns:1fr}.tapgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{padding:19px}.card,.panel{padding:17px}}
 </style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="top"><div class="wrap topinner"><a class="brand" href="#discover">well<span>wise.</span></a><nav id="nav" aria-label="Main navigation"></nav></div></header>
+<header class="top"><div class="wrap topinner"><a class="brand" href="#discover">well<span>wise.</span></a><nav id="nav" aria-label="Main navigation"></nav><div class="icons" id="icons"></div></div></header>
 <main class="wrap" id="main" tabindex="-1" aria-live="polite"></main>
 <div id="toast" class="toast hide" role="status"></div>
 <footer class="wrap footer" id="footer"></footer>
+<nav class="tabbar" id="tabbar" aria-label="Main navigation"></nav>
 <script>/*__DATA__*/</script>
 <script>/*__ENGINE__*/</script>
 <script>
@@ -141,11 +153,11 @@ const TAPS=['p-cook','p-ate','p-shop','p-desk','p-sleep','p-low','p-tired','p-dr
 const DISCLAIMER='Wellwise shares general health information. It is not a substitute for medical advice. Always check with a certified healthcare provider about your own health.';
 
 const I18N={
- en:{discover:'Discover',moments:'Moments',journey:'My journey',explore:'Explore',inbox:'Inbox',settings:'Settings',tryThis:'Try this',why:'Why it matters',considerations:'Keep in mind',timeline:'Typical timeline for this kind of change',localNote:'Local note',willTry:'I’ll try this',trying:'✓ Trying',already:'Already doing',adopted:'✓ Habit',notForMe:'Not for me',open:'Read more →',dailyEyebrow:'Your daily insight',heroTitle:'Learn something useful, right when it matters.',heroSub:'Short, sourced tips, sparked by your day.',useful:'Useful',notUseful:'Not useful'},
- hi:{discover:'खोजें',moments:'पल',journey:'मेरी यात्रा',explore:'लाइब्रेरी',inbox:'इनबॉक्स',settings:'सेटिंग्स',tryThis:'यह आज़माएँ',why:'यह क्यों ज़रूरी है',considerations:'ध्यान रखें',timeline:'नतीजे कब दिख सकते हैं',localNote:'स्थानीय बात',willTry:'आज़माना है',trying:'✓ आज़मा रहे हैं',already:'पहले से कर रहे हैं',adopted:'✓ आदत बन गई',notForMe:'मेरे लिए नहीं',open:'और पढ़ें →',dailyEyebrow:'आज की जानकारी',heroTitle:'सही समय पर, काम की बात जानें।',heroSub:'आपके दिन से जुड़ी छोटी, भरोसेमंद जानकारियाँ।',useful:'काम का',notUseful:'काम का नहीं'}
+ en:{discover:'Discover',moments:'Moments',journey:'My journey',journeyTab:'Journey',explore:'Explore',inbox:'Inbox',settings:'Settings',tryThis:'Try this',why:'Why it matters',considerations:'Keep in mind',timeline:'Typical timeline for this kind of change',localNote:'Local note',willTry:'I’ll try this',trying:'✓ Trying',already:'Already doing',adopted:'✓ Habit',notForMe:'Not for me',open:'Read more →',dailyEyebrow:'Your daily insight',heroTitle:'Learn something useful, right when it matters.',heroSub:'Short, sourced tips, sparked by your day.',useful:'Useful',notUseful:'Not useful'},
+ hi:{discover:'खोजें',moments:'पल',journey:'मेरी यात्रा',journeyTab:'यात्रा',explore:'लाइब्रेरी',inbox:'इनबॉक्स',settings:'सेटिंग्स',tryThis:'यह आज़माएँ',why:'यह क्यों ज़रूरी है',considerations:'ध्यान रखें',timeline:'नतीजे कब दिख सकते हैं',localNote:'स्थानीय बात',willTry:'आज़माना है',trying:'✓ आज़मा रहे हैं',already:'पहले से कर रहे हैं',adopted:'✓ आदत बन गई',notForMe:'मेरे लिए नहीं',open:'और पढ़ें →',dailyEyebrow:'आज की जानकारी',heroTitle:'सही समय पर, काम की बात जानें।',heroSub:'आपके दिन से जुड़ी छोटी, भरोसेमंद जानकारियाँ।',useful:'काम का',notUseful:'काम का नहीं'}
 };
 
-const DEFAULTS={geo:'GLOBAL',geoAuto:true,cats:[],age:'',diet:'',lang:'en',statuses:{},statusAt:{},seen:{},source:{},feedback:{},checkins:{},notifications:[],events:[],delivered:{},channel:CHANNELS[0],frequency:'both',discovery:'balanced',offsetDays:0,momentTab:'near',selected:null,shareText:'',nearConsent:false,live:null,inboxSince:0,lastDaily:'',tap:null,intakes:{},tz:'',updatedAt:0};
+const DEFAULTS={geo:'GLOBAL',geoAuto:true,cats:[],age:'',diet:'',lang:'en',statuses:{},statusAt:{},seen:{},source:{},feedback:{},checkins:{},notifications:[],events:[],delivered:{},channel:CHANNELS[0],frequency:'both',discovery:'balanced',offsetDays:0,momentTab:'near',selected:null,shareText:'',nearConsent:false,live:null,inboxSince:0,lastDaily:'',tap:null,intakes:{},tz:'',inboxSeenAt:0,updatedAt:0};
 let S;try{S=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){S={}}
 S={...DEFAULTS,...S};
 if(!CHANNELS.includes(S.channel))S.channel=/whatsapp/i.test(S.channel)?'WhatsApp':CHANNELS[0];
@@ -169,7 +181,7 @@ const hosted=()=>/^https?:/.test(location.protocol);
 const fmtDate=ms=>new Date(ms).toLocaleDateString(undefined,{day:'numeric',month:'short'});
 const fmtTime=ms=>new Date(ms).toLocaleString(undefined,{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'});
 const rel=id=>EDGES.filter(e=>e.a===id||e.b===id).map(e=>({...e,other:e.a===id?e.b:e.a}));
-const header=(ey,title,sub='')=>`<div class="eyebrow">${esc(ey)}</div><h1>${esc(title)}</h1>${sub?`<p class="lead">${esc(sub)}</p>`:''}`;
+const header=(ey,title,sub='')=>`${ey?`<div class="eyebrow">${esc(ey)}</div>`:''}<h1>${esc(title)}</h1>${sub?`<p class="lead">${esc(sub)}</p>`:''}`;
 const hash=ENGINE.hash;
 function toast(msg){const el=$('toast');el.textContent=msg;el.classList.remove('hide');clearTimeout(window.__t);window.__t=setTimeout(()=>el.classList.add('hide'),2800)}
 
@@ -341,7 +353,7 @@ function discover(){
   hero=`<div class="hero spaced"><div class="eyebrow">${esc(L('dailyEyebrow'))} · ${new Date(now()).toLocaleDateString(undefined,{month:'short',day:'numeric'})}</div><h2 style="font-size:29px;margin-top:12px">${esc(tx(t,'title'))}</h2><p class="lead">${esc(tx(t,'why'))}</p><p><b>${esc(L('tryThis'))}:</b> ${esc(tx(t,'action'))}</p><div class="row spaced"><button class="btn" onclick="nav('tip/${t.id}')">${esc(L('open'))}</button><button class="btn ghost" onclick="nav('moments')">Tell us about your day</button></div>
   ${S.live?`<p class="small muted spaced" style="margin-bottom:0">Nothing stands out in the air or weather${S.live.place?' near '+esc(S.live.place):''} today, so here is your daily tip.</p>`:API.on?`<p class="small spaced" style="margin-bottom:0"><a href="#" onclick="useLocation();return false">Turn on Near you</a> <span class="muted">to get tips for today’s air and weather where you are.</span></p>`:''}</div>`}
  const tm=S.tap&&MOMENTS.find(x=>x.id===S.tap),ttop=tm&&candidates(tm.event).scored[0];
- return `${header('Wellwise',L('heroTitle'),L('heroSub'))}
+ return `${header('',L('heroTitle'),L('heroSub'))}
  ${due.length?`<div class="sectiontitle"><h2>Quick check-in</h2></div><div class="grid two">${due.slice(0,4).map(d=>{const x=TIPMAP[d.id];return `<div class="card checkin"><span class="small muted">${d.stage} days ago you started</span><h3 style="margin-top:6px">${esc(tx(x,'title'))}</h3><p class="small">How is it going?</p><div class="row"><button class="btn sm" onclick="checkin('${d.id}',${d.stage},'kept')">It’s a habit now</button><button class="btn alt sm" onclick="checkin('${d.id}',${d.stage},'still')">Still trying</button><button class="btn ghost sm" onclick="checkin('${d.id}',${d.stage},'stopped')">I stopped</button></div></div>`}).join('')}</div>`:''}
  ${hero}
  <div class="panel spaced"><span class="badge">What happened today?</span><h3 style="margin-top:12px">One tap, one more useful tip</h3><div class="tapgrid">${TAPS.map(id=>{const m=MOMENTS.find(x=>x.id===id);return m?`<button class="btn ${S.tap===id?'':'ghost'} sm" onclick="tapMoment('${id}')">${esc(m.name)}</button>`:''}).join('')}</div>
@@ -433,7 +445,7 @@ function momentPreview(){
 }
 function moments(){
  const agentEvents=S.events.filter(e=>e.source==='agent');
- return `${header('Moments','Tell Wellwise about your day.','Live conditions near you, a link or photo you share, a barcode, your calendar, WhatsApp or your AI agent. Each one can bring a tip that fits.')}
+ return `${header('','Tell Wellwise about your day.','Live conditions near you, a link or photo you share, a barcode, your calendar, WhatsApp or your AI agent. Each one can bring a tip that fits.')}
  <div class="side spaced">${momentPicker()}${momentPreview()}</div>
  ${agentEvents.length?`<div class="sectiontitle"><h2>One journey across agents</h2></div><div class="panel"><div class="timeline">${agentEvents.slice(0,8).map(e=>`<div class="event"><b>${esc(e.agent||'Agent')}</b> <span class="muted small">· ${fmtTime(e.at)}</span><p style="margin:2px 0"><a href="#tip/${e.tip}">${esc(TIPMAP[e.tip]?.title||e.tip)}</a></p><p class="small muted" style="margin:0">${esc(e.moment)}</p></div>`).join('')}</div></div>`:''}`;
 }
@@ -442,7 +454,7 @@ function journey(){
  const seen=TIPS.filter(t=>S.seen[t.id]),adopted=TIPS.filter(t=>stat(t.id)==='adopted'),trying=TIPS.filter(t=>stat(t.id)==='trying');
  const ids=new Set(seen.map(t=>t.id)),jEdges=EDGES.filter(e=>ids.has(e.a)&&ids.has(e.b)),nearEdges=EDGES.filter(e=>(ids.has(e.a)!==ids.has(e.b)));
  const sources=[...new Set(Object.values(S.source))];
- return `${header('Your connected knowledge','My journey','What you learned, tried and kept.')}
+ return `${header('','My journey','What you learned, tried and kept.')}
  <div class="grid spaced">${[['Seen',seen.length,'Tips you opened or received'],['Trying',trying.length,'Actions you chose to try'],['Habits',adopted.length,'Actions that are part of your life']].map(([x,n,d])=>`<div class="card"><div class="eyebrow">${x}</div><div class="metric numeric spaced">${n}</div><p class="small muted">${d}</p></div>`).join('')}</div>
  <div class="side spaced"><div class="panel"><h2>This week</h2>${recapBlock()}<h3 class="spaced">What you now know</h3>${knowList()}</div>
  <div class="panel"><h2>Where your tips came from</h2>${sources.length?`<div class="taglist">${sources.map(s=>`<span class="badge">${esc(s)}</span>`).join('')}</div><p class="small muted spaced">Your journey stays the same whatever brought the tip: Wellwise itself, a moment, WhatsApp or any agent you link.</p>`:'<div class="empty">Nothing yet.</div>'}</div></div>
@@ -459,7 +471,7 @@ function exploreList(){let a=TIPS.filter(inInterests);
  if(searchKind==='NEW')a=a.filter(isNew);else if(searchKind==='RARE')a=a.filter(t=>t.familiarity!=='common');else if(searchKind==='COMMON')a=a.filter(t=>t.familiarity==='common');
  if(searchText){const q=searchText.toLowerCase();a=a.filter(t=>[t.title,t.action,t.why,t.category,...t.tags,...(t.hi?Object.values(t.hi):[])].join(' ').toLowerCase().includes(q))}return a}
 const exploreCount=a=>`Showing ${a.length} of ${TIPS.length} tips · ${searchGeo==='MINE'?'for '+REGIONS[S.geo]:searchGeo==='ALL'?'all regions':searchGeo==='LOCAL'?'specific to '+REGIONS[S.geo]:'for '+REGIONS[searchGeo]}${S.cats.length?' · filtered by your interests':''}`;
-function explore(){const a=exploreList();return `${header('The library','Explore every tip.','Search by topic, product or situation.')}
+function explore(){const a=exploreList();return `${header('','Explore every tip.','Search by topic, product or situation.')}
  <div class="panel spaced"><div class="grid five"><input class="field" id="search" placeholder="Search tips…" aria-label="Search tips" value="${esc(searchText)}" oninput="searchText=this.value;updateExplore()">
  <select class="field" aria-label="Category" onchange="searchCat=this.value;updateExplore()"><option value="ALL">All categories</option>${CATS.map(c=>`<option ${searchCat===c?'selected':''}>${esc(c)}</option>`).join('')}</select>
  <select class="field" aria-label="Region" onchange="searchGeo=this.value;updateExplore()"><option value="MINE" ${searchGeo==='MINE'?'selected':''}>My region: ${esc(REGIONS[S.geo])}</option><option value="LOCAL" ${searchGeo==='LOCAL'?'selected':''}>Only tips specific to my region</option><option value="ALL" ${searchGeo==='ALL'?'selected':''}>All regions</option>${['IN','GB','US'].map(r=>`<option value="${r}" ${searchGeo===r?'selected':''}>${REGIONS[r]}</option>`).join('')}</select>
@@ -472,7 +484,7 @@ function notifCard(n){const t=TIPMAP[n.tip];if(!t)return '';const from=n.agent||
  if(n.channel==='WhatsApp')return `<div style="margin-bottom:12px"><div class="wa"><b>Wellwise</b><p style="margin:4px 0">${esc(n.message)}</p><p style="margin:4px 0"><b>${esc(tx(t,'title'))}</b><br>${esc(tx(t,'action'))}</p><p class="small" style="margin:4px 0"><a href="#tip/${t.id}">Read more on Wellwise</a></p><div class="meta">${fmtTime(n.at)} ✓✓</div></div><p class="small muted" style="margin:4px 0 0">Sent to WhatsApp · via ${esc(from)}</p></div>`;
  return `<div class="detail" style="margin-bottom:10px"><span class="badge">${esc(from)}</span><p style="margin:8px 0 2px"><b>${esc(tx(t,'title'))}</b></p><p class="small" style="margin:0 0 6px">${esc(n.message)}</p><p class="small muted">${fmtTime(n.at)} · ${esc(n.moment||'')}</p><button class="btn alt sm" onclick="nav('tip/${t.id}')">Open tip</button></div>`}
 function inbox(){
- return `${header('Inbox','Your tips, delivered your way.','Choose when and where tips reach you.')}
+ return `${header('','Your tips, delivered your way.','Choose when and where tips reach you.')}
  <div class="side spaced"><div class="panel"><h2>Delivery</h2>
  <label>How often<select class="field" onchange="S.frequency=this.value;persist();render()">${[['off','Off'],['daily','Daily tip only'],['weekly','Weekly tip only'],['contextual','Moments only'],['both','Daily tip and moments']].map(([v,t])=>`<option value="${v}" ${S.frequency===v?'selected':''}>${t}</option>`).join('')}</select></label><div class="gap"></div>
  <label>Where<select class="field" onchange="S.channel=this.value;persist();render()"><option ${S.channel==='In the app'?'selected':''}>In the app</option><option ${S.channel==='WhatsApp'?'selected':''} ${API.linked.whatsapp?'':'disabled'}>WhatsApp${API.linked.whatsapp?'':' (link it in Moments first)'}</option></select></label><div class="gap"></div>
@@ -482,7 +494,7 @@ function inbox(){
 /* Without the server, the daily tip still lands in the inbox once a day. */
 function localDaily(){if(API.on||!['daily','both'].includes(S.frequency))return;const d=new Date(now()).toISOString().slice(0,10);if(S.lastDaily===d)return;const t=dailyTip();S.lastDaily=d;S.notifications.unshift({id:'day-'+d,tip:t.id,at:now(),message:'Your Wellwise tip for today',source:'daily',agent:null,channel:'In the app',moment:'Your daily tip'});S.notifications=S.notifications.slice(0,100);persist()}
 
-function settings(){const ln=API.linked;return `${header('Settings','Make Wellwise yours.','Everything here is optional. You can use Wellwise without sharing anything about your health.')}
+function settings(){const ln=API.linked;return `${header('','Make Wellwise yours.','Everything here is optional. You can use Wellwise without sharing anything about your health.')}
  <div class="panel spaced"><h2>Region and language</h2><div class="formgrid"><label>Region<select class="field" id="geo"><option value="AUTO" ${S.geoAuto?'selected':''}>Automatic${S.live?.region?' ('+esc(REGIONS[S.live.region])+')':' (from Near you)'}</option>${Object.entries(REGIONS).map(([v,n])=>`<option value="${v}" ${!S.geoAuto&&S.geo===v?'selected':''}>${n}</option>`).join('')}</select></label><label>Language<select class="field" onchange="setLang(this.value)"><option value="en" ${S.lang==='en'?'selected':''}>English</option><option value="hi" ${S.lang==='hi'?'selected':''}>हिंदी (preview)</option></select></label></div>${S.lang==='hi'?`<p class="small muted">Hindi preview: the main labels and ${TIPS.filter(t=>t.hi).length} tips are translated. Other text stays in English for now.</p>`:''}
  <h3 class="spaced">Topics you care about</h3><p class="small muted">Pick none to see everything.</p><div class="checks">${CATS.map(c=>`<label class="check"><input type="checkbox" class="catcheck" value="${esc(c)}" ${S.cats.includes(c)?'checked':''}> ${esc(c)}</label>`).join('')}</div>
  <h3 class="spaced">About you</h3><div class="formgrid"><label>Age range<select id="age" class="field">${['','Under 18','18–29','30–44','45–59','60+'].map(x=>`<option value="${esc(x)}" ${S.age===x?'selected':''}>${x||'Prefer not to say'}</option>`).join('')}</select></label><label>Diet<select id="diet" class="field">${['','Omnivore','Vegetarian','Vegan','Pescatarian','Other'].map(x=>`<option value="${esc(x)}" ${S.diet===x?'selected':''}>${x||'Prefer not to say'}</option>`).join('')}</select></label></div><p class="small muted">Diet changes which tips rise first. For example, “Vegan” brings B12 and fortified-food tips forward.</p>
@@ -515,10 +527,14 @@ function tipPage(t){
 
 async function checkForNewContent(){if(!hosted()||typeof fetch!=='function')return;try{const r=await fetch('wellwise-content.json',{cache:'no-cache'});if(!r.ok)return;const c=await r.json();if(c&&Array.isArray(c.TIPS)&&+c.contentVersion>+CONTENT.contentVersion){CONTENT=c;applyContent(c);render();toast('The library has new tips')}}catch(e){}}
 /* ---------- shell ---------- */
-const NAV=['discover','moments','journey','explore','inbox','settings'];
+const NAV=['discover','moments','explore','journey'],PAGES=[...NAV,'inbox','settings'];
+const svg=d=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+const ICON={discover:svg('<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/>'),moments:svg('<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/>'),explore:svg('<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>'),journey:svg('<path d="M4 19c4 0 4-6 8-6s4-6 8-6"/><circle cx="4" cy="19" r="1.6"/><circle cx="20" cy="7" r="1.6"/>'),inbox:svg('<path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/>'),settings:svg('<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>')};
+const navLabel=k=>k==='journey'?L('journeyTab'):L(k);
+const unreadCount=()=>S.notifications.filter(n=>n.at>(S.inboxSeenAt||0)).length;
 function currentPath(){return decodeURIComponent(location.hash.slice(1))||'discover'}
 function nav(p){if(location.hash==='#'+p){route()}else{location.hash='#'+p}window.scrollTo(0,0)}
-async function route(){const p=currentPath();if(p.startsWith('tip/')&&TIPMAP[p.slice(4)])markSeen(p.slice(4),'Explore');
+async function route(){const p=currentPath();if(p==='inbox'&&unreadCount()){S.inboxSeenAt=Date.now();persist()}if(p.startsWith('tip/')&&TIPMAP[p.slice(4)])markSeen(p.slice(4),'Explore');
  if(camStream&&!(p==='moments'&&S.momentTab==='scan'))stopCamera();
  const im=p.match(/^moments\/intake\/(in-[a-f0-9]+)$/);
  if(im){S.momentTab='share';history.replaceState(null,'','#moments');try{const r=await api('/api/intake/'+im[1]);keepIntake(r,'share')}catch(e){toast('We could not open what you shared')}}
@@ -528,9 +544,11 @@ async function route(){const p=currentPath();if(p.startsWith('tip/')&&TIPMAP[p.s
 function render(){
  document.documentElement.lang=S.lang==='hi'?'hi':'en';
  const path=currentPath();let page=path.startsWith('tip/')?'tip':path.startsWith('moments')?'moments':path;
- if(![...NAV,'tip'].includes(page))page='discover';
- const count=TIPS.filter(eligible).length,unread=S.notifications.length;
- $('nav').innerHTML=NAV.map(k=>`<button class="navbtn ${page===k?'active':''}" onclick="nav('${k}')">${esc(L(k))}${k==='explore'?' · '+count:''}${k==='inbox'&&unread?' · '+Math.min(unread,99):''}</button>`).join('');
+ if(![...PAGES,'tip'].includes(page))page='discover';
+ const count=TIPS.filter(eligible).length,unread=unreadCount(),here=k=>page===k?'active':'',cur=k=>page===k?' aria-current="page"':'';
+ $('nav').innerHTML=NAV.map(k=>`<button class="navbtn ${here(k)}"${cur(k)} onclick="nav('${k}')">${ICON[k]}${esc(navLabel(k))}${k==='explore'?' · '+count:''}</button>`).join('');
+ $('tabbar').innerHTML=NAV.map(k=>`<button class="${here(k)}"${cur(k)} onclick="nav('${k}')">${ICON[k]}<span>${esc(navLabel(k))}</span></button>`).join('');
+ $('icons').innerHTML=`<button class="iconbtn ${here('inbox')}"${cur('inbox')} onclick="nav('inbox')" aria-label="${esc(L('inbox'))}${unread?`, ${unread} new`:''}">${ICON.inbox}${unread?`<span class="dot">${Math.min(unread,99)}</span>`:''}</button><button class="iconbtn ${here('settings')}"${cur('settings')} onclick="nav('settings')" aria-label="${esc(L('settings'))}">${ICON.settings}</button>`;
  const t=page==='tip'?TIPMAP[path.slice(4)]:null;
  $('main').innerHTML=page==='tip'?(t?tipPage(t):'<div class="empty">Tip not found.</div>'):{discover,moments,journey,explore,inbox,settings}[page]();
  $('footer').innerHTML=`${esc(DISCLAIMER)}`;

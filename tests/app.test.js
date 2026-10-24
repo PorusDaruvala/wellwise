@@ -11,6 +11,19 @@ const check=(name,cond)=>{if(!cond)failed++;console.log((cond?'PASS ':'FAIL ')+n
 for(const p of ['discover','moments','journey','explore','inbox','settings','tip/ww-001','tip/ww-112','tip/ww-126','bogus'])go(p),check('render '+p,txt().length>100);
 for(const tab of ['near','share','scan','calendar','prompt','whatsapp','agent']){go('moments');w.eval(`setTab('${tab}')`);check('moments tab '+tab,txt().length>100)}
 
+// menu: four places, inbox and settings as icons, the same four in the phone menu
+go('discover');
+const navText=[...w.document.querySelectorAll('#nav .navbtn')].map(b=>b.textContent.replace(/ · \d+/,''));
+check('four main places',navText.join()==='Discover,Moments,Explore,Journey');
+check('phone menu has the same four',[...w.document.querySelectorAll('#tabbar button')].map(b=>b.textContent).join()==='Discover,Moments,Explore,Journey');
+check('inbox and settings icons',w.document.querySelectorAll('#icons .iconbtn').length===2&&/Settings/.test(w.document.querySelector('#icons').innerHTML));
+w.eval("S.notifications.unshift({id:'n-new',tip:'ww-001',at:Date.now()-1000,message:'Hi',source:'daily',channel:'In the app'});S.inboxSeenAt=0;render()");
+check('unread badge',!!w.document.querySelector('#icons .dot'));
+go('inbox');check('badge clears in the inbox',!w.document.querySelector('#icons .dot')&&w.document.querySelector('#icons .iconbtn.active'));
+// no small label above page titles; tip pages keep their category
+check('no labels above menu page titles',['discover','moments','explore','journey','inbox','settings'].every(p=>(go(p),!w.document.querySelector('#main > .eyebrow'))));
+go('tip/ww-001');check('tip page keeps its category',/Food & nutrition/i.test(w.document.querySelector('#main > .eyebrow')?.textContent||''));
+
 // every tip can come from a moment
 check('all tips reachable',w.eval('REACHABLE===TIPS.length'));
 check('no agent simulations left',w.eval('typeof AGENT_SCENARIOS')==='undefined'&&!w.eval('"AGENT_SCENARIOS" in CONTENT'));

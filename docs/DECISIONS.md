@@ -84,3 +84,7 @@ One entry per product or technical decision. Add new entries at the bottom. Do n
 ### D-019 · Everyone on their own clock · 2026-10-23
 **Decision:** Scheduled tips (daily, weekly, near you) and calendar times follow each person's time zone, sent from their browser.
 **Why:** Testers and users live in different time zones from the server.
+
+### D-020 · Four places, bottom menu on phones · 2026-10-23
+**Decision:** The menu has four places: Discover, Moments, Explore and Journey. Inbox and Settings are icons at the top right, and the inbox icon shows how many tips are new. On phones (700 px wide or less) the four places sit in a fixed bottom menu; computers keep them at the top. Page titles have no small label above them; tip pages keep their category.
+**Why:** On phones, six options in a scrolling top bar hid Inbox and Settings. A bottom menu with four places is what people expect from an app.

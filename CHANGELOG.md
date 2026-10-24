@@ -31,6 +31,9 @@
 - Connect Claude, ChatGPT or another assistant with one address and a sign-in. Connected assistants can be disconnected.
 - Calendar: "Connect Google Calendar" and "Connect Outlook" shown as coming soon.
 - The Health details panel now says what it will do: bring the tips that matter most to you.
+- Fixed: assistants such as Claude could not find the connector sign-in when the public address was set without https://.
+- Menu: four places (Discover, Moments, Explore, Journey). Inbox (with a count of new tips) and Settings are icons at the top right. On phones the four places sit in a bottom menu.
+- Removed the small label above each page title. Tip pages keep their category.
 - 21 more sourced tips (ww-252 to ww-272) in four more categories: Ageing & older adults, Children & parenting, Work & screen life, and Travel health, with new moments for older parents, children, night shifts and high-altitude trips.
 
 
