@@ -95,7 +95,8 @@ w.eval('laterPush()');check('not now hides it for a while',!/Turn on notificatio
 w.eval("S.pushAskedAt=0;API.pushOn=true;render()");check('card gone once on',!/Get a useful tip every morning/.test(txt()));
 go('settings');check('notifications switch in settings',/Notifications on this device/.test(txt())&&/Turn off/.test(txt()));
 w.eval("API.pushOn=false;delete window.PushManager;Object.defineProperty(navigator,'userAgent',{value:'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X)',configurable:true});S.pushAskedAt=0");
-go('discover');check('iPhone gets Home Screen steps',/Add to Home Screen/.test(txt()));
+go('discover');check('iPhone gets Home Screen steps',/Add to Home Screen/.test(txt())&&/Open as Web App/.test(txt())&&w.document.querySelectorAll('.steps li').length===4);
+w.eval("Object.defineProperty(navigator,'userAgent',{value:'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) CriOS/130.0',configurable:true});render()");check('Chrome on iPhone gets its own steps',/address bar at the top/.test(txt()));
 w.eval("API.on=false");
 check('travel tips moved',['ww-059','ww-191','ww-196'].every(id=>w.eval(`TIPMAP['${id}'].category`)==='Travel health'));
 
