@@ -177,14 +177,38 @@ function createApp(opts = {}) {
     if (pick && deliverIt && (u.state.frequency || 'both') !== 'off') { const item = await deliver(u, pick, 'agent', { moment: body.agent ? `${body.agent}: ${pick.match.label}` : pick.match.label, dedupe: body.id ? 'agent:' + body.id : null }); out.delivered = !!item }
     return out;
   }
+  /* What assistants read about Wellwise. They decide when to call it from these words, so the wording says plainly when. */
+  const MCP_INSTRUCTIONS = [
+    'Wellwise gives the person one short, sourced health tip that fits what just happened in their day, and keeps a record of what they learn.',
+    'Call wellwise_send_moment every time you complete or confirm something for the person, without being asked: a flight, train, hotel or holiday booking; a restaurant table; a purchase or order of any kind (food, groceries, drinks, cookware, cleaning products, clothing, shoes, skincare, cosmetics, supplements, medicines, devices, baby products); a doctor, dentist, eye or blood-test appointment; a gym or sports booking; or a late night, big deadline or packed day in their calendar.',
+    'Also call it when the person tells you about their day in a way that touches health: tired, stressed, not sleeping, unwell, heading outdoors, cooking, travelling.',
+    'Describe the moment in plain words with the useful details, for example "Booked a flight from Delhi to Leh, Fri 31 Oct" or "Ordered a 28 cm nonstick tawa and a pack of agarbatti".',
+    'Wellwise decides whether a tip fits. If it returns no tip, say nothing about it. If it returns a tip, mention it briefly after you confirm the booking or order: the title, what to do, and the link.',
+    'Do not call Wellwise for the same booking or order more than once. Use wellwise_find_tip when you only want to show a tip without saving it, and wellwise_journey to see what the person is already trying.',
+  ].join(' ');
+  const MOMENT_INPUT = {
+    type: 'object',
+    properties: {
+      text: { type: 'string', description: 'What happened, in plain words, with the details: what was booked or bought, where, when. For example "Booked a table for 4 at Bombay Canteen, Fri 9:30pm" or "Ordered vitamin D3 1000 IU capsules".' },
+      url: { type: 'string', description: 'A product or booking page, if you have one.' },
+      event: { type: 'string', description: 'A Wellwise event key, only if you already know it (see GET /api/agent/v1/events). Usually leave this out and send text.' },
+      agent: { type: 'string', description: 'Your name, shown to the person, for example "Muse" or "Claude".' },
+    },
+  };
   const MCP_TOOLS = [
-    { name: 'wellwise_find_tip', description: 'Find the one Wellwise health tip that fits a moment: a purchase, an order, a link, a calendar entry or a short description of what is happening. Returns nothing when no tip fits. Does not notify the person.', inputSchema: { type: 'object', properties: { text: { type: 'string', description: 'What is happening, or text from an order, page or calendar entry' }, url: { type: 'string', description: 'A product or page link' }, event: { type: 'string', description: 'A Wellwise event key, if you know it' } } } },
-    { name: 'wellwise_send_moment', description: 'Tell Wellwise about a moment in the person’s day. Wellwise picks a tip if one fits and saves it to their journey and inbox (and WhatsApp, if they chose that).', inputSchema: { type: 'object', properties: { text: { type: 'string' }, url: { type: 'string' }, event: { type: 'string' }, agent: { type: 'string', description: 'Your name, shown to the person' } } } },
-    { name: 'wellwise_journey', description: 'What the person is trying and has made a habit, so you can avoid repeating tips.', inputSchema: { type: 'object', properties: {} } },
+    { name: 'wellwise_send_moment', title: 'Tell Wellwise what just happened',
+      description: 'Call this right after you book travel, a restaurant or an appointment, or complete any purchase or order for the person, and when they tell you about their day. Wellwise picks one sourced health tip that fits (or none), saves it to their Wellwise journey, and sends it to them. Show the returned tip briefly in your reply.',
+      inputSchema: MOMENT_INPUT, annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false } },
+    { name: 'wellwise_find_tip', title: 'Find a tip without saving it',
+      description: 'Find the one sourced health tip that fits a moment, a product, a link or a calendar entry, without saving it or notifying the person. Returns no tip when nothing fits well.',
+      inputSchema: MOMENT_INPUT, annotations: { readOnlyHint: true, openWorldHint: false } },
+    { name: 'wellwise_journey', title: 'What the person is trying',
+      description: 'The tips the person is trying and has made habits, so you do not repeat them.',
+      inputSchema: { type: 'object', properties: {} }, annotations: { readOnlyHint: true, openWorldHint: false } },
   ];
   async function mcp(u, msg) {
     const ok = result => ({ jsonrpc: '2.0', id: msg.id, result });
-    if (msg.method === 'initialize') return ok({ protocolVersion: msg.params?.protocolVersion || '2025-06-18', capabilities: { tools: {} }, serverInfo: { name: 'wellwise', version: '4.0.0' }, instructions: 'Wellwise gives one short, sourced health tip that fits a moment. Call wellwise_send_moment when something happens in the person’s day.' });
+    if (msg.method === 'initialize') return ok({ protocolVersion: msg.params?.protocolVersion || '2025-06-18', capabilities: { tools: {} }, serverInfo: { name: 'wellwise', version: '4.0.0' }, instructions: MCP_INSTRUCTIONS });
     if (msg.method === 'ping') return ok({});
     if (msg.method === 'tools/list') return ok({ tools: MCP_TOOLS });
     if (msg.method === 'tools/call') {
