@@ -88,3 +88,7 @@ One entry per product or technical decision. Add new entries at the bottom. Do n
 ### D-020 · Four places, bottom menu on phones · 2026-10-23
 **Decision:** The menu has four places: Discover, Moments, Explore and Journey. Inbox and Settings are icons at the top right, and the inbox icon shows how many tips are new. On phones (700 px wide or less) the four places sit in a fixed bottom menu; computers keep them at the top. Page titles have no small label above them; tip pages keep their category.
 **Why:** On phones, six options in a scrolling top bar hid Inbox and Settings. A bottom menu with four places is what people expect from an app.
+
+### D-021 · Tips come to people, not the other way round · 2026-10-23
+**Decision:** After one tap to allow notifications, every tip Wellwise delivers (daily, calendar, near you, agents, email) also arrives as a phone or browser notification, at the person's local time. Discover offers this once, with "Not now" hiding it for a week. On iPhone, notifications need Wellwise on the Home Screen, so Discover explains that step instead.
+**Why:** Without it, people had to remember to come back. Browsers require one tap to allow notifications; nothing can skip that.

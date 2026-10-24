@@ -34,6 +34,7 @@
 - Fixed: assistants such as Claude could not find the connector sign-in when the public address was set without https://.
 - Menu: four places (Discover, Moments, Explore, Journey). Inbox (with a count of new tips) and Settings are icons at the top right. On phones the four places sit in a bottom menu.
 - Removed the small label above each page title. Tip pages keep their category.
+- Notifications: one tap on Discover turns them on. The daily tip, calendar and near-you tips then arrive on the phone by themselves, at the person's local time. On iPhone, Wellwise explains the Home Screen step first. Settings has an on/off switch for each device. PNG app icons for home screens and notifications.
 - 21 more sourced tips (ww-252 to ww-272) in four more categories: Ageing & older adults, Children & parenting, Work & screen life, and Travel health, with new moments for older parents, children, night shifts and high-altitude trips.
 
 

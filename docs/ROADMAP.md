@@ -21,7 +21,6 @@ Done in 4.0: installable app with share target, live air and weather, barcode an
 
 | # | Item | Why |
 |---|---|---|
-| X1 | **Web push notifications** (VAPID) as a third channel. | Not everyone wants WhatsApp. |
 | X2 | **Google and Microsoft calendar sign-in** (OAuth) as well as .ics links. | Easier than finding a secret address. |
 | X3 | **Barcode reading on the server** for browsers without BarcodeDetector. | Photos of barcodes without needing Claude. |
 | X4 | **Shop integrations** (order emails parsed per retailer, or partner APIs). | Purchases arrive with no forwarding. |

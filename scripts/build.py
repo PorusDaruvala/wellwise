@@ -19,7 +19,7 @@ DIST = os.path.join(ROOT, 'dist')
 OUTPUT = os.path.join(DIST, 'index.html')
 PACK_DIR = os.path.join(ROOT, 'content', 'packs')
 ENGINE = os.path.join(ROOT, 'src', 'engine.js')
-STATIC = ['admin.html', 'manifest.webmanifest', 'sw.js', 'icon.svg']
+STATIC = ['admin.html', 'manifest.webmanifest', 'sw.js', 'icon.svg', 'icon-192.png', 'icon-512.png']
 # Open-source barcode reader (ZXing, Apache-2.0) for browsers without a built-in one, such as Safari on iPhone.
 ZXING = os.path.join(ROOT, 'node_modules', '@zxing', 'library')
 

@@ -14,10 +14,11 @@ const llm = require('./llm.js');
 const { fetchPublic } = require('./net.js');
 const oauth = require('./oauth.js');
 const clock = require('./clock.js');
+const pushMod = require('./push.js');
 
 const ROOT = path.join(__dirname, '..');
-const STATIC = { '/': 'index.html', '/index.html': 'index.html', '/admin': 'admin.html', '/manifest.webmanifest': 'manifest.webmanifest', '/sw.js': 'sw.js', '/icon.svg': 'icon.svg', '/vendor/zxing.min.js': 'vendor/zxing.min.js', '/vendor/zxing-LICENSE.txt': 'vendor/zxing-LICENSE.txt' };
-const TYPES = { '.txt': 'text/plain; charset=utf-8', '.html': 'text/html; charset=utf-8', '.webmanifest': 'application/manifest+json', '.js': 'text/javascript; charset=utf-8', '.svg': 'image/svg+xml', '.json': 'application/json' };
+const STATIC = { '/': 'index.html', '/index.html': 'index.html', '/admin': 'admin.html', '/manifest.webmanifest': 'manifest.webmanifest', '/sw.js': 'sw.js', '/icon.svg': 'icon.svg', '/icon-192.png': 'icon-192.png', '/icon-512.png': 'icon-512.png', '/vendor/zxing.min.js': 'vendor/zxing.min.js', '/vendor/zxing-LICENSE.txt': 'vendor/zxing-LICENSE.txt' };
+const TYPES = { '.png': 'image/png', '.txt': 'text/plain; charset=utf-8', '.html': 'text/html; charset=utf-8', '.webmanifest': 'application/manifest+json', '.js': 'text/javascript; charset=utf-8', '.svg': 'image/svg+xml', '.json': 'application/json' };
 const SOURCE_LABEL = { share: 'Share', scan: 'Scan', photo: 'Photo', document: 'Document', calendar: 'Calendar', environment: 'Near you', whatsapp: 'WhatsApp', email: 'Email', agent: 'Your agent', daily: 'Daily tip', weekly: 'Weekly tip', checkin: 'Check-in', prompt: 'Quick check-in' };
 
 function createApp(opts = {}) {
@@ -26,6 +27,7 @@ function createApp(opts = {}) {
   const lib = createLibrary(db, opts.content || path.join(dist, 'wellwise-content.json'));
   const adminToken = opts.adminToken ?? process.env.WELLWISE_ADMIN_TOKEN ?? '';
   const oa = oauth.setup(db);
+  const push = pushMod.setup(db, { sender: opts.pushSender, subject: () => /^https:/.test(baseUrl) ? baseUrl : 'mailto:wellwise@example.com' });
   const SECRET = process.env.WELLWISE_SECRET || crypto.randomBytes(32).toString('hex');
   const sign = (...xs) => crypto.createHmac('sha256', SECRET).update(xs.join('|')).digest('hex');
   // The public address, always absolute. "wellwise.example.com" in the settings becomes "https://wellwise.example.com".
@@ -78,6 +80,8 @@ function createApp(opts = {}) {
     const content = lib.current();
     const item = db.addInbox(u.id, { tip: pick.tip.id, moment: moment || pick.match?.label || SOURCE_LABEL[source], source, via: SOURCE_LABEL[source] || source, message: message ?? intake.friendly(content, pick.match), channel: u.state.channel === 'WhatsApp' && u.phone ? 'WhatsApp' : 'In the app', dedupe: dedupe || null });
     if (item && item.channel === 'WhatsApp' && source !== 'whatsapp') await wa.deliver(u, pick.tip, item.message, tipUrl(pick.tip.id)).catch(e => console.error(e.message));
+    // A notification on every device the person allowed (not for WhatsApp replies: they are already in the chat).
+    if (item && source !== 'whatsapp') await push.notify(u.id, { title: pick.tip.title, body: [item.message, pick.tip.action].filter(Boolean).join(' · '), url: '/#tip/' + pick.tip.id, tag: item.id }).catch(e => console.error('push', e.message));
     return item;
   }
   async function runIntake(u, input, source) {
@@ -268,7 +272,7 @@ function createApp(opts = {}) {
         const u = me(req, res);
         if (m === 'GET' && p === '/api/me') return send(res, 200, { id: u.id, state: u.state, linked: summaryOf(u), features: features() });
         if (m === 'PUT' && p === '/api/state') { const b = await json(req); const st = { ...(b.state || {}), _server: u.state._server || {} }; db.saveState(u.id, st); return send(res, 200, { ok: true }) }
-        if (m === 'DELETE' && p === '/api/me') { oa.revokeAll(u.id); db.deleteUser(u.id); return send(res, 200, { ok: true }, { 'set-cookie': 'ww=; Path=/; Max-Age=0' }) }
+        if (m === 'DELETE' && p === '/api/me') { oa.revokeAll(u.id); push.removeAll(u.id); db.deleteUser(u.id); return send(res, 200, { ok: true }, { 'set-cookie': 'ww=; Path=/; Max-Age=0' }) }
         if (m === 'GET' && p === '/api/inbox') return send(res, 200, { items: db.inboxSince(u.id, +url.searchParams.get('since') || 0) });
         if (m === 'POST' && p === '/api/feedback') { const b = await json(req); db.vote(u.id, String(b.tip), b.source, b.vote === 'useful' || b.vote === 'not-useful' ? b.vote : null); return send(res, 200, { ok: true }) }
         if (m === 'GET' && p === '/api/live') {
@@ -304,6 +308,12 @@ function createApp(opts = {}) {
         if (p === '/api/whatsapp') {
           if (m === 'POST') { const c = db.newCode(u.id, 'whatsapp'), num = (wa.env().number || '').replace(/\D/g, ''); return send(res, 200, { code: c, number: wa.env().number || null, link: num ? `https://wa.me/${num}?text=${encodeURIComponent('LINK ' + c)}` : null, enabled: wa.enabled() }) }
           if (m === 'DELETE') { db.setField(u.id, 'phone', null); return send(res, 200, { ok: true }) }
+        }
+        if (p === '/api/push') {
+          if (m === 'GET') return send(res, 200, { key: push.publicKey(), devices: push.count(u.id) });
+          const b = await json(req);
+          if (m === 'POST') { if (!push.save(u.id, b.subscription)) return fail(res, 400, 'That subscription is not valid'); push.notify(u.id, { title: 'Notifications are on', body: 'Your Wellwise tips will arrive here.', url: '/', tag: 'welcome' }).catch(() => {}); return send(res, 200, { ok: true, devices: push.count(u.id) }) }
+          if (m === 'DELETE') { push.remove(u.id, b.endpoint); return send(res, 200, { ok: true, devices: push.count(u.id) }) }
         }
         if (m === 'GET' && p === '/api/agents') return send(res, 200, { mcp: baseUrl + '/mcp', connected: oa.connected(u.id).map(c => ({ id: c.client_id, name: c.name, since: c.since })) });
         if (m === 'DELETE' && (mm = p.match(/^\/api\/agents\/(wwc_[a-f0-9]+)$/))) { oa.revoke(u.id, mm[1]); return send(res, 200, { ok: true }) }
@@ -366,7 +376,7 @@ function createApp(opts = {}) {
         if (!isAdmin(req)) return fail(res, 401, adminToken ? 'Wrong admin token' : 'Set WELLWISE_ADMIN_TOKEN on the server to use the admin console');
         const c = lib.current();
         if (m === 'GET' && p === '/api/admin/status') return send(res, 200, { stats: db.stats(), feedback: { bySource: db.feedbackBySource(), byTip: db.feedbackByTip().map(r => ({ ...r, title: c.byId[r.tip]?.title })) }, reach: reach(c), packs: db.packs().map(x => ({ id: x.id, name: x.name, at: x.at, tips: x.body.tips.length })), contentVersion: c.contentVersion,
-          integrations: { claude: llm.enabled() ? llm.MODEL : null, whatsapp: wa.enabled(), whatsappWebhook: !!wa.env().verify, whatsappTemplate: wa.env().template || null, email: !!process.env.WELLWISE_INBOUND_DOMAIN, publicUrl: baseUrl } });
+          integrations: { push: push.total(), claude: llm.enabled() ? llm.MODEL : null, whatsapp: wa.enabled(), whatsappWebhook: !!wa.env().verify, whatsappTemplate: wa.env().template || null, email: !!process.env.WELLWISE_INBOUND_DOMAIN, publicUrl: baseUrl } });
         if (m === 'POST' && p === '/api/admin/packs/check') return send(res, 200, lib.validate(await json(req)));
         if (m === 'POST' && p === '/api/admin/packs') { const b = await json(req), r = lib.validate(b); if (r.errors.length) return send(res, 400, r); db.savePack('pk-' + db.id(4), b.pack || 'Pack', { tips: r.tips, edges: r.edges }); lib.invalidate(); return send(res, 200, { ok: true, added: r.tips.length }) }
         let pm; if (m === 'DELETE' && (pm = p.match(/^\/api\/admin\/packs\/(pk-[a-f0-9]+)$/))) { db.deletePack(pm[1]); lib.invalidate(); return send(res, 200, { ok: true }) }

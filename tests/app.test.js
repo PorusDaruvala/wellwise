@@ -88,6 +88,14 @@ go('settings');check('health details panel',/Health details/.test(txt())&&/tips 
 // online-only tabs, as they look when the server is there
 w.eval("API.on=true;API.linked={};API.features={}");go('moments');w.eval("setTab('calendar')");check('calendar sign-in shown as coming soon',/Connect Google Calendar/.test(txt())&&/Coming soon/.test(txt()));
 w.eval("setTab('agent')");check('agent connector address',/\/mcp/.test(txt())&&/Add custom connector/.test(txt()));
+// daily notifications: the one-tap card on Discover, or Home Screen steps on iPhone
+w.eval("window.PushManager=function(){};window.Notification={permission:'default',requestPermission:async()=>'default'};Object.defineProperty(navigator,'serviceWorker',{value:{ready:new Promise(()=>{}),register:async()=>{}},configurable:true});S.pushAskedAt=0;API.pushOn=false");
+go('discover');check('notifications card',/Turn on notifications/.test(txt()));
+w.eval('laterPush()');check('not now hides it for a while',!/Turn on notifications/.test(txt()));
+w.eval("S.pushAskedAt=0;API.pushOn=true;render()");check('card gone once on',!/Get a useful tip every morning/.test(txt()));
+go('settings');check('notifications switch in settings',/Notifications on this device/.test(txt())&&/Turn off/.test(txt()));
+w.eval("API.pushOn=false;delete window.PushManager;Object.defineProperty(navigator,'userAgent',{value:'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X)',configurable:true});S.pushAskedAt=0");
+go('discover');check('iPhone gets Home Screen steps',/Add to Home Screen/.test(txt()));
 w.eval("API.on=false");
 check('travel tips moved',['ww-059','ww-191','ww-196'].every(id=>w.eval(`TIPMAP['${id}'].category`)==='Travel health'));
 

@@ -7,6 +7,9 @@
 <meta name="description" content="Wellwise: useful health insights, sparked by everyday moments">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Wellwise">
 <title>Wellwise</title>
 <style>
 :root{--bg:#f5f7f2;--ink:#172a22;--muted:#5f7166;--green:#146c4b;--pale:#e7f3e9;--line:#e0e8df;--card:#fff;--amber:#7b5019;--amberbg:#fff4e5;--amberline:#f0ddc2;--red:#8a2a1f;--redbg:#fdecea;--redline:#f2cfc9;--wa:#dcf8c6;--soft:#f7faf6}
@@ -157,7 +160,7 @@ const I18N={
  hi:{discover:'खोजें',moments:'पल',journey:'मेरी यात्रा',journeyTab:'यात्रा',explore:'लाइब्रेरी',inbox:'इनबॉक्स',settings:'सेटिंग्स',tryThis:'यह आज़माएँ',why:'यह क्यों ज़रूरी है',considerations:'ध्यान रखें',timeline:'नतीजे कब दिख सकते हैं',localNote:'स्थानीय बात',willTry:'आज़माना है',trying:'✓ आज़मा रहे हैं',already:'पहले से कर रहे हैं',adopted:'✓ आदत बन गई',notForMe:'मेरे लिए नहीं',open:'और पढ़ें →',dailyEyebrow:'आज की जानकारी',heroTitle:'सही समय पर, काम की बात जानें।',heroSub:'आपके दिन से जुड़ी छोटी, भरोसेमंद जानकारियाँ।',useful:'काम का',notUseful:'काम का नहीं'}
 };
 
-const DEFAULTS={geo:'GLOBAL',geoAuto:true,cats:[],age:'',diet:'',lang:'en',statuses:{},statusAt:{},seen:{},source:{},feedback:{},checkins:{},notifications:[],events:[],delivered:{},channel:CHANNELS[0],frequency:'both',discovery:'balanced',offsetDays:0,momentTab:'near',selected:null,shareText:'',nearConsent:false,live:null,inboxSince:0,lastDaily:'',tap:null,intakes:{},tz:'',inboxSeenAt:0,updatedAt:0};
+const DEFAULTS={geo:'GLOBAL',geoAuto:true,cats:[],age:'',diet:'',lang:'en',statuses:{},statusAt:{},seen:{},source:{},feedback:{},checkins:{},notifications:[],events:[],delivered:{},channel:CHANNELS[0],frequency:'both',discovery:'balanced',offsetDays:0,momentTab:'near',selected:null,shareText:'',nearConsent:false,live:null,inboxSince:0,lastDaily:'',tap:null,intakes:{},tz:'',inboxSeenAt:0,pushAskedAt:0,updatedAt:0};
 let S;try{S=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){S={}}
 S={...DEFAULTS,...S};
 if(!CHANNELS.includes(S.channel))S.channel=/whatsapp/i.test(S.channel)?'WhatsApp':CHANNELS[0];
@@ -196,9 +199,35 @@ async function connect(){
   const tz=(()=>{try{return Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){return ''}})();
   const remote=me.state||{};if((remote.updatedAt||0)>(S.updatedAt||0)){const keep={momentTab:S.momentTab,selected:S.selected};S={...DEFAULTS,...remote,...keep};delete S._server;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
   if(tz&&S.tz!==tz){S.tz=tz;persist()}else pushState();
-  await pullInbox();if(S.nearConsent)refreshLive();render();
+  await pullInbox();if(S.nearConsent)refreshLive();checkPush();render();
   setInterval(pullInbox,60e3);window.addEventListener('focus',pullInbox);
  }catch(e){API.on=false}}
+/* ---------- notifications: allowed once, then tips arrive by themselves ---------- */
+const PUSH_OK=()=>'serviceWorker' in navigator&&'PushManager' in window&&'Notification' in window;
+const isIOS=()=>/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+const standalone=()=>(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true;
+let installEvt=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installEvt=e;render()});
+function b64ToU8(s){const p='='.repeat((4-s.length%4)%4),b=atob((s+p).replace(/-/g,'+').replace(/_/g,'/'));return Uint8Array.from(b,c=>c.charCodeAt(0))}
+async function checkPush(){if(!API.on||!PUSH_OK())return;try{const reg=await navigator.serviceWorker.ready;const sub=await reg.pushManager.getSubscription();API.pushOn=!!sub&&Notification.permission==='granted';render()}catch(e){}}
+async function enablePush(){
+ if(!PUSH_OK())return;
+ const perm=await Notification.requestPermission();
+ if(perm!=='granted'){toast('Notifications are blocked. You can allow them in your browser settings.');return}
+ try{const {key}=await api('/api/push');const reg=await navigator.serviceWorker.ready;let sub=await reg.pushManager.getSubscription();
+  if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64ToU8(key)});
+  await api('/api/push',{method:'POST',body:{subscription:sub.toJSON()}});API.pushOn=true;render();toast('Done. Tips will now arrive on this device.')}
+ catch(e){toast('Notifications could not be turned on here. Try again later.')}}
+async function disablePush(){try{const reg=await navigator.serviceWorker.ready;const sub=await reg.pushManager.getSubscription();if(sub){await api('/api/push',{method:'DELETE',body:{endpoint:sub.endpoint}});await sub.unsubscribe()}}catch(e){}API.pushOn=false;render();toast('Notifications are off on this device')}
+async function installApp(){if(!installEvt)return;installEvt.prompt();try{await installEvt.userChoice}catch(e){}installEvt=null;render()}
+function laterPush(){S.pushAskedAt=Date.now();persist();render()}
+function notifyCard(){
+ if(!API.on||API.pushOn||(S.pushAskedAt&&Date.now()-S.pushAskedAt<7*DAY))return '';
+ const later=`<button class="btn ghost sm" onclick="laterPush()">Not now</button>`;
+ if(PUSH_OK())return `<div class="panel spaced"><h3>Get a useful tip every morning</h3><p class="small muted" style="margin-top:0">Turn on notifications once. Your daily tip, and tips for your calendar and the air near you, then arrive by themselves.</p><div class="row"><button class="btn sm" onclick="enablePush()">Turn on notifications</button>${installEvt?`<button class="btn alt sm" onclick="installApp()">Add to home screen</button>`:''}${later}</div></div>`;
+ if(isIOS()&&!standalone())return `<div class="panel spaced"><h3>Get a useful tip every morning</h3><p class="small" style="margin-top:0">On iPhone, add Wellwise to your Home Screen first: tap <b>Share</b>, then <b>Add to Home Screen</b>. Open Wellwise from your Home Screen and turn on notifications here.</p><div class="row">${later}</div></div>`;
+ return ''}
+
 function pushState(){if(!API.on)return;const {live,...rest}=S;api('/api/state',{method:'PUT',body:{state:rest}}).catch(()=>{})}
 async function refreshMe(){try{const me=await api('/api/me');API.linked=me.linked||{};API.features=me.features||{}}catch(e){}}
 /* Tips the server delivered (calendar, near you, WhatsApp, agents, email, daily tips) join the journey here. */
@@ -355,6 +384,7 @@ function discover(){
  const tm=S.tap&&MOMENTS.find(x=>x.id===S.tap),ttop=tm&&candidates(tm.event).scored[0];
  return `${header('',L('heroTitle'),L('heroSub'))}
  ${due.length?`<div class="sectiontitle"><h2>Quick check-in</h2></div><div class="grid two">${due.slice(0,4).map(d=>{const x=TIPMAP[d.id];return `<div class="card checkin"><span class="small muted">${d.stage} days ago you started</span><h3 style="margin-top:6px">${esc(tx(x,'title'))}</h3><p class="small">How is it going?</p><div class="row"><button class="btn sm" onclick="checkin('${d.id}',${d.stage},'kept')">It’s a habit now</button><button class="btn alt sm" onclick="checkin('${d.id}',${d.stage},'still')">Still trying</button><button class="btn ghost sm" onclick="checkin('${d.id}',${d.stage},'stopped')">I stopped</button></div></div>`}).join('')}</div>`:''}
+ ${notifyCard()}
  ${hero}
  <div class="panel spaced"><span class="badge">What happened today?</span><h3 style="margin-top:12px">One tap, one more useful tip</h3><div class="tapgrid">${TAPS.map(id=>{const m=MOMENTS.find(x=>x.id===id);return m?`<button class="btn ${S.tap===id?'':'ghost'} sm" onclick="tapMoment('${id}')">${esc(m.name)}</button>`:''}).join('')}</div>
  ${ttop?`<div class="spaced">${tm.id==='p-low'?supportNotice():''}<p class="small muted" style="margin:0 0 8px">${esc(tm.friendly)}</p>${tipBlock(ttop.t,'saveTap()',S.delivered['tap:'+tm.id+':'+day()])}</div>`:''}</div>
@@ -500,7 +530,7 @@ function settings(){const ln=API.linked;return `${header('','Make Wellwise yours
  <h3 class="spaced">About you</h3><div class="formgrid"><label>Age range<select id="age" class="field">${['','Under 18','18–29','30–44','45–59','60+'].map(x=>`<option value="${esc(x)}" ${S.age===x?'selected':''}>${x||'Prefer not to say'}</option>`).join('')}</select></label><label>Diet<select id="diet" class="field">${['','Omnivore','Vegetarian','Vegan','Pescatarian','Other'].map(x=>`<option value="${esc(x)}" ${S.diet===x?'selected':''}>${x||'Prefer not to say'}</option>`).join('')}</select></label></div><p class="small muted">Diet changes which tips rise first. For example, “Vegan” brings B12 and fortified-food tips forward.</p>
  <div class="row spaced"><button class="btn" onclick="savePrefs()">Save</button><button class="btn ghost" onclick="clearPrefs()">Clear</button></div></div>
  <div class="panel spaced"><div class="eyebrow">Coming soon</div><h2>Health details</h2><p>Add conditions, medicines and allergies, and Wellwise will bring the tips that matter most to you. This is coming soon.</p><div class="formgrid"><label>Conditions<input disabled class="field" placeholder="Coming later"></label><label>Medicines<input disabled class="field" placeholder="Coming later"></label></div></div>
- ${API.on?`<div class="panel spaced"><h2>Connected</h2>${[['Near you',S.nearConsent?'On':'Off','near'],['Calendar',ln.calendar?'Connected':'Not connected','calendar'],['WhatsApp',ln.whatsapp?'Linked · '+ln.whatsapp:'Not linked','whatsapp'],['Your agent',ln.agent?'Key active':'Not linked','agent'],...(API.features.email?[['Email',ln.email||'Not set up','email']]:[])].map(([n,v,tab])=>`<div class="status"><span><b>${n}</b><br><span class="small muted">${esc(v)}</span></span><button class="btn ghost sm" onclick="S.momentTab='${tab}';persist();nav('moments')">Manage</button></div>`).join('')}</div>`:''}
+ ${API.on?`<div class="panel spaced"><h2>Connected</h2><div class="status"><span><b>Notifications on this device</b><br><span class="small muted">${API.pushOn?'On':PUSH_OK()?'Off':isIOS()&&!standalone()?'Add Wellwise to your Home Screen first':'Not available in this browser'}</span></span>${API.pushOn?`<button class="btn ghost sm" onclick="disablePush()">Turn off</button>`:PUSH_OK()?`<button class="btn ghost sm" onclick="enablePush()">Turn on</button>`:''}</div>${[['Near you',S.nearConsent?'On':'Off','near'],['Calendar',ln.calendar?'Connected':'Not connected','calendar'],['WhatsApp',ln.whatsapp?'Linked · '+ln.whatsapp:'Not linked','whatsapp'],['Your agent',ln.agent?'Key active':'Not linked','agent'],...(API.features.email?[['Email',ln.email||'Not set up','email']]:[])].map(([n,v,tab])=>`<div class="status"><span><b>${n}</b><br><span class="small muted">${esc(v)}</span></span><button class="btn ghost sm" onclick="S.momentTab='${tab}';persist();nav('moments')">Manage</button></div>`).join('')}</div>`:''}
  <div class="panel spaced"><h2>Your data</h2><p class="small muted">${API.on?'Your settings and journey are saved to your Wellwise account on this device, so they survive a cleared browser.':'Your settings and journey are kept in this browser.'}</p>
  <div class="row"><button class="btn ghost sm" onclick="exportData()">Export my data</button>${API.on?'<button class="btn ghost sm" onclick="deviceCode()">Use Wellwise on another device</button>':''}<button class="btn ghost sm" onclick="resetAll()">Delete all my data</button></div>
  ${API.on?`<details class="spaced"><summary>Have a code from another device?</summary><div class="row spaced"><input id="joinCode" class="field" style="max-width:180px" inputmode="numeric" placeholder="6-digit code"><button class="btn alt sm" onclick="joinDevice()">Use this code</button></div></details>`:''}</div>`}

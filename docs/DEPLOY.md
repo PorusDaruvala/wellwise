@@ -31,6 +31,8 @@ The repository has a `Dockerfile` and `railway.json`, so Railway builds and star
 
 Share the address with testers. Each tester's browser gets its own account automatically.
 
+Notifications need no setup: the server makes its own key pair the first time it starts and keeps it on the volume. To manage the keys yourself, set `WELLWISE_VAPID_PUBLIC` and `WELLWISE_VAPID_PRIVATE`.
+
 ## Host it elsewhere
 
 Any Docker host with a persistent disk works. Build the `Dockerfile`, mount a volume at `/data`, set the variables above, and serve over https. Camera, location and the share menu need https.

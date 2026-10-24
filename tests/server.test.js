@@ -35,7 +35,8 @@ const { createApp } = require('../server/app.js');
 const { privateIp } = require('../server/net.js');
 
 (async () => {
-  const app = createApp({ db: ':memory:', adminToken: 'admin-secret' });
+  const pushed = []; let pushFail = null;
+  const app = createApp({ db: ':memory:', adminToken: 'admin-secret', pushSender: async (sub, payload) => { if (pushFail) { const e = new Error('gone'); e.statusCode = pushFail; throw e } pushed.push({ endpoint: sub.endpoint, ...JSON.parse(payload) }) } });
   await new Promise(r => app.server.listen(0, '127.0.0.1', r));
   const base = `http://127.0.0.1:${app.server.address().port}`;
   let cookie = '';
@@ -190,6 +191,34 @@ const { privateIp } = require('../server/net.js');
     r = await call('POST', '/api/admin/packs', { pack: 'Test', tips: [{ title: 'Drink water with meals', category: 'Food & nutrition', action: 'Keep a glass of water on the table', why: 'An easy swap for sugary drinks', caution: 'Follow fluid limits if you have them', sources: ['https://www.cdc.gov/healthy-weight-growth/water-healthy-drinks/index.html'], triggerKeys: ['prompt:grocery'] }] }, A);
     const after = (await call('GET', '/wellwise-content.json')).data;
     check('valid pack goes live', r.data.added === 1 && after.TIPS.length === before.TIPS.length + 1 && after.contentVersion >= before.contentVersion);
+
+    // notifications: allowed once, then tips arrive on their own
+    {
+      const saved = cookie; cookie = '';
+      await call('GET', '/api/me');
+      const clock = require('../server/clock.js');
+      const zones = Array.from({ length: 25 }, (_, i) => 'Etc/GMT' + (i - 12 >= 0 ? '+' : '') + (i - 12)).map(z => z.replace('+-', '-').replace('GMT+0', 'GMT'));
+      const morning = zones.find(z => { const h = clock.local(z).hour; return h >= 9 && h <= 20 });
+      await call('PUT', '/api/state', { state: { frequency: 'both', tz: morning, updatedAt: 1 } });
+      const k = (await call('GET', '/api/push')).data;
+      check('push key offered', typeof k.key === 'string' && k.key.length > 60 && k.devices === 0);
+      check('bad subscription refused', (await call('POST', '/api/push', { subscription: { endpoint: 'http://x' } })).status === 400);
+      const sub = { endpoint: 'https://push.example/abc', keys: { p256dh: 'BPx', auth: 'au' } };
+      r = await call('POST', '/api/push', { subscription: sub });
+      check('device subscribed, with a confirmation', r.data.devices === 1 && pushed.some(x => x.tag === 'welcome' && x.endpoint === sub.endpoint));
+      const before = pushed.length;
+      await app.tick();
+      const daily = pushed.slice(before).find(x => x.url && x.url.startsWith('/#tip/'));
+      check('daily tip arrives as a notification without opening the app', !!daily && daily.title.length > 3);
+      await app.tick();
+      check('only one daily notification', pushed.slice(before).filter(x => x.url && x.url.startsWith('/#tip/') && x.body.startsWith('Your Wellwise tip for today')).length === 1);
+      pushFail = 410; await call('POST', '/api/agent-key', {}); pushFail = 410;
+      const key2 = (await call('POST', '/api/agent-key', {})).data.key;
+      await call('POST', '/api/agent/v1/moments', { text: 'Bought sunscreen SPF 50' }, { authorization: 'Bearer ' + key2, cookie: '' });
+      pushFail = null;
+      check('expired devices are forgotten', (await call('GET', '/api/push')).data.devices === 0);
+      cookie = saved;
+    }
 
     // a public address set without https:// still gives assistants absolute sign-in links
     process.env.WELLWISE_PUBLIC_URL = 'wellwise-production.up.railway.app/';

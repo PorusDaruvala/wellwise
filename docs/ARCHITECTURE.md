@@ -39,6 +39,7 @@ dist/ ──► server/ (Node, SQLite) ──► the browser
 | `content.js` | The live library and pack checks (same rules as `scripts/build.py`). |
 | `net.js` | Fetches shared links with private-address blocking, redirects checked, size and time limits. |
 | `oauth.js` | Connector sign-in for AI assistants: dynamic registration, PKCE codes, access and refresh tokens, the approval page. |
+| `push.js` | Web Push: the server's own key pair (made once, stored), device subscriptions, sending, and forgetting devices that have gone. |
 | `clock.js` | Each person's local date and hour, and time-zone conversion for calendar times. |
 
 ### HTTP surface
@@ -52,6 +53,7 @@ dist/ ──► server/ (Node, SQLite) ──► the browser
 | `/api/agent/v1/*`, `POST /mcp` | Agents (Bearer key or OAuth token) | `moments`, `tips`, `events`; MCP tools `wellwise_find_tip`, `wellwise_send_moment`, `wellwise_journey`. |
 | `/.well-known/oauth-*`, `/oauth/register`, `/oauth/authorize`, `/oauth/token` | AI assistants | Connector sign-in. |
 | `/api/agents` | The person | Connected assistants; disconnect one. |
+| `/api/push` | The person | The push key, and subscribing or unsubscribing this device. |
 | `/webhooks/whatsapp`, `/webhooks/email` | Meta, email provider | Inbound messages. |
 | `/api/admin/*` | Operators (Bearer admin token) | Status, packs, merged library, reader test, run scheduler. |
 
