@@ -87,7 +87,8 @@ go('tip/ww-126');check('sponsor slot',/Sponsored/.test(txt()));
 go('settings');check('health details panel',/Health details/.test(txt())&&/tips that matter most to you/.test(txt())&&!/unsafe/.test(txt()));
 // online-only tabs, as they look when the server is there
 w.eval("API.on=true;API.linked={};API.features={}");go('moments');w.eval("setTab('calendar')");check('calendar sign-in shown as coming soon',/Connect Google Calendar/.test(txt())&&/Coming soon/.test(txt()));
-w.eval("setTab('agent')");check('agent connector address',/\/mcp/.test(txt())&&/Add custom connector/.test(txt()));
+w.eval("setTab('agent')");check('agent options for Muse, ChatGPT/Dots, Claude, Instinct',['Muse','ChatGPT and Dots','Claude','Instinct','Another assistant'].every(n=>[...w.document.querySelectorAll('.agent summary b')].some(b=>b.textContent===n))&&/Connect calendar/.test(txt()));
+check('agent connector address',/\/mcp/.test(txt())&&/Add custom connector/.test(txt()));
 // daily notifications: the one-tap card on Discover, or Home Screen steps on iPhone
 w.eval("window.PushManager=function(){};window.Notification={permission:'default',requestPermission:async()=>'default'};Object.defineProperty(navigator,'serviceWorker',{value:{ready:new Promise(()=>{}),register:async()=>{}},configurable:true});S.pushAskedAt=0;API.pushOn=false");
 go('discover');check('notifications card',/Turn on notifications/.test(txt()));

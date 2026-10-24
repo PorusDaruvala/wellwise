@@ -37,6 +37,7 @@
 - Notifications: one tap on Discover turns them on. The daily tip, calendar and near-you tips then arrive on the phone by themselves, at the person's local time. On iPhone, Wellwise explains the Home Screen step first. Settings has an on/off switch for each device. PNG app icons for home screens and notifications.
 - iPhone: step-by-step Home Screen instructions with the real Safari icons (iOS 26 and older), and separate steps for Chrome, Edge and Firefox on iPhone. Shown on Discover and in Settings.
 - Connecting an assistant (Claude, ChatGPT, Muse and others) no longer dead-ends for people new to Wellwise: the approval page starts their Wellwise with one tap. People who already use Wellwise can still bring their journey with a code.
+- Moments → Your agent lists Muse, ChatGPT and Dots, Claude, Instinct and other assistants, each with its own steps. Instinct, which has no connectors, points to the calendar (and email, where set up).
 - One tip per event: when an agent, the calendar and a forwarded email report the same trip or purchase, only the first sends a tip. The same tip is not sent twice within 30 days, or a tip for the same kind of moment within 7 days, from these sources.
 - 21 more sourced tips (ww-252 to ww-272) in four more categories: Ageing & older adults, Children & parenting, Work & screen life, and Travel health, with new moments for older parents, children, night shifts and high-altitude trips.
 

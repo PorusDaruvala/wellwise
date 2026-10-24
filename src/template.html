@@ -107,6 +107,8 @@ details{border:1px solid var(--line);padding:13px;border-radius:11px;background:
 .readings{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
 .camera{width:100%;max-height:340px;border-radius:12px;background:#0b1a13;object-fit:cover}
 .drop{border:1.5px dashed #b9d3c0;border-radius:12px;padding:16px;text-align:center;background:#fbfdfa}
+.agent{border:1px solid var(--line);border-radius:12px;padding:0;margin:8px 0;background:#fff}.agent>summary{list-style:none;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px}.agent>summary::-webkit-details-marker{display:none}.agent>summary:after{content:'›';font-size:20px;color:var(--muted);transition:transform .15s}.agent[open]>summary:after{transform:rotate(90deg)}.agent .body{padding:0 14px 12px}.agent .what{display:block;font-weight:400;font-size:12.5px;color:var(--muted)}
+.addr{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:6px 0}
 .steps{margin:10px 0 4px;padding:0;list-style:none;counter-reset:st}
 .steps li{counter-increment:st;display:flex;gap:10px;align-items:flex-start;padding:7px 0;font-size:14px}
 .steps li:before{content:counter(st);flex:none;width:24px;height:24px;border-radius:50%;background:var(--green);color:#fff;font-weight:800;font-size:12.5px;display:flex;align-items:center;justify-content:center;margin-top:1px}
@@ -357,6 +359,16 @@ async function syncCalendar(){try{API.calendar=await api('/api/calendar/sync',{m
 async function disconnectCalendar(){await api('/api/calendar',{method:'DELETE',body:{}}).catch(()=>{});API.calendar=null;await refreshMe();render();toast('Calendar disconnected')}
 async function linkWhatsApp(){try{API.wa=await api('/api/whatsapp',{method:'POST',body:{}});render()}catch(e){toast(e.message)}}
 async function unlinkWhatsApp(){await api('/api/whatsapp',{method:'DELETE',body:{}}).catch(()=>{});if(S.channel==='WhatsApp')S.channel=CHANNELS[0];persist();await refreshMe();render();toast('WhatsApp unlinked')}
+/* How to connect each agent. The address is the same for all that take connectors. */
+function agentOptions(mcp){
+ const addr=`<div class="addr"><code>${esc(mcp)}</code><button class="btn ghost sm" onclick="copyText('${esc(mcp)}')">Copy address</button></div>`;
+ const allow=`<li><span>A Wellwise page opens. Tap <b>Allow</b>.</span></li>`;
+ const opt=(name,what,body)=>`<details class="agent"><summary><span><b>${name}</b><span class="what">${what}</span></span></summary><div class="body">${body}</div></details>`;
+ return opt('Muse','Meta’s agent, in its app, on the web and in WhatsApp',`${addr}<ol class="steps"><li><span>Open Muse and send it this message: <b>Add a custom connector</b> followed by the address above.</span></li><li><span>When Muse asks to connect, agree.</span></li>${allow}</ol><p class="small muted">After that, when Muse books a trip or a table, or buys something for you, it can tell Wellwise and you get a tip that fits.</p>`)
+  +opt('ChatGPT and Dots','OpenAI’s assistant and its always-on agents',`${addr}<ol class="steps"><li><span>In ChatGPT on the web, open <b>Settings</b> and turn on <b>Developer mode</b>. It is under <b>Apps</b> (or <b>Connectors</b>) → <b>Advanced settings</b>.</span></li><li><span>Go to <b>Plugins</b> (or <b>Connectors</b>), tap <b>+</b>, name it <b>Wellwise</b>, paste the address, keep <b>OAuth</b>, tick the box, and tap <b>Create</b>.</span></li>${allow}</ol><p class="small muted">Your Dots can use Wellwise once it is added to ChatGPT. On a work account, your admin may need to allow custom connectors first.</p>`)
+  +opt('Claude','Anthropic’s assistant',`${addr}<ol class="steps"><li><span>In Claude, open <b>Settings</b> → <b>Connectors</b> → <b>Add custom connector</b>.</span></li><li><span>Name it <b>Wellwise</b>, paste the address, tap <b>Add</b>, then <b>Connect</b>.</span></li>${allow}</ol>`)
+  +opt('Instinct','The assistant you text or call',`<p class="small" style="margin-top:0">Instinct does not take connectors yet. It puts your bookings in your calendar and email, so Wellwise picks them up there.</p><ol class="steps"><li><span>Connect the calendar Instinct books into.</span></li>${API.features.email?`<li><span>Ask Instinct to forward booking and order confirmations to your Wellwise email address.</span></li>`:''}</ol><div class="row"><button class="btn sm" onclick="setTab('calendar')">Connect calendar</button>${API.features.email?`<button class="btn ghost sm" onclick="setTab('email')">My Wellwise email</button>`:''}</div>`)
+  +opt('Another assistant','Any assistant that takes MCP connectors',`${addr}<p class="small" style="margin-top:0">Add the address as a new connector or MCP server, and sign in when it asks.</p>`)}
 async function loadAgents(){if(!API.on)return;try{API.agents=await api('/api/agents');render()}catch(e){}}
 async function disconnectAgent(id){await api('/api/agents/'+id,{method:'DELETE',body:{}}).catch(()=>{});await loadAgents();toast('Disconnected')}
 async function makeAgentKey(){if(API.linked.agent&&!confirm('Make a new key? The old key stops working.'))return;try{API.agentKey=await api('/api/agent-key',{method:'POST',body:{}});await refreshMe();render()}catch(e){toast(e.message)}}
@@ -450,10 +462,9 @@ function momentPicker(){
  }else if(tab==='agent'){
   if(!API.on)body=`<div class="empty"><b>Link your AI agent</b><p>If you use a personal AI agent for shopping, travel or your calendar, it can send moments to Wellwise once Wellwise is online.</p></div>`;
   else{const k=API.agentKey,ag=API.agents,mcp=ag?.mcp||location.origin+'/mcp';body=`<p>Link your AI agent. If it shops, books or plans for you, it can tell Wellwise what happened. Wellwise picks a tip that fits and saves it to your journey, whichever agent sent it.</p>
-   <h3 class="spaced">Connect Claude, ChatGPT or another assistant</h3>
-   <p class="small">Add this address as a connector in your assistant, then sign in to Wellwise when it asks.</p>
-   <p><code>${esc(mcp)}</code> <button class="btn ghost sm" onclick="copyText('${esc(mcp)}')">Copy</button></p>
-   <details><summary>How to add it</summary><p class="small"><b>Claude:</b> Settings → Connectors → Add custom connector. Paste the address, choose Add, then Connect. A Wellwise page opens: choose Allow.</p><p class="small"><b>ChatGPT and others:</b> add a new connector or MCP server, paste the address, and sign in when asked.</p><p class="small">If the sign-in page asks for a code, open Wellwise on your phone or computer, go to Settings → Your data → Use Wellwise on another device, and enter the code it shows.</p></details>
+   <h3 class="spaced">Connect your agent</h3>
+   <p class="small">Choose the one you use. Each needs only this once.</p>
+   ${agentOptions(mcp)}
    ${ag?.connected?.length?`<div class="spaced">${ag.connected.map(c=>`<div class="status"><span><b>${esc(c.name)}</b><br><span class="small muted">Connected ${fmtDate(c.since)}</span></span><button class="btn ghost sm" onclick="disconnectAgent('${esc(c.id)}')">Disconnect</button></div>`).join('')}</div>`:''}
    <h3 class="spaced">Or use a key</h3><p class="small muted">For agents you build or run yourself.</p>
    ${k?`<div class="notice"><b>Your agent key</b><p class="small">Copy it now. It is shown only once.</p><p><code>${esc(k.key)}</code> <button class="btn ghost sm" onclick="copyText('${esc(k.key)}')">Copy</button></p><p class="small"><b>MCP server:</b> <code>${esc(k.mcp)}</code></p><p class="small"><b>REST:</b> <code>POST ${esc(k.api)}/moments</code></p><pre>curl -X POST ${esc(k.api)}/moments \\
