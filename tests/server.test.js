@@ -168,6 +168,39 @@ const { privateIp } = require('../server/net.js');
     await call('DELETE', '/api/agents/' + reg.client_id, {});
     check('disconnect revokes access', (await call('POST', '/mcp', { jsonrpc: '2.0', id: 11, method: 'tools/list' }, { 'content-type': 'application/json', authorization: 'Bearer ' + refreshed.access_token, cookie: '' })).status === 401);
 
+    // someone new to Wellwise connects from their assistant with one tap
+    {
+      const keep = cookie; cookie = '';
+      const page1 = await call('GET', '/oauth/authorize?' + aq);
+      check('new person sees Allow, not a dead end', /name="decision" value="new"/.test(page1.data) && /Already use Wellwise/.test(page1.data));
+      const anonCsrf = (page1.data.match(/name="csrf" value="([a-f0-9]+)"/) || [])[1];
+      r = await call('POST', '/oauth/authorize', new URLSearchParams({ ...Object.fromEntries(aq), csrf: anonCsrf, decision: 'new' }).toString(), { 'content-type': 'application/x-www-form-urlencoded' });
+      const newCode = new URL(r.headers.get('location') || 'https://x/').searchParams.get('code');
+      check('one tap creates the account and returns to the assistant', r.status === 302 && !!newCode && !!cookie);
+      const t2 = (await call('POST', '/oauth/token', new URLSearchParams({ grant_type: 'authorization_code', code: newCode, redirect_uri: 'https://claude.ai/api/mcp/auth_callback', client_id: reg.client_id, code_verifier: verifier }).toString(), { 'content-type': 'application/x-www-form-urlencoded' })).data;
+      r = await call('POST', '/mcp', { jsonrpc: '2.0', id: 12, method: 'tools/call', params: { name: 'wellwise_send_moment', arguments: { text: 'Bought sunscreen SPF 50' } } }, { 'content-type': 'application/json', authorization: 'Bearer ' + t2.access_token, cookie: '' });
+      check('the new account works straight away', r.data.result?.structuredContent?.delivered === true && (await call('GET', '/api/inbox')).data.items.length >= 1);
+      const forged = await call('POST', '/oauth/authorize', new URLSearchParams({ ...Object.fromEntries(aq), csrf: 'nope', decision: 'new' }).toString(), { 'content-type': 'application/x-www-form-urlencoded', cookie: '' });
+      check('forged sign-up refused', !forged.headers.get('location'));
+      cookie = keep;
+    }
+
+    // the same trip from an agent and from the calendar brings one tip, not two
+    {
+      const keep = cookie; cookie = '';
+      await call('GET', '/api/me');
+      const k = (await call('POST', '/api/agent-key', {})).data.key;
+      r = await call('POST', '/api/agent/v1/moments', { agent: 'Muse', text: 'Booked a flight to London, long-haul' }, { authorization: 'Bearer ' + k, 'content-type': 'application/json', cookie: '' });
+      check('agent booking brings a tip', r.data.delivered === true);
+      await call('POST', '/api/calendar', { url: 'https://cal.test/basic.ics' });
+      await app.tick();
+      const items = (await call('GET', '/api/inbox')).data.items;
+      check('calendar does not repeat the trip tip', items.filter(i => i.source === 'calendar' && /Flight/.test(i.moment)).length === 0 && items.filter(i => i.source === 'agent').length === 1);
+      r = await call('POST', '/api/agent/v1/moments', { agent: 'Muse', text: 'Booked a flight to London, long-haul' }, { authorization: 'Bearer ' + k, 'content-type': 'application/json', cookie: '' });
+      check('a repeat from the agent is not sent again', r.data.delivered === false && !!r.data.tip);
+      cookie = keep;
+    }
+
     // scheduled tips follow each person's own clock
     const clock = require('../server/clock.js');
     const zones = Array.from({ length: 25 }, (_, i) => 'Etc/GMT' + (i - 12 >= 0 ? '+' : '') + (i - 12)).map(z => z.replace('+-', '-').replace('GMT+0', 'GMT'));

@@ -30,6 +30,7 @@ function open(file) {
   CREATE TABLE IF NOT EXISTS packs(id TEXT PRIMARY KEY, name TEXT, at INTEGER NOT NULL, body TEXT NOT NULL);
   CREATE TABLE IF NOT EXISTS cache(k TEXT PRIMARY KEY, v TEXT NOT NULL, expires INTEGER NOT NULL);
   `);
+  try { db.exec('ALTER TABLE inbox ADD COLUMN event TEXT') } catch (e) { /* already there */ }
   const q = sql => db.prepare(sql);
   const now = () => Date.now();
   const parse = u => u && { ...u, state: JSON.parse(u.state || '{}') };
@@ -56,11 +57,13 @@ function open(file) {
     useCode(c, kind) { const r = q('SELECT * FROM link_codes WHERE code=? AND kind=?').get(String(c), kind); if (!r || r.expires < now()) return null; q('DELETE FROM link_codes WHERE code=?').run(String(c)); return r.user_id },
 
     addInbox(uid, item) {
-      const row = { id: 'evt-' + now() + '-' + id(3), at: now(), via: null, message: '', channel: 'In the app', dedupe: null, ...item };
-      const r = q('INSERT OR IGNORE INTO inbox(id,user_id,at,tip,moment,source,via,message,channel,dedupe) VALUES(?,?,?,?,?,?,?,?,?,?)')
-        .run(row.id, uid, row.at, row.tip, row.moment, row.source, row.via, row.message, row.channel, row.dedupe);
+      const row = { id: 'evt-' + now() + '-' + id(3), at: now(), via: null, message: '', channel: 'In the app', dedupe: null, event: null, ...item };
+      const r = q('INSERT OR IGNORE INTO inbox(id,user_id,at,tip,moment,source,via,message,channel,dedupe,event) VALUES(?,?,?,?,?,?,?,?,?,?,?)')
+        .run(row.id, uid, row.at, row.tip, row.moment, row.source, row.via, row.message, row.channel, row.dedupe, row.event);
       return r.changes ? row : null;
     },
+    /* Was this tip, or a tip for this moment, already sent recently? */
+    sentRecently: (uid, { tip, event }, tipDays, eventDays) => !!q('SELECT 1 FROM inbox WHERE user_id=? AND ((tip=? AND at>?) OR (event IS NOT NULL AND event=? AND at>?)) LIMIT 1').get(uid, tip, now() - tipDays * 864e5, event || '', now() - eventDays * 864e5),
     inboxSince: (uid, since) => q('SELECT id,at,tip,moment,source,via,message,channel FROM inbox WHERE user_id=? AND at>? ORDER BY at').all(uid, since || 0),
 
     addIntake(uid, source, kind, summary, result) { const i = 'in-' + id(6); q('INSERT INTO intakes VALUES(?,?,?,?,?,?,?)').run(i, uid, now(), source, kind, summary || '', JSON.stringify({ ...result, id: i })); return i },

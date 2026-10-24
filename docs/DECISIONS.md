@@ -92,3 +92,7 @@ One entry per product or technical decision. Add new entries at the bottom. Do n
 ### D-021 · Tips come to people, not the other way round · 2026-10-23
 **Decision:** After one tap to allow notifications, every tip Wellwise delivers (daily, calendar, near you, agents, email) also arrives as a phone or browser notification, at the person's local time. Discover offers this once, with "Not now" hiding it for a week. On iPhone, notifications need Wellwise on the Home Screen, so Discover explains that step instead.
 **Why:** Without it, people had to remember to come back. Browsers require one tap to allow notifications; nothing can skip that.
+
+### D-022 · One tip per event across automatic sources · 2026-10-23
+**Decision:** Agents, calendars and forwarded emails often report the same trip or purchase. From these sources, Wellwise never sends the same tip twice within 30 days, and sends at most one tip per kind of moment (event key) within 7 days. The first report wins. Things people do themselves (share, scan, WhatsApp, quick check-in) and near-you alerts are not limited this way.
+**Why:** Two tips for one flight feels like spam and teaches people to ignore Wellwise.

@@ -68,9 +68,12 @@ function approvePage(client, hidden, err) {
   return page('Connect', `<h1>Connect ${esc(client.name)} to Wellwise?</h1><p>${esc(client.name)} will be able to:</p><ul><li>tell Wellwise about moments in your day, like a purchase or a trip</li><li>get the tip that fits, and save it to your journey</li><li>see which tips you are trying and which are habits</li></ul>
   ${err ? `<p class="err">${esc(err)}</p>` : ''}<form method="post" action="/oauth/authorize">${hidden}<div class="row"><button class="btn" name="decision" value="allow">Allow</button><button class="btn ghost" name="decision" value="deny">Cancel</button></div></form><p class="muted">You can disconnect at any time in Wellwise → Moments → Your agent.</p>`);
 }
+/* Someone new to Wellwise: one tap starts Wellwise and connects the assistant. People who already use Wellwise elsewhere can bring their journey with a code. */
 function codePage(client, hidden, err) {
-  return page('Connect', `<h1>Connect ${esc(client.name)} to Wellwise</h1><p>Wellwise is not open in this browser yet. On the device where you use Wellwise, go to <b>Settings → Your data → Use Wellwise on another device</b>, then enter the 6-digit code here.</p>
-  ${err ? `<p class="err">${esc(err)}</p>` : ''}<form method="post" action="/oauth/authorize">${hidden}<input class="field" name="device_code" inputmode="numeric" autocomplete="one-time-code" placeholder="6-digit code" required><div class="row"><button class="btn" name="decision" value="code">Continue</button></div></form>`);
+  return page('Connect', `<h1>Connect ${esc(client.name)} to Wellwise?</h1><p>Wellwise sends you one short, sourced health tip when something in your day makes it useful. ${esc(client.name)} will be able to:</p><ul><li>tell Wellwise about moments in your day, like a purchase or a trip</li><li>get the tip that fits, and save it to your journey</li><li>see which tips you are trying and which are habits</li></ul>
+  ${err ? `<p class="err">${esc(err)}</p>` : ''}<form method="post" action="/oauth/authorize">${hidden}<div class="row"><button class="btn" name="decision" value="new">Allow</button><button class="btn ghost" name="decision" value="deny">Cancel</button></div></form>
+  <details style="margin-top:18px"><summary class="muted">Already use Wellwise on another device?</summary><p class="muted">In Wellwise there, go to <b>Settings → Your data → Use Wellwise on another device</b>, and enter the 6-digit code here.</p><form method="post" action="/oauth/authorize">${hidden}<input class="field" name="device_code" inputmode="numeric" autocomplete="one-time-code" placeholder="6-digit code" required><div class="row"><button class="btn ghost" name="decision" value="code">Use my code</button></div></form></details>
+  <p class="muted">You can disconnect at any time in Wellwise → Moments → Your agent.</p>`);
 }
 
 module.exports = { setup, page, approvePage, codePage, esc, b64url };

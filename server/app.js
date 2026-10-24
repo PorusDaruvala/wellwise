@@ -76,9 +76,13 @@ function createApp(opts = {}) {
   const tipOut = t => t && { id: t.id, title: t.title, action: t.action, why: t.why, caution: t.caution, category: t.category, grade: t.grade, familiarity: t.familiarity, sources: t.sources, url: tipUrl(t.id) };
 
   /* Save a tip to someone's inbox, and send it on WhatsApp when that is their channel. */
+  /* The same trip can reach Wellwise from an agent, the calendar and a forwarded email. Automatic sources send one tip for it:
+     never the same tip twice within 30 days, and one tip per kind of moment within 7 days. */
+  const AUTO_SOURCES = new Set(['agent', 'calendar', 'email']);
   async function deliver(u, pick, source, { moment, dedupe, message } = {}) {
-    const content = lib.current();
-    const item = db.addInbox(u.id, { tip: pick.tip.id, moment: moment || pick.match?.label || SOURCE_LABEL[source], source, via: SOURCE_LABEL[source] || source, message: message ?? intake.friendly(content, pick.match), channel: u.state.channel === 'WhatsApp' && u.phone ? 'WhatsApp' : 'In the app', dedupe: dedupe || null });
+    const content = lib.current(), event = pick.match?.event || null;
+    if (AUTO_SOURCES.has(source) && db.sentRecently(u.id, { tip: pick.tip.id, event }, 30, 7)) return null;
+    const item = db.addInbox(u.id, { tip: pick.tip.id, moment: moment || pick.match?.label || SOURCE_LABEL[source], source, via: SOURCE_LABEL[source] || source, message: message ?? intake.friendly(content, pick.match), channel: u.state.channel === 'WhatsApp' && u.phone ? 'WhatsApp' : 'In the app', dedupe: dedupe || null, event });
     if (item && item.channel === 'WhatsApp' && source !== 'whatsapp') await wa.deliver(u, pick.tip, item.message, tipUrl(pick.tip.id)).catch(e => console.error(e.message));
     // A notification on every device the person allowed (not for WhatsApp replies: they are already in the chat).
     if (item && source !== 'whatsapp') await push.notify(u.id, { title: pick.tip.title, body: [item.message, pick.tip.action].filter(Boolean).join(' · '), url: '/#tip/' + pick.tip.id, tag: item.id }).catch(e => console.error('push', e.message));
@@ -245,6 +249,14 @@ function createApp(opts = {}) {
             if (!other) return send(res, 200, oauth.codePage(client, authHidden(q, null), 'That code did not work. Codes last 10 minutes.'), htmlHeaders);
             res.setHeader('set-cookie', sessionCookie(req, other.token));
             return send(res, 200, oauth.approvePage(client, authHidden(q, other.id)), htmlHeaders);
+          }
+          if (!u && (q.decision === 'new' || q.decision === 'deny')) {
+            if (q.csrf !== sign('anon', q.client_id, q.redirect_uri, q.code_challenge)) return send(res, 200, oauth.codePage(client, authHidden(q, null), 'Please try again.'), htmlHeaders);
+            const back = new URL(q.redirect_uri);
+            if (q.decision === 'new') { const fresh = db.createUser(); res.setHeader('set-cookie', sessionCookie(req, fresh.token)); back.searchParams.set('code', oa.issueCode(fresh.id, client.id, q.redirect_uri, q.code_challenge)) }
+            else back.searchParams.set('error', 'access_denied');
+            if (q.state) back.searchParams.set('state', q.state);
+            res.writeHead(302, { location: back.href }); return res.end();
           }
           if (!u || q.csrf !== sign(u.id, q.client_id, q.redirect_uri, q.code_challenge)) return send(res, 200, u ? oauth.approvePage(client, authHidden(q, u.id), 'Please try again.') : oauth.codePage(client, authHidden(q, null)), htmlHeaders);
           const back = new URL(q.redirect_uri);
