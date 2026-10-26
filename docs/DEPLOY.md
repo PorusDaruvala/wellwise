@@ -27,6 +27,8 @@ The repository has a `Dockerfile` and `railway.json`, so Railway builds and star
    - `WELLWISE_SECRET`: another long random string
    - `ANTHROPIC_API_KEY`: your key, for photos and documents
    - WhatsApp and email settings, when you have them (below)
+
+   Do not add `WELLWISE_DB` on Railway. A path like `./data/wellwise.db` points inside the server, not at the volume, and is wiped on every redeploy.
 6. Railway redeploys. Open the address on your phone. Every push to `main` deploys again.
 
 Share the address with testers. Each tester's browser gets its own account automatically.

@@ -40,6 +40,7 @@
 - Moments → Your agent lists Muse, ChatGPT and Dots, Claude, Instinct and other assistants, each with its own steps. Instinct, which has no connectors, points to the calendar (and email, where set up).
 - Assistants are told plainly to tell Wellwise after every booking, order, purchase or appointment, with examples, and to show the tip briefly. Tools that only read are labelled as such.
 - Fixed: notifications stopped after a redeploy when no Railway volume was attached. Wellwise now stores data on the attached volume wherever it is mounted, reports temporary storage in /api/health, the admin console and the log, and each phone quietly re-registers for notifications whenever Wellwise opens (signing up again if the server's key changed).
+- Fixed: `.env.example` suggested `WELLWISE_DB=./data/wellwise.db`, which on Railway points inside the server instead of at the volume. It is now marked local-only.
 - Muse shows two ways to connect: sign in, or a Wellwise key pasted into Muse's secure prompt, with a one-tap button to create the key.
 - One tip per event: when an agent, the calendar and a forwarded email report the same trip or purchase, only the first sends a tip. The same tip is not sent twice within 30 days, or a tip for the same kind of moment within 7 days, from these sources.
 - 21 more sourced tips (ww-252 to ww-272) in four more categories: Ageing & older adults, Children & parenting, Work & screen life, and Travel health, with new moments for older parents, children, night shifts and high-altitude trips.
