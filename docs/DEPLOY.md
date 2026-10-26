@@ -41,6 +41,17 @@ Any Docker host with a persistent disk works. Build the `Dockerfile`, mount a vo
 
 GitHub Pages (the existing workflow) still publishes `dist/` as a static site. That copy runs offline-only: keyword matching and a local daily tip, without accounts or integrations.
 
+## Sign-in
+
+Signing in is optional. It gives a person the same Wellwise on every device, and makes sure assistants (Muse, Claude, ChatGPT) connect to their own Wellwise, even when the assistant opens the sign-in page in its own browser. When someone signs in on a browser that already has an unsigned Wellwise, its tips, assistant connections and notification sign-ups are merged into their account.
+
+**Email codes (Resend):**
+1. Create an account at resend.com and an API key. Set `RESEND_API_KEY`.
+2. Add and verify your domain in Resend (a few DNS records), then set `WELLWISE_EMAIL_FROM`, for example `Wellwise <hello@your-domain.com>`.
+3. Until a domain is verified, Resend's test sender (`onboarding@resend.dev`) only delivers to the email address of your Resend account, so you can try it yourself but testers will not get codes.
+
+**WhatsApp:** turns on with WhatsApp (below). People send `SIGNIN 123456` to Wellwise's number and the page signs them in.
+
 ## WhatsApp
 
 1. In Meta for Developers, create an app with the WhatsApp product and add a phone number.

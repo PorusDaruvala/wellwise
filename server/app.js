@@ -15,6 +15,7 @@ const { fetchPublic } = require('./net.js');
 const oauth = require('./oauth.js');
 const clock = require('./clock.js');
 const pushMod = require('./push.js');
+const authMod = require('./auth.js');
 
 const ROOT = path.join(__dirname, '..');
 const STATIC = { '/': 'index.html', '/index.html': 'index.html', '/admin': 'admin.html', '/manifest.webmanifest': 'manifest.webmanifest', '/sw.js': 'sw.js', '/icon.svg': 'icon.svg', '/icon-192.png': 'icon-192.png', '/icon-512.png': 'icon-512.png', '/vendor/zxing.min.js': 'vendor/zxing.min.js', '/vendor/zxing-LICENSE.txt': 'vendor/zxing-LICENSE.txt' };
@@ -33,6 +34,19 @@ function createApp(opts = {}) {
   const lib = createLibrary(db, opts.content || path.join(dist, 'wellwise-content.json'));
   const adminToken = opts.adminToken ?? process.env.WELLWISE_ADMIN_TOKEN ?? '';
   const oa = oauth.setup(db);
+  const auth = authMod.setup(db, opts.sendEmail !== undefined ? { sendEmail: opts.sendEmail } : {});
+  const signedIn = u => !!(u && (u.email || u.phone));
+  /* Make this browser use the person's own Wellwise. An unsigned Wellwise already in this browser is merged into it. */
+  function signInAs(req, res, current, { email, phone }) {
+    let target = email ? db.userByEmail(email) : db.userByPhone(phone);
+    if (!target) {
+      target = current && !signedIn(current) ? current : db.createUser();
+      db.setField(target.id, email ? 'email' : 'phone', email || phone);
+    } else if (current && current.id !== target.id && !signedIn(current)) authMod.mergeAccounts(db, current.id, target.id);
+    target = db.userById(target.id);
+    res.setHeader('set-cookie', sessionCookie(req, target.token));
+    return target;
+  }
   const push = pushMod.setup(db, { sender: opts.pushSender, subject: () => /^https:/.test(baseUrl) ? baseUrl : 'mailto:wellwise@example.com' });
   const SECRET = process.env.WELLWISE_SECRET || crypto.randomBytes(32).toString('hex');
   const sign = (...xs) => crypto.createHmac('sha256', SECRET).update(xs.join('|')).digest('hex');
@@ -78,7 +92,7 @@ function createApp(opts = {}) {
     whatsapp: u.phone ? '•••• ' + u.phone.slice(-4) : null, calendar: !!u.calendar_url, calendarSynced: u.calendar_synced || null,
     agent: !!u.agent_key, email: u.inbound && process.env.WELLWISE_INBOUND_DOMAIN ? `${u.inbound}@${process.env.WELLWISE_INBOUND_DOMAIN}` : null, location: u.lat != null,
   });
-  const features = () => ({ photo: llm.enabled(), whatsapp: wa.enabled(), whatsappNumber: wa.env().number || null, email: !!process.env.WELLWISE_INBOUND_DOMAIN, server: true, storage });
+  const features = () => ({ signIn: { email: auth.emailEnabled(), whatsapp: wa.enabled() }, photo: llm.enabled(), whatsapp: wa.enabled(), whatsappNumber: wa.env().number || null, email: !!process.env.WELLWISE_INBOUND_DOMAIN, server: true, storage });
   const tipOut = t => t && { id: t.id, title: t.title, action: t.action, why: t.why, caution: t.caution, category: t.category, grade: t.grade, familiarity: t.familiarity, sources: t.sources, url: tipUrl(t.id) };
 
   /* Save a tip to someone's inbox, and send it on WhatsApp when that is their channel. */
@@ -281,7 +295,28 @@ function createApp(opts = {}) {
         const { client, error } = authCheck(q);
         if (error) { oa.log(q.client_id, 'authorize', false, error + ' · redirect ' + (q.redirect_uri || '') + ' · method ' + (q.code_challenge_method || '')) }
         if (error) return send(res, 400, oauth.page('Sign-in problem', `<h1>Something is not right</h1><p>${oauth.esc(error)}</p>`), htmlHeaders);
-        const u = me(req, res, false);
+        let u = me(req, res, false);
+        const signInOpts = extra => ({ email: auth.emailEnabled(), whatsapp: wa.enabled(), uid: u?.id, ...extra });
+        const authUrl = baseUrl + '/oauth/authorize?' + new URLSearchParams({ response_type: 'code', ...Object.fromEntries(AUTH_FIELDS.filter(k => q[k]).map(k => [k, q[k]])) });
+        if (m === 'POST' && q.decision === 'switch') return send(res, 200, oauth.signInPage(client, authHidden(q, u?.id), signInOpts()), htmlHeaders);
+        if (m === 'POST' && q.decision === 'email') {
+          if (limited('authpage:' + (req.socket.remoteAddress || ''), 10)) return send(res, 200, oauth.signInPage(client, authHidden(q, u?.id), signInOpts({ err: 'Too many tries. Wait a minute.' })), htmlHeaders);
+          const r = await auth.startEmail(q.email);
+          if (r.error) return send(res, 200, oauth.signInPage(client, authHidden(q, u?.id), signInOpts({ err: r.error })), htmlHeaders);
+          oa.log(client.id, 'sign-in', true, 'email code sent');
+          return send(res, 200, oauth.emailCodePage(client, authHidden(q, u?.id), r.email, r.id), htmlHeaders);
+        }
+        if (m === 'POST' && q.decision === 'verify') {
+          const r = auth.verifyEmail(q.login_id, q.login_code);
+          if (r.error) return send(res, 200, oauth.emailCodePage(client, authHidden(q, u?.id), q.email, q.login_id, r.error), htmlHeaders);
+          u = signInAs(req, res, u, { email: r.email });
+          oa.log(client.id, 'sign-in', true, 'signed in ' + oauth.shortId(u.id));
+          return send(res, 200, oauth.signedInPage(client, authHidden(q, u.id), u), htmlHeaders);
+        }
+        if (m === 'POST' && q.decision === 'wa') {
+          const r = auth.startWhatsApp(), num = (wa.env().number || '').replace(/\D/g, '');
+          return send(res, 200, oauth.whatsappPage(client, authHidden(q, u?.id), r.code, num ? `https://wa.me/${num}?text=${encodeURIComponent('SIGNIN ' + r.code)}` : null, wa.env().number, r.id, authUrl), htmlHeaders);
+        }
         if (m === 'POST') {
           if (q.decision === 'code') {
             const uid = db.useCode(String(q.device_code || '').trim(), 'device'), other = uid && db.userById(uid);
@@ -297,14 +332,14 @@ function createApp(opts = {}) {
             if (q.state) back.searchParams.set('state', q.state);
             res.writeHead(302, { location: back.href }); return res.end();
           }
-          if (!u || q.csrf !== sign(u.id, q.client_id, q.redirect_uri, q.code_challenge)) return send(res, 200, u ? oauth.approvePage(client, authHidden(q, u.id), 'Please try again.', u.id) : oauth.codePage(client, authHidden(q, null)), htmlHeaders);
+          if (!u || q.csrf !== sign(u.id, q.client_id, q.redirect_uri, q.code_challenge)) return send(res, 200, signedIn(u) ? oauth.signedInPage(client, authHidden(q, u.id), u, 'Please try again.') : oauth.signInPage(client, authHidden(q, u?.id), signInOpts({ err: 'Please try again.' })), htmlHeaders);
           const back = new URL(q.redirect_uri);
           if (q.decision === 'allow') { back.searchParams.set('code', oa.issueCode(u.id, client.id, q.redirect_uri, q.code_challenge)); oa.log(client.id, 'allow', true, 'existing account ' + oauth.shortId(u.id) + ' → ' + back.origin) }
           else back.searchParams.set('error', 'access_denied');
           if (q.state) back.searchParams.set('state', q.state);
           res.writeHead(302, { location: back.href }); return res.end();
         }
-        return send(res, 200, u ? oauth.approvePage(client, authHidden(q, u.id), null, u.id) : oauth.codePage(client, authHidden(q, null)), htmlHeaders);
+        return send(res, 200, signedIn(u) ? oauth.signedInPage(client, authHidden(q, u.id), u) : oauth.signInPage(client, authHidden(q, u?.id), signInOpts()), htmlHeaders);
       }
 
       /* share target: other apps share a link, text or photo straight into Wellwise */
@@ -321,7 +356,16 @@ function createApp(opts = {}) {
       if (p.startsWith('/api/') && !p.startsWith('/api/agent/') && !p.startsWith('/api/admin/')) {
         if (m !== 'GET' && !/json/.test(req.headers['content-type'] || '')) return fail(res, 415, 'Send JSON');
         const u = me(req, res);
-        if (m === 'GET' && p === '/api/me') return send(res, 200, { id: u.id, state: u.state, linked: summaryOf(u), features: features() });
+        if (m === 'GET' && p === '/api/me') return send(res, 200, { id: u.id, account: signedIn(u) ? { email: u.email || null, phone: u.phone ? oauth.accountLabel({ phone: u.phone }) : null } : null, state: u.state, linked: summaryOf(u), features: features() });
+        if (p.startsWith('/api/auth/')) {
+          if (limited('auth:' + (req.socket.remoteAddress || ''), 20)) return fail(res, 429, 'Too many tries. Wait a minute.');
+          if (m === 'POST' && p === '/api/auth/email') { const b = await json(req), r = await auth.startEmail(b.email); return r.error ? fail(res, 400, r.error) : send(res, 200, r) }
+          if (m === 'POST' && p === '/api/auth/email/verify') { const b = await json(req), r = auth.verifyEmail(b.id, b.code); if (r.error) return fail(res, 400, r.error); const t = signInAs(req, res, u, { email: r.email }); return send(res, 200, { ok: true, account: { email: t.email } }) }
+          if (m === 'POST' && p === '/api/auth/whatsapp') { const r = auth.startWhatsApp(), num = (wa.env().number || '').replace(/\D/g, ''); return send(res, 200, { ...r, number: wa.env().number || null, link: num ? `https://wa.me/${num}?text=${encodeURIComponent('SIGNIN ' + r.code)}` : null, enabled: wa.enabled() }) }
+          let am; if (m === 'GET' && (am = p.match(/^\/api\/auth\/whatsapp\/(lc_[a-f0-9]+)$/))) { const r = auth.checkWhatsApp(am[1]); if (r.error || r.pending) return send(res, 200, r); signInAs(req, res, u, { phone: r.phone }); return send(res, 200, { ok: true }) }
+          if (m === 'POST' && p === '/api/auth/signout') { const fresh = db.createUser(); return send(res, 200, { ok: true }, { 'set-cookie': sessionCookie(req, fresh.token) }) }
+          return fail(res, 404, 'Not found');
+        }
         if (m === 'PUT' && p === '/api/state') { const b = await json(req); const st = { ...(b.state || {}), _server: u.state._server || {} }; db.saveState(u.id, st); return send(res, 200, { ok: true }) }
         if (m === 'DELETE' && p === '/api/me') { oa.revokeAll(u.id); push.removeAll(u.id); db.deleteUser(u.id); return send(res, 200, { ok: true }, { 'set-cookie': 'ww=; Path=/; Max-Age=0' }) }
         if (m === 'GET' && p === '/api/inbox') return send(res, 200, { items: db.inboxSince(u.id, +url.searchParams.get('since') || 0) });
@@ -430,7 +474,7 @@ function createApp(opts = {}) {
         if (!isAdmin(req)) return fail(res, 401, adminToken ? 'Wrong admin token' : 'Set WELLWISE_ADMIN_TOKEN on the server to use the admin console');
         const c = lib.current();
         if (m === 'GET' && p === '/api/admin/status') return send(res, 200, { stats: db.stats(), feedback: { bySource: db.feedbackBySource(), byTip: db.feedbackByTip().map(r => ({ ...r, title: c.byId[r.tip]?.title })) }, reach: reach(c), packs: db.packs().map(x => ({ id: x.id, name: x.name, at: x.at, tips: x.body.tips.length })), contentVersion: c.contentVersion,
-          connectors: oa.recent(), integrations: { storage, push: push.total(), claude: llm.enabled() ? llm.MODEL : null, whatsapp: wa.enabled(), whatsappWebhook: !!wa.env().verify, whatsappTemplate: wa.env().template || null, email: !!process.env.WELLWISE_INBOUND_DOMAIN, publicUrl: baseUrl } });
+          connectors: oa.recent(), integrations: { storage, signInEmail: auth.emailEnabled(), push: push.total(), claude: llm.enabled() ? llm.MODEL : null, whatsapp: wa.enabled(), whatsappWebhook: !!wa.env().verify, whatsappTemplate: wa.env().template || null, email: !!process.env.WELLWISE_INBOUND_DOMAIN, publicUrl: baseUrl } });
         if (m === 'POST' && p === '/api/admin/packs/check') return send(res, 200, lib.validate(await json(req)));
         if (m === 'POST' && p === '/api/admin/packs') { const b = await json(req), r = lib.validate(b); if (r.errors.length) return send(res, 400, r); db.savePack('pk-' + db.id(4), b.pack || 'Pack', { tips: r.tips, edges: r.edges }); lib.invalidate(); return send(res, 200, { ok: true, added: r.tips.length }) }
         let pm; if (m === 'DELETE' && (pm = p.match(/^\/api\/admin\/packs\/(pk-[a-f0-9]+)$/))) { db.deletePack(pm[1]); lib.invalidate(); return send(res, 200, { ok: true }) }
@@ -449,6 +493,8 @@ function createApp(opts = {}) {
   async function onWhatsApp(msg) {
     const from = msg.from, content = lib.current();
     const text = msg.type === 'text' ? msg.text.body.trim() : '';
+    const signinCode = text.match(/^signin\s+(\d{6})$/i);
+    if (signinCode) return wa.sendText(from, auth.claimWhatsApp(signinCode[1], from) ? 'You are signed in to Wellwise. Go back to the page that showed the code; it moves on by itself.' : 'That code did not work or has expired. Start the sign-in again.');
     const link = text.match(/^link\s+(\d{6})$/i);
     if (link) {
       const uid = db.useCode(link[1], 'whatsapp');

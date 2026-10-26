@@ -36,7 +36,8 @@ const { privateIp } = require('../server/net.js');
 
 (async () => {
   const pushed = []; let pushFail = null;
-  const app = createApp({ db: ':memory:', adminToken: 'admin-secret', pushSender: async (sub, payload) => { if (pushFail) { const e = new Error('gone'); e.statusCode = pushFail; throw e } pushed.push({ endpoint: sub.endpoint, ...JSON.parse(payload) }) } });
+  const sentEmails = [];
+  const app = createApp({ db: ':memory:', adminToken: 'admin-secret', sendEmail: async (to, code) => { sentEmails.push({ to, code }) }, pushSender: async (sub, payload) => { if (pushFail) { const e = new Error('gone'); e.statusCode = pushFail; throw e } pushed.push({ endpoint: sub.endpoint, ...JSON.parse(payload) }) } });
   await new Promise(r => app.server.listen(0, '127.0.0.1', r));
   const base = `http://127.0.0.1:${app.server.address().port}`;
   let cookie = '';
@@ -146,10 +147,10 @@ const { privateIp } = require('../server/net.js');
     const verifier = crypto.randomBytes(32).toString('hex'), challenge = crypto.createHash('sha256').update(verifier).digest('base64url');
     const aq = new URLSearchParams({ response_type: 'code', client_id: reg.client_id, redirect_uri: 'https://claude.ai/api/mcp/auth_callback', code_challenge: challenge, code_challenge_method: 'S256', state: 'xyz' });
     const signedIn = cookie; cookie = '';
-    r = await call('GET', '/oauth/authorize?' + aq); check('new browser is asked for a device code', /6-digit code/.test(r.data));
+    r = await call('GET', '/oauth/authorize?' + aq); check('new browser is asked to sign in first', /Sign in first/.test(r.data) && /Send me a code/.test(r.data) && /Sign in with WhatsApp/.test(r.data));
     cookie = signedIn;
-    r = await call('GET', '/oauth/authorize?' + aq); check('Allow page names the account and offers your own', /WW-[0-9A-F]{6}/.test(r.data) && /Not your Wellwise?/.test(r.data));
-    check('signed-in browser sees Allow', /Connect Claude to Wellwise\?/.test(r.data) && r.headers.get('x-frame-options') === 'DENY');
+    r = await call('GET', '/oauth/authorize?' + aq); check('a WhatsApp-linked browser counts as signed in', /Signed in as/.test(r.data) && r.data.includes('Not you? Use a different account'));
+    check('sign-in page cannot be framed', r.headers.get('x-frame-options') === 'DENY');
     const csrf = (r.data.match(/name="csrf" value="([a-f0-9]+)"/) || [])[1];
     const approve = new URLSearchParams({ ...Object.fromEntries(aq), csrf, decision: 'allow' });
     check('forged approval refused', !/code=/.test((await call('POST', '/oauth/authorize', new URLSearchParams({ ...Object.fromEntries(aq), csrf: 'nope', decision: 'allow' }).toString(), { 'content-type': 'application/x-www-form-urlencoded' })).headers.get('location') || ''));
@@ -202,7 +203,7 @@ const { privateIp } = require('../server/net.js');
     {
       const keep = cookie; cookie = '';
       const page1 = await call('GET', '/oauth/authorize?' + aq);
-      check('new person sees Allow, not a dead end', /name="decision" value="new"/.test(page1.data) && /Already use Wellwise/.test(page1.data));
+      check('new person can sign in or connect without signing in', /name="decision" value="new"/.test(page1.data) && /Send me a code/.test(page1.data));
       const anonCsrf = (page1.data.match(/name="csrf" value="([a-f0-9]+)"/) || [])[1];
       r = await call('POST', '/oauth/authorize', new URLSearchParams({ ...Object.fromEntries(aq), csrf: anonCsrf, decision: 'new' }).toString(), { 'content-type': 'application/x-www-form-urlencoded' });
       const newCode = new URL(r.headers.get('location') || 'https://x/').searchParams.get('code');
@@ -243,6 +244,47 @@ const { privateIp } = require('../server/net.js');
     check(`daily tip at 8:00 local (${morning} yes, ${night} not yet)`, dA === 1 && dB === 0);
     check('calendar times use the event time zone', require('../server/calendar.js').parse('BEGIN:VEVENT\nUID:1\nDTSTART;TZID=Asia/Kolkata:20261101T233000\nSUMMARY:x\nEND:VEVENT', 'Europe/London')[0].start === Date.UTC(2026, 10, 1, 18, 0));
     cookie = signedIn;
+
+    // sign-in: email codes, WhatsApp codes, and merging an unsigned browser into your own Wellwise
+    {
+      const keep = cookie;
+      cookie = ''; await call('GET', '/api/me'); const phoneBrowser = cookie;
+      r = await call('POST', '/api/auth/email', { email: 'Me@Example.com ' });
+      check('email code sent', !!r.data.id && sentEmails.at(-1).to === 'me@example.com' && /^\d{6}$/.test(sentEmails.at(-1).code));
+      check('wrong code refused', (await call('POST', '/api/auth/email/verify', { id: r.data.id, code: '000000' })).status === 400);
+      r = await call('POST', '/api/auth/email/verify', { id: r.data.id, code: sentEmails.at(-1).code });
+      check('signed in by email', r.data.ok && (await call('GET', '/api/me')).data.account.email === 'me@example.com');
+      const myId = (await call('GET', '/api/me')).data.id;
+      // another browser, with its own tips and a connected assistant, signs in: everything moves to my Wellwise
+      cookie = ''; await call('GET', '/api/me');
+      await call('PUT', '/api/state', { state: { seen: { 'ww-077': 1 }, statuses: { 'ww-077': 'trying' }, statusAt: { 'ww-077': 5 }, updatedAt: 9 } });
+      const pg = await call('GET', '/oauth/authorize?' + aq);
+      const cs = (pg.data.match(/name="csrf" value="([a-f0-9]+)"/) || [])[1];
+      const al = await call('POST', '/oauth/authorize', new URLSearchParams({ ...Object.fromEntries(aq), csrf: cs, decision: 'allow' }).toString(), { 'content-type': 'application/x-www-form-urlencoded' });
+      const ac = new URL(al.headers.get('location')).searchParams.get('code');
+      await call('POST', '/oauth/token', { grant_type: 'authorization_code', code: ac, redirect_uri: 'https://claude.ai/api/mcp/auth_callback', client_id: reg.client_id, code_verifier: verifier });
+      r = await call('POST', '/oauth/authorize', new URLSearchParams({ ...Object.fromEntries(aq), decision: 'email', email: 'me@example.com' }).toString(), { 'content-type': 'application/x-www-form-urlencoded' });
+      check('Allow page sends an email code', /Check your email/.test(r.data));
+      const lid = (r.data.match(/name="login_id" value="([^"]+)"/) || [])[1];
+      r = await call('POST', '/oauth/authorize', new URLSearchParams({ ...Object.fromEntries(aq), decision: 'verify', login_id: lid, email: 'me@example.com', login_code: sentEmails.at(-1).code }).toString(), { 'content-type': 'application/x-www-form-urlencoded' });
+      check('signed in on the Allow page', /Signed in as <b>me@example.com/.test(r.data) && cookie === phoneBrowser);
+      const meNow = (await call('GET', '/api/me')).data;
+      check('that browser\'s tips merged into my Wellwise', meNow.id === myId && meNow.state.statuses['ww-077'] === 'trying');
+      check('its assistant connection moved to my Wellwise', (await call('GET', '/api/agents')).data.connected.some(c => c.name === 'Claude'));
+      const cs2 = (r.data.match(/name="csrf" value="([a-f0-9]+)"/) || [])[1];
+      r = await call('POST', '/oauth/authorize', new URLSearchParams({ ...Object.fromEntries(aq), csrf: cs2, decision: 'allow' }).toString(), { 'content-type': 'application/x-www-form-urlencoded' });
+      check('Allow after signing in returns a code', !!new URL(r.headers.get('location')).searchParams.get('code'));
+      // WhatsApp sign-in on a fresh browser
+      cookie = ''; await call('GET', '/api/me');
+      const ws = (await call('POST', '/api/auth/whatsapp', {})).data;
+      check('WhatsApp sign-in code offered', /^\d{6}$/.test(ws.code) && /SIGNIN%20\d{6}/.test(ws.link));
+      check('waiting until the message arrives', (await call('GET', '/api/auth/whatsapp/' + ws.id)).data.pending === true);
+      await hook({ from: '447700900999', id: 'w-si', type: 'text', text: { body: 'SIGNIN ' + ws.code } }); await new Promise(r => setTimeout(r, 50));
+      check('WhatsApp confirms sign-in', /signed in to Wellwise/.test(sent.at(-1).text.body));
+      r = await call('GET', '/api/auth/whatsapp/' + ws.id);
+      check('signed in by WhatsApp', r.data.ok && /•••/.test((await call('GET', '/api/me')).data.account.phone));
+      cookie = keep;
+    }
 
     // admin console
     check('admin needs a token', (await call('GET', '/api/admin/status')).status === 401);

@@ -100,4 +100,34 @@ function codePage(client, hidden, err) {
   <p class="muted">You can disconnect at any time in Wellwise → Moments → Your agent.</p>`);
 }
 
-module.exports = { setup, page, approvePage, codePage, esc, b64url, shortId };
+/* Who this Wellwise belongs to, for the Allow page. */
+const accountLabel = u => u?.email || (u?.phone ? '+' + String(u.phone).replace(/^\+/, '').replace(/(\d{2})\d+(\d{3})$/, '$1 ••• $2') : null);
+
+/* The browser is signed in: connect the assistant to this person's Wellwise. */
+function signedInPage(client, hidden, u, err) {
+  return page('Connect', `<h1>Connect ${esc(client.name)} to your Wellwise?</h1><p class="muted">Signed in as <b>${esc(accountLabel(u))}</b></p><p>${esc(client.name)} will be able to:</p><ul><li>tell Wellwise about moments in your day, like a purchase or a trip</li><li>get the tip that fits, and save it to your journey</li><li>see which tips you are trying and which are habits</li></ul>
+  ${err ? `<p class="err">${esc(err)}</p>` : ''}<form method="post" action="/oauth/authorize">${hidden}<div class="row"><button class="btn" name="decision" value="allow">Allow</button><button class="btn ghost" name="decision" value="deny">Cancel</button></div></form>
+  <form method="post" action="/oauth/authorize" style="margin-top:14px">${hidden}<button class="btn ghost" name="decision" value="switch">Not you? Use a different account</button></form>
+  <p class="muted">You can disconnect at any time in Wellwise → Moments → Your agent.</p>`);
+}
+/* Not signed in: sign in first, so the assistant reaches the person's own Wellwise wherever this page opens. */
+function signInPage(client, hidden, opts = {}) {
+  return page('Sign in', `<h1>Connect ${esc(client.name)} to your Wellwise</h1><p>Sign in first, so ${esc(client.name)} reaches your own Wellwise, whichever device or browser this page is on.</p>
+  ${opts.err ? `<p class="err">${esc(opts.err)}</p>` : ''}
+  ${opts.email ? `<form method="post" action="/oauth/authorize">${hidden}<label>Your email<input class="field" type="email" name="email" autocomplete="email" required placeholder="you@example.com"></label><div class="row"><button class="btn" name="decision" value="email">Send me a code</button></div></form>` : ''}
+  ${opts.whatsapp ? `<form method="post" action="/oauth/authorize" style="margin-top:14px">${hidden}<button class="btn ${opts.email ? 'ghost' : ''}" name="decision" value="wa">Sign in with WhatsApp</button></form>` : ''}
+  ${!opts.email && !opts.whatsapp ? '<p class="muted">Sign-in is not available yet.</p>' : ''}
+  <details style="margin-top:22px"><summary class="muted">Continue without signing in</summary><p class="muted">${esc(client.name)} will connect to the Wellwise in this browser only${opts.uid ? ` (ID <b>${esc(shortId(opts.uid))}</b>)` : ''}. Tips it sends will not reach you on other devices.</p><form method="post" action="/oauth/authorize">${hidden}<div class="row"><button class="btn ghost" name="decision" value="${opts.uid ? 'allow' : 'new'}">Connect this browser only</button></div></form></details>`);
+}
+function emailCodePage(client, hidden, email, loginId, err) {
+  return page('Check your email', `<h1>Check your email</h1><p>We sent a 6-digit code to <b>${esc(email)}</b>. It works for 10 minutes.</p>${err ? `<p class="err">${esc(err)}</p>` : ''}
+  <form method="post" action="/oauth/authorize">${hidden}<input type="hidden" name="login_id" value="${esc(loginId)}"><input type="hidden" name="email" value="${esc(email)}"><input class="field" name="login_code" inputmode="numeric" autocomplete="one-time-code" placeholder="6-digit code" required><div class="row"><button class="btn" name="decision" value="verify">Sign in</button></div></form>
+  <form method="post" action="/oauth/authorize" style="margin-top:12px">${hidden}<button class="btn ghost" name="decision" value="switch">Use a different email</button></form>`);
+}
+function whatsappPage(client, hidden, code, link, number, loginId, back) {
+  return page('Sign in with WhatsApp', `<h1>Sign in with WhatsApp</h1><p>Send this message to <b>${esc(number || 'Wellwise')}</b> on WhatsApp:</p><p style="font-size:26px;font-weight:800;letter-spacing:2px">SIGNIN ${esc(code)}</p>
+  ${link ? `<p><a class="btn" href="${esc(link)}" target="_blank" rel="noopener">Open WhatsApp</a></p>` : ''}<p class="muted" id="st">Waiting for your message… This page moves on by itself.</p>
+  <script>(function(){var t=setInterval(function(){fetch('/api/auth/whatsapp/${esc(loginId)}',{credentials:'same-origin'}).then(function(r){return r.json()}).then(function(j){if(j.ok){clearInterval(t);location.href=${JSON.stringify(back)}}else if(j.error){clearInterval(t);document.getElementById('st').textContent=j.error}}).catch(function(){})},2500)})()</script>`);
+}
+
+module.exports = { setup, page, approvePage, codePage, signedInPage, signInPage, emailCodePage, whatsappPage, accountLabel, esc, b64url, shortId };

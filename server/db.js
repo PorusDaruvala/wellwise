@@ -41,12 +41,13 @@ function open(file) {
     userByToken: t => t ? parse(q('SELECT * FROM users WHERE token=?').get(t)) : null,
     userById: i => parse(q('SELECT * FROM users WHERE id=?').get(i)),
     userByPhone: p => parse(q('SELECT * FROM users WHERE phone=?').get(p)),
+    userByEmail: e => parse(q('SELECT * FROM users WHERE email=?').get(e)),
     userByAgentKey: k => k ? parse(q('SELECT * FROM users WHERE agent_key=?').get(k)) : null,
     userByInbound: a => a ? parse(q('SELECT * FROM users WHERE inbound=?').get(a)) : null,
     touch: uid => q('UPDATE users SET seen=? WHERE id=?').run(now(), uid),
     saveState: (uid, s) => q('UPDATE users SET state=? WHERE id=?').run(JSON.stringify(s), uid),
     setField(uid, field, v) {
-      if (!['phone', 'agent_key', 'inbound', 'calendar_url', 'calendar_synced', 'lat', 'lon'].includes(field)) throw new Error('bad field');
+      if (!['phone', 'email', 'agent_key', 'inbound', 'calendar_url', 'calendar_synced', 'lat', 'lon'].includes(field)) throw new Error('bad field');
       q(`UPDATE users SET ${field}=? WHERE id=?`).run(v ?? null, uid);
     },
     usersWith: field => q(`SELECT * FROM users WHERE ${field} IS NOT NULL`).all().map(parse),

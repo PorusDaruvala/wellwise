@@ -96,3 +96,7 @@ One entry per product or technical decision. Add new entries at the bottom. Do n
 ### D-022 · One tip per event across automatic sources · 2026-10-23
 **Decision:** Agents, calendars and forwarded emails often report the same trip or purchase. From these sources, Wellwise never sends the same tip twice within 30 days, and sends at most one tip per kind of moment (event key) within 7 days. The first report wins. Things people do themselves (share, scan, WhatsApp, quick check-in) and near-you alerts are not limited this way.
 **Why:** Two tips for one flight feels like spam and teaches people to ignore Wellwise.
+
+### D-023 · Optional sign-in by email code or WhatsApp · 2026-10-26
+**Decision:** People can start without an account, as before. Signing in (a 6-digit email code, or "SIGNIN" sent on WhatsApp; no passwords) gives them the same Wellwise everywhere. Assistant sign-in pages ask people to sign in first, with "Continue without signing in" still available. Signing in on a browser with an unsigned Wellwise merges it into the account.
+**Why:** Without sign-in, each browser had its own Wellwise, so Muse connected to an empty one in its own cloud browser and the person never saw its tips.

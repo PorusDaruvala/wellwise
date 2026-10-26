@@ -85,6 +85,13 @@ go('settings');check('no add-tips in settings',!/Add tips|tip pack/i.test(txt())
 check('disclaimer in footer',/not a substitute for medical advice/.test(w.document.getElementById('footer').textContent)&&/certified healthcare provider/.test(w.document.getElementById('footer').textContent));
 go('tip/ww-126');check('sponsor slot',/Sponsored/.test(txt()));
 w.eval("API.on=true;API.id='abc123def';API.linked={};API.features={}");go('settings');check('settings shows the Wellwise ID',/WW-ABC123/.test(txt()));w.eval('API.on=false');
+// sign-in: offered in Settings and before connecting an assistant; signed-in view shows the account
+w.eval("API.on=true;API.account=null;API.features={signIn:{email:true,whatsapp:true}};API.linked={}");go('settings');
+check('settings offers sign-in', /Your account/.test(txt())&&/Send me a code/.test(txt())&&/Sign in with WhatsApp/.test(txt()));
+w.eval("SIGN={step:'code',id:'lc_1',email:'me@example.com'};render()");check('settings asks for the emailed code', /6-digit code to me@example.com/.test(txt()));
+w.eval("SIGN={step:null};API.account={email:'me@example.com'};render()");check('settings shows who is signed in', /Signed in as me@example.com/.test(txt())&&/Sign out/.test(txt()));
+w.eval("API.account=null");go('moments');w.eval("setTab('agent')");check('agent tab asks to sign in first', /Sign in first/.test(txt()));
+w.eval("API.on=false;API.features={}");
 go('settings');check('health details panel',/Health details/.test(txt())&&/tips that matter most to you/.test(txt())&&!/unsafe/.test(txt()));
 // online-only tabs, as they look when the server is there
 w.eval("API.on=true;API.linked={};API.features={}");go('moments');w.eval("setTab('calendar')");check('calendar sign-in shown as coming soon',/Connect Google Calendar/.test(txt())&&/Coming soon/.test(txt()));

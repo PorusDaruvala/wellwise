@@ -201,7 +201,7 @@ async function api(path,opts={}){
  const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||'Something went wrong');return j}
 async function connect(){
  if(!hosted()||typeof fetch!=='function')return;
- try{const me=await api('/api/me');API.on=true;API.id=me.id;API.features=me.features||{};API.linked=me.linked||{};
+ try{const me=await api('/api/me');API.on=true;API.id=me.id;API.account=me.account||null;API.features=me.features||{};API.linked=me.linked||{};
   const tz=(()=>{try{return Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){return ''}})();
   const remote=me.state||{};if((remote.updatedAt||0)>(S.updatedAt||0)){const keep={momentTab:S.momentTab,selected:S.selected};S={...DEFAULTS,...remote,...keep};delete S._server;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
   if(tz&&S.tz!==tz){S.tz=tz;persist()}else pushState();
@@ -251,7 +251,26 @@ function notifyCard(){
  if(isIOS()&&!standalone())return `<div class="panel spaced"><h3>Get a useful tip every morning</h3><p class="small muted" style="margin-top:0">On iPhone, notifications work once Wellwise is on your Home Screen. It takes about 20 seconds:</p>${iosSteps()}<div class="row">${later}</div></div>`;
  return ''}
 
-function pushState(){if(!API.on)return;const {live,...rest}=S;api('/api/state',{method:'PUT',body:{state:rest}}).catch(()=>{})}
+function pushState(){if(!API.on)return Promise.resolve();const {live,...rest}=S;return api('/api/state',{method:'PUT',body:{state:rest}}).catch(()=>{})}
+
+/* ---------- signing in: your own Wellwise on every device, and for every assistant ---------- */
+let SIGN={step:null},signPoll=null;
+const signInAvailable=()=>!!(API.features.signIn&&(API.features.signIn.email||API.features.signIn.whatsapp));
+async function afterSignIn(){clearInterval(signPoll);try{localStorage.removeItem(KEY)}catch(e){}location.reload()}
+async function sendSignInCode(){const email=($('signEmail')?.value||'').trim();if(!email){toast('Type your email first');return}
+ try{await pushState();const r=await api('/api/auth/email',{method:'POST',body:{email}});SIGN={step:'code',id:r.id,email:r.email};render();setTimeout(()=>$('signCode')?.focus(),50)}catch(e){toast(e.message)}}
+async function verifySignIn(){const code=($('signCode')?.value||'').trim();try{await api('/api/auth/email/verify',{method:'POST',body:{id:SIGN.id,code}});afterSignIn()}catch(e){toast(e.message)}}
+async function startWaSignIn(){try{await pushState();const r=await api('/api/auth/whatsapp',{method:'POST',body:{}});SIGN={step:'wa',...r};render();clearInterval(signPoll);
+ signPoll=setInterval(async()=>{try{const s=await api('/api/auth/whatsapp/'+r.id);if(s.ok)afterSignIn();else if(s.error){clearInterval(signPoll);SIGN={step:null};render();toast(s.error)}}catch(e){}},2500)}catch(e){toast(e.message)}}
+async function signOut(){if(!confirm('Sign out on this device? Your journey stays in your account.'))return;try{await api('/api/auth/signout',{method:'POST',body:{}})}catch(e){}try{localStorage.removeItem(KEY)}catch(e){}location.reload()}
+function accountPanel(){
+ if(!API.on||(!API.account&&!signInAvailable()))return '';
+ if(API.account)return `<div class="panel spaced"><h2>Your account</h2><div class="status"><span>Signed in as <b>${esc(API.account.email||API.account.phone)}</b><br><span class="small muted">Your journey is the same on every device where you sign in.</span></span><button class="btn ghost sm" onclick="signOut()">Sign out</button></div></div>`;
+ const f=API.features.signIn;
+ const body=SIGN.step==='code'?`<p class="small">We sent a 6-digit code to <b>${esc(SIGN.email)}</b>. It works for 10 minutes.</p><div class="row"><input id="signCode" class="field" style="max-width:180px" inputmode="numeric" autocomplete="one-time-code" placeholder="6-digit code"><button class="btn sm" onclick="verifySignIn()">Sign in</button><button class="btn ghost sm" onclick="SIGN={step:null};render()">Use a different email</button></div>`
+  :SIGN.step==='wa'?`<p class="small">Send this message to <b>${esc(SIGN.number||'Wellwise')}</b> on WhatsApp:</p><p class="metric numeric">SIGNIN ${esc(SIGN.code)}</p>${SIGN.link?`<a class="btn sm" href="${esc(SIGN.link)}" target="_blank" rel="noopener">Open WhatsApp</a>`:''}<p class="small muted">This page moves on by itself once your message arrives.</p>`
+  :`${f.email?`<div class="row"><input id="signEmail" class="field" style="max-width:280px" type="email" autocomplete="email" placeholder="you@example.com"><button class="btn sm" onclick="sendSignInCode()">Send me a code</button></div>`:''}${f.whatsapp?`<div class="row spaced"><button class="btn ${f.email?'ghost':''} sm" onclick="startWaSignIn()">Sign in with WhatsApp</button></div>`:''}`;
+ return `<div class="panel spaced"><h2>Your account</h2><p class="small muted" style="margin-top:0">Sign in to keep your Wellwise on all your devices, and so assistants like Muse always connect to it. No password.</p>${body}</div>`}
 async function refreshMe(){try{const me=await api('/api/me');API.linked=me.linked||{};API.features=me.features||{}}catch(e){}}
 /* Tips the server delivered (calendar, near you, WhatsApp, agents, email, daily tips) join the journey here. */
 async function pullInbox(){
@@ -478,6 +497,7 @@ function momentPicker(){
  }else if(tab==='agent'){
   if(!API.on)body=`<div class="empty"><b>Link your AI agent</b><p>If you use a personal AI agent for shopping, travel or your calendar, it can send moments to Wellwise once Wellwise is online.</p></div>`;
   else{const k=API.agentKey,ag=API.agents,mcp=ag?.mcp||location.origin+'/mcp';body=`<p>Link your AI agent. If it shops, books or plans for you, it can tell Wellwise what happened. Wellwise picks a tip that fits and saves it to your journey, whichever agent sent it.</p>
+   ${!API.account&&signInAvailable()?`<div class="notice warn"><b>Sign in first.</b> Then any assistant you connect reaches this Wellwise, wherever its sign-in page opens. <button class="btn sm" style="margin-left:6px" onclick="nav('settings')">Sign in</button></div>`:API.account?`<p class="small muted">Signed in as <b>${esc(API.account.email||API.account.phone)}</b>. When an assistant asks you to sign in to Wellwise, use the same account.</p>`:''}
    ${ag?.connected?.length?`<div class="notice spaced"><b>Connected</b>${ag.connected.map(c=>`<div class="status"><span><b>✓ ${esc(c.name)}</b><br><span class="small muted">Connected ${fmtDate(c.since)}. When ${esc(c.name)} books or buys something for you, it can send Wellwise the moment.</span></span><button class="btn ghost sm" onclick="disconnectAgent('${esc(c.id)}')">Disconnect</button></div>`).join('')}</div>`:''}
    <h3 class="spaced">${ag?.connected?.length?'Connect another agent':'Connect your agent'}</h3>
    <p class="small">Choose the one you use. Each needs only this once.</p>
@@ -564,6 +584,7 @@ function inbox(){
 function localDaily(){if(API.on||!['daily','both'].includes(S.frequency))return;const d=new Date(now()).toISOString().slice(0,10);if(S.lastDaily===d)return;const t=dailyTip();S.lastDaily=d;S.notifications.unshift({id:'day-'+d,tip:t.id,at:now(),message:'Your Wellwise tip for today',source:'daily',agent:null,channel:'In the app',moment:'Your daily tip'});S.notifications=S.notifications.slice(0,100);persist()}
 
 function settings(){const ln=API.linked;return `${header('','Make Wellwise yours.','Everything here is optional. You can use Wellwise without sharing anything about your health.')}
+ ${accountPanel()}
  <div class="panel spaced"><h2>Region and language</h2><div class="formgrid"><label>Region<select class="field" id="geo"><option value="AUTO" ${S.geoAuto?'selected':''}>Automatic${S.live?.region?' ('+esc(REGIONS[S.live.region])+')':' (from Near you)'}</option>${Object.entries(REGIONS).map(([v,n])=>`<option value="${v}" ${!S.geoAuto&&S.geo===v?'selected':''}>${n}</option>`).join('')}</select></label><label>Language<select class="field" onchange="setLang(this.value)"><option value="en" ${S.lang==='en'?'selected':''}>English</option><option value="hi" ${S.lang==='hi'?'selected':''}>हिंदी (preview)</option></select></label></div>${S.lang==='hi'?`<p class="small muted">Hindi preview: the main labels and ${TIPS.filter(t=>t.hi).length} tips are translated. Other text stays in English for now.</p>`:''}
  <h3 class="spaced">Topics you care about</h3><p class="small muted">Pick none to see everything.</p><div class="checks">${CATS.map(c=>`<label class="check"><input type="checkbox" class="catcheck" value="${esc(c)}" ${S.cats.includes(c)?'checked':''}> ${esc(c)}</label>`).join('')}</div>
  <h3 class="spaced">About you</h3><div class="formgrid"><label>Age range<select id="age" class="field">${['','Under 18','18–29','30–44','45–59','60+'].map(x=>`<option value="${esc(x)}" ${S.age===x?'selected':''}>${x||'Prefer not to say'}</option>`).join('')}</select></label><label>Diet<select id="diet" class="field">${['','Omnivore','Vegetarian','Vegan','Pescatarian','Other'].map(x=>`<option value="${esc(x)}" ${S.diet===x?'selected':''}>${x||'Prefer not to say'}</option>`).join('')}</select></label></div><p class="small muted">Diet changes which tips rise first. For example, “Vegan” brings B12 and fortified-food tips forward.</p>
