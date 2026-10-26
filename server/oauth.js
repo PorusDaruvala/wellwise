@@ -67,6 +67,7 @@ function setup(db) {
       return { error: 'unsupported_grant_type' };
     },
     userFor(token) { const r = q("SELECT * FROM oauth_tokens WHERE hash=? AND kind='access'").get(sha(token)); return r && r.expires > Date.now() ? r.user_id : null },
+    tokenInfo(token) { const r = q("SELECT t.user_id, t.client_id, c.name FROM oauth_tokens t LEFT JOIN oauth_clients c ON c.id=t.client_id WHERE t.hash=? AND t.kind='access' AND t.expires>?").get(sha(token), Date.now()); return r || null },
     connected(uid) { return q("SELECT t.client_id, c.name, MIN(t.created) since FROM oauth_tokens t JOIN oauth_clients c ON c.id=t.client_id WHERE t.user_id=? AND t.expires>? GROUP BY t.client_id, c.name").all(uid, Date.now()) },
     revoke(uid, clientId) { q('DELETE FROM oauth_tokens WHERE user_id=? AND client_id=?').run(uid, clientId) },
     revokeAll(uid) { q('DELETE FROM oauth_tokens WHERE user_id=?').run(uid); q('DELETE FROM oauth_codes WHERE user_id=?').run(uid) },

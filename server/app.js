@@ -269,7 +269,11 @@ function createApp(opts = {}) {
       if (m === 'POST' && p === '/oauth/register') { if (limited('reg:' + (req.socket.remoteAddress || ''), 20)) return fail(res, 429, 'Slow down'); const r = oa.register(await formOrJson(req)); return send(res, r.error ? 400 : 201, r) }
       if (m === 'POST' && p === '/oauth/token') {
         const basic = (req.headers.authorization || '').match(/^Basic\s+(.+)$/i), basicId = basic ? decodeURIComponent(Buffer.from(basic[1], 'base64').toString().split(':')[0]) : null;
-        const r = oa.exchange(await formOrJson(req), basicId);
+        const form = await formOrJson(req), r = oa.exchange(form, basicId);
+        if (r.access_token && form.grant_type === 'authorization_code') {
+          const info = oa.tokenInfo(r.access_token);
+          if (info) push.notify(info.user_id, { title: `${info.name || 'Your assistant'} is connected to Wellwise`, body: `When ${info.name || 'it'} books or buys something for you, a tip that fits will arrive here.`, url: '/#moments', tag: 'connected-' + info.client_id }).catch(() => {});
+        }
         return send(res, r.error ? 400 : 200, r);
       }
       if (p === '/oauth/authorize') {
@@ -386,6 +390,8 @@ function createApp(opts = {}) {
         if (p === '/mcp') {
           if (m !== 'POST') return send(res, 405, 'Use POST', { allow: 'POST' });
           const body = await json(req), batch = Array.isArray(body) ? body : [body];
+          const tok = (req.headers.authorization || '').replace(/^Bearer\s+/i, '').trim(), info = tok.startsWith('wwo_') ? oa.tokenInfo(tok) : null;
+          for (const x of batch) if (x && x.method && x.method !== 'ping' && !String(x.method).startsWith('notifications/')) oa.log(info ? info.client_id : 'key', 'mcp', true, x.method + (x.params?.name ? ' · ' + x.params.name : '') + (x.params?.arguments?.text ? ' · "' + String(x.params.arguments.text).slice(0, 80) + '"' : ''));
           const replies = (await Promise.all(batch.map(x => x.id === undefined ? null : mcp(db.userById(u.id), x)))).filter(Boolean);
           if (!replies.length) { res.writeHead(202); return res.end() }
           return send(res, 200, Array.isArray(body) ? replies : replies[0]);

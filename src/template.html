@@ -372,7 +372,8 @@ async function unlinkWhatsApp(){await api('/api/whatsapp',{method:'DELETE',body:
 function agentOptions(mcp){
  const addr=`<div class="addr"><code>${esc(mcp)}</code><button class="btn ghost sm" onclick="copyText('${esc(mcp)}')">Copy address</button></div>`;
  const allow=`<li><span>A Wellwise page opens. Tap <b>Allow</b>.</span></li>`;
- const opt=(name,what,body)=>`<details class="agent"><summary><span><b>${name}</b><span class="what">${what}</span></span></summary><div class="body">${body}</div></details>`;
+ const linked=n=>(API.agents?.connected||[]).some(c=>(c.name||'').toLowerCase().includes(n.toLowerCase().split(' ')[0]));
+ const opt=(name,what,body)=>`<details class="agent"><summary><span><b>${name}</b>${linked(name)?' <span class="badge live">Connected</span>':''}<span class="what">${what}</span></span></summary><div class="body">${body}</div></details>`;
  const key=API.agentKey?.key;
  const museKey=key?`<div class="addr"><code>${esc(key)}</code><button class="btn ghost sm" onclick="copyText('${esc(key)}')">Copy key</button></div><p class="small muted" style="margin:0">Copy it now. It is shown only once.</p>`
   :`<div class="row" style="margin:6px 0"><button class="btn alt sm" onclick="makeAgentKey()">${API.linked.agent?'Make a new key':'Create a key'}</button></div>${API.linked.agent?'<p class="small muted" style="margin:0">A new key replaces your old one.</p>':''}`;
@@ -477,10 +478,10 @@ function momentPicker(){
  }else if(tab==='agent'){
   if(!API.on)body=`<div class="empty"><b>Link your AI agent</b><p>If you use a personal AI agent for shopping, travel or your calendar, it can send moments to Wellwise once Wellwise is online.</p></div>`;
   else{const k=API.agentKey,ag=API.agents,mcp=ag?.mcp||location.origin+'/mcp';body=`<p>Link your AI agent. If it shops, books or plans for you, it can tell Wellwise what happened. Wellwise picks a tip that fits and saves it to your journey, whichever agent sent it.</p>
-   <h3 class="spaced">Connect your agent</h3>
+   ${ag?.connected?.length?`<div class="notice spaced"><b>Connected</b>${ag.connected.map(c=>`<div class="status"><span><b>✓ ${esc(c.name)}</b><br><span class="small muted">Connected ${fmtDate(c.since)}. When ${esc(c.name)} books or buys something for you, it can send Wellwise the moment.</span></span><button class="btn ghost sm" onclick="disconnectAgent('${esc(c.id)}')">Disconnect</button></div>`).join('')}</div>`:''}
+   <h3 class="spaced">${ag?.connected?.length?'Connect another agent':'Connect your agent'}</h3>
    <p class="small">Choose the one you use. Each needs only this once.</p>
    ${agentOptions(mcp)}
-   ${ag?.connected?.length?`<div class="spaced">${ag.connected.map(c=>`<div class="status"><span><b>${esc(c.name)}</b><br><span class="small muted">Connected ${fmtDate(c.since)}</span></span><button class="btn ghost sm" onclick="disconnectAgent('${esc(c.id)}')">Disconnect</button></div>`).join('')}</div>`:''}
    <h3 class="spaced">Or use a key</h3><p class="small muted">For agents you build or run yourself.</p>
    ${k?`<div class="notice"><b>Your agent key</b><p class="small">Copy it now. It is shown only once.</p><p><code>${esc(k.key)}</code> <button class="btn ghost sm" onclick="copyText('${esc(k.key)}')">Copy</button></p><p class="small"><b>MCP server:</b> <code>${esc(k.mcp)}</code></p><p class="small"><b>REST:</b> <code>POST ${esc(k.api)}/moments</code></p><pre>curl -X POST ${esc(k.api)}/moments \\
   -H "Authorization: Bearer ${esc(k.key)}" -H "Content-Type: application/json" \\

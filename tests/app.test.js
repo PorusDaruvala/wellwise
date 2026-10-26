@@ -100,6 +100,7 @@ go('settings');check('notifications switch in settings',/Notifications on this d
 w.eval("API.pushOn=false;delete window.PushManager;Object.defineProperty(navigator,'userAgent',{value:'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X)',configurable:true});S.pushAskedAt=0");
 go('discover');check('iPhone gets Home Screen steps',/Add to Home Screen/.test(txt())&&/Open as Web App/.test(txt())&&w.document.querySelectorAll('.steps li').length===4);
 w.eval("Object.defineProperty(navigator,'userAgent',{value:'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) CriOS/130.0',configurable:true});render()");check('Chrome on iPhone gets its own steps',/address bar at the top/.test(txt()));
+go('moments');w.eval("API.agents={mcp:'https://x/mcp',connected:[{id:'wwc_1',name:'Muse',since:Date.now()}]};setTab('agent')");check('connected assistant shown first, with a mark on its option',/✓ Muse/.test(txt())&&/Connect another agent/.test(txt())&&/Connected/.test(w.document.querySelector('.agent summary').textContent));w.eval('API.agents=null');
 w.eval("API.on=false");
 check('travel tips moved',['ww-059','ww-191','ww-196'].every(id=>w.eval(`TIPMAP['${id}'].category`)==='Travel health'));
 

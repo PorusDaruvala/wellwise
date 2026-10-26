@@ -182,6 +182,7 @@ const { privateIp } = require('../server/net.js');
       const bad = await call('POST', '/oauth/token', new URLSearchParams({ grant_type: 'authorization_code', code: 'nope', code_verifier: 'x' }).toString(), { 'content-type': 'application/x-www-form-urlencoded' });
       check('a failed sign-in says why', bad.status === 400 && /Unknown or already used/.test(bad.data.error_description));
       const log = (await call('GET', '/api/admin/status', undefined, { authorization: 'Bearer admin-secret' })).data.connectors;
+      check('admin sees what assistants ask for', log.some(x => x.step === 'mcp' && /tools/call · wellwise_send_moment/.test(x.detail)));
       check('admin sees each connection step', log.some(x => x.step === 'allow' && x.ok) && log.some(x => x.step === 'token' && x.ok) && log.some(x => x.step === 'token' && !x.ok && /Unknown/.test(x.detail)) && log.some(x => x.name === 'Muse' && x.step === 'register'));
     }
 
