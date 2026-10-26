@@ -3,7 +3,7 @@
 const crypto = require('node:crypto');
 const { getJSON } = require('./net.js');
 
-const API = 'https://graph.facebook.com/v21.0';
+const API = 'https://graph.facebook.com/v25.0'; // supported until July 2028
 const env = () => ({ token: process.env.WHATSAPP_TOKEN, phoneId: process.env.WHATSAPP_PHONE_NUMBER_ID, verify: process.env.WHATSAPP_VERIFY_TOKEN, secret: process.env.WHATSAPP_APP_SECRET, number: process.env.WHATSAPP_DISPLAY_NUMBER, template: process.env.WHATSAPP_TEMPLATE });
 const enabled = () => !!(env().token && env().phoneId);
 
@@ -22,7 +22,7 @@ async function post(body) {
   return { ok: res.ok };
 }
 const sendText = (to, text) => post({ to, type: 'text', text: { body: text.slice(0, 4000), preview_url: true } });
-const sendTemplate = (to, params) => post({ to, type: 'template', template: { name: env().template, language: { code: 'en' }, components: [{ type: 'body', parameters: params.map(t => ({ type: 'text', text: String(t).slice(0, 900) })) }] } });
+const sendTemplate = (to, params) => post({ to, type: 'template', template: { name: env().template, language: { code: process.env.WHATSAPP_TEMPLATE_LANG || 'en' }, components: [{ type: 'body', parameters: params.map(t => ({ type: 'text', text: String(t).slice(0, 900) })) }] } });
 
 async function media(id) {
   const meta = await getJSON(`${API}/${id}`, { headers: { authorization: 'Bearer ' + env().token } });

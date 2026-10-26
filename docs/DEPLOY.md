@@ -54,6 +54,9 @@ Signing in is optional. It gives a person the same Wellwise on every device, and
 
 ## WhatsApp
 
+Step by step, with Meta links: [WHATSAPP_SETUP.md](WHATSAPP_SETUP.md). In short:
+
+
 1. In Meta for Developers, create an app with the WhatsApp product and add a phone number.
 2. Set `WHATSAPP_TOKEN` (a permanent system-user token), `WHATSAPP_PHONE_NUMBER_ID` and `WHATSAPP_DISPLAY_NUMBER`.
 3. Set the webhook callback to `<public url>/webhooks/whatsapp`, choose a `WHATSAPP_VERIFY_TOKEN`, and subscribe to `messages`. Set `WHATSAPP_APP_SECRET` so signatures are checked.
