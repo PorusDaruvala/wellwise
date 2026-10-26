@@ -148,7 +148,8 @@ const { privateIp } = require('../server/net.js');
     const signedIn = cookie; cookie = '';
     r = await call('GET', '/oauth/authorize?' + aq); check('new browser is asked for a device code', /6-digit code/.test(r.data));
     cookie = signedIn;
-    r = await call('GET', '/oauth/authorize?' + aq); check('signed-in browser sees Allow', /Connect Claude to Wellwise\?/.test(r.data) && r.headers.get('x-frame-options') === 'DENY');
+    r = await call('GET', '/oauth/authorize?' + aq); check('Allow page names the account and offers your own', /WW-[0-9A-F]{6}/.test(r.data) && /Not your Wellwise?/.test(r.data));
+    check('signed-in browser sees Allow', /Connect Claude to Wellwise\?/.test(r.data) && r.headers.get('x-frame-options') === 'DENY');
     const csrf = (r.data.match(/name="csrf" value="([a-f0-9]+)"/) || [])[1];
     const approve = new URLSearchParams({ ...Object.fromEntries(aq), csrf, decision: 'allow' });
     check('forged approval refused', !/code=/.test((await call('POST', '/oauth/authorize', new URLSearchParams({ ...Object.fromEntries(aq), csrf: 'nope', decision: 'allow' }).toString(), { 'content-type': 'application/x-www-form-urlencoded' })).headers.get('location') || ''));
@@ -184,6 +185,17 @@ const { privateIp } = require('../server/net.js');
       const log = (await call('GET', '/api/admin/status', undefined, { authorization: 'Bearer admin-secret' })).data.connectors;
       check('admin sees what assistants ask for', log.some(x => x.step === 'mcp' && x.detail.includes('tools/call · wellwise_send_moment')));
       check('admin sees each connection step', log.some(x => x.step === 'allow' && x.ok) && log.some(x => x.step === 'token' && x.ok) && log.some(x => x.step === 'token' && !x.ok && /Unknown/.test(x.detail)) && log.some(x => x.name === 'Muse' && x.step === 'register'));
+    }
+
+    // an assistant's own browser can switch to the person's Wellwise with a code, and Allow then links that account
+    {
+      const mine = cookie, myId = (await call('GET', '/api/me')).data.id;
+      const dc = (await call('POST', '/api/device-code', {})).data.code;
+      cookie = ''; await call('GET', '/api/me'); const other = cookie;
+      r = await call('POST', '/oauth/authorize', new URLSearchParams({ ...Object.fromEntries(aq), decision: 'code', device_code: dc }).toString(), { 'content-type': 'application/x-www-form-urlencoded' });
+      check('code switches the Allow page to your Wellwise', r.headers.get('set-cookie')?.includes('ww=') && r.data.includes('WW-' + myId.slice(0, 6).toUpperCase()));
+      check('that browser now uses your Wellwise', cookie === mine && other !== mine);
+      cookie = mine;
     }
 
     // someone new to Wellwise connects from their assistant with one tap

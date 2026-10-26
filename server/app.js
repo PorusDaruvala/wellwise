@@ -287,24 +287,24 @@ function createApp(opts = {}) {
             const uid = db.useCode(String(q.device_code || '').trim(), 'device'), other = uid && db.userById(uid);
             if (!other) return send(res, 200, oauth.codePage(client, authHidden(q, null), 'That code did not work. Codes last 10 minutes.'), htmlHeaders);
             res.setHeader('set-cookie', sessionCookie(req, other.token));
-            return send(res, 200, oauth.approvePage(client, authHidden(q, other.id)), htmlHeaders);
+            return send(res, 200, oauth.approvePage(client, authHidden(q, other.id), null, other.id), htmlHeaders);
           }
           if (!u && (q.decision === 'new' || q.decision === 'deny')) {
             if (q.csrf !== sign('anon', q.client_id, q.redirect_uri, q.code_challenge)) return send(res, 200, oauth.codePage(client, authHidden(q, null), 'Please try again.'), htmlHeaders);
             const back = new URL(q.redirect_uri);
-            if (q.decision === 'new') { const fresh = db.createUser(); res.setHeader('set-cookie', sessionCookie(req, fresh.token)); back.searchParams.set('code', oa.issueCode(fresh.id, client.id, q.redirect_uri, q.code_challenge)); oa.log(client.id, 'allow', true, 'new account → ' + back.origin) }
+            if (q.decision === 'new') { const fresh = db.createUser(); res.setHeader('set-cookie', sessionCookie(req, fresh.token)); back.searchParams.set('code', oa.issueCode(fresh.id, client.id, q.redirect_uri, q.code_challenge)); oa.log(client.id, 'allow', true, 'new account ' + oauth.shortId(fresh.id) + ' → ' + back.origin) }
             else back.searchParams.set('error', 'access_denied');
             if (q.state) back.searchParams.set('state', q.state);
             res.writeHead(302, { location: back.href }); return res.end();
           }
-          if (!u || q.csrf !== sign(u.id, q.client_id, q.redirect_uri, q.code_challenge)) return send(res, 200, u ? oauth.approvePage(client, authHidden(q, u.id), 'Please try again.') : oauth.codePage(client, authHidden(q, null)), htmlHeaders);
+          if (!u || q.csrf !== sign(u.id, q.client_id, q.redirect_uri, q.code_challenge)) return send(res, 200, u ? oauth.approvePage(client, authHidden(q, u.id), 'Please try again.', u.id) : oauth.codePage(client, authHidden(q, null)), htmlHeaders);
           const back = new URL(q.redirect_uri);
-          if (q.decision === 'allow') { back.searchParams.set('code', oa.issueCode(u.id, client.id, q.redirect_uri, q.code_challenge)); oa.log(client.id, 'allow', true, 'existing account → ' + back.origin) }
+          if (q.decision === 'allow') { back.searchParams.set('code', oa.issueCode(u.id, client.id, q.redirect_uri, q.code_challenge)); oa.log(client.id, 'allow', true, 'existing account ' + oauth.shortId(u.id) + ' → ' + back.origin) }
           else back.searchParams.set('error', 'access_denied');
           if (q.state) back.searchParams.set('state', q.state);
           res.writeHead(302, { location: back.href }); return res.end();
         }
-        return send(res, 200, u ? oauth.approvePage(client, authHidden(q, u.id)) : oauth.codePage(client, authHidden(q, null)), htmlHeaders);
+        return send(res, 200, u ? oauth.approvePage(client, authHidden(q, u.id), null, u.id) : oauth.codePage(client, authHidden(q, null)), htmlHeaders);
       }
 
       /* share target: other apps share a link, text or photo straight into Wellwise */

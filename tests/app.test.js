@@ -84,6 +84,7 @@ check('no safety tags',!/Check first|Talk to a clinician|clinician’s input|hel
 go('settings');check('no add-tips in settings',!/Add tips|tip pack/i.test(txt()));check('no prototype tools',!/Prototype tools|Jump ahead/.test(txt()));
 check('disclaimer in footer',/not a substitute for medical advice/.test(w.document.getElementById('footer').textContent)&&/certified healthcare provider/.test(w.document.getElementById('footer').textContent));
 go('tip/ww-126');check('sponsor slot',/Sponsored/.test(txt()));
+w.eval("API.on=true;API.id='abc123def';API.linked={};API.features={}");go('settings');check('settings shows the Wellwise ID',/WW-ABC123/.test(txt()));w.eval('API.on=false');
 go('settings');check('health details panel',/Health details/.test(txt())&&/tips that matter most to you/.test(txt())&&!/unsafe/.test(txt()));
 // online-only tabs, as they look when the server is there
 w.eval("API.on=true;API.linked={};API.features={}");go('moments');w.eval("setTab('calendar')");check('calendar sign-in shown as coming soon',/Connect Google Calendar/.test(txt())&&/Coming soon/.test(txt()));
