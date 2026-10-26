@@ -23,7 +23,13 @@ const SOURCE_LABEL = { share: 'Share', scan: 'Scan', photo: 'Photo', document: '
 
 function createApp(opts = {}) {
   const dist = opts.dist || path.join(ROOT, 'dist');
-  const db = open(opts.db || process.env.WELLWISE_DB || path.join(ROOT, 'data', 'wellwise.db'));
+  // On Railway, data goes on the attached volume wherever it is mounted. Without a volume, every redeploy wipes it.
+  const onRailway = !!(process.env.RAILWAY_ENVIRONMENT_NAME || process.env.RAILWAY_PROJECT_ID);
+  const volume = process.env.RAILWAY_VOLUME_MOUNT_PATH;
+  const dbFile = opts.db || (volume ? path.join(volume, 'wellwise.db') : process.env.WELLWISE_DB || path.join(ROOT, 'data', 'wellwise.db'));
+  const storage = opts.db === ':memory:' ? 'memory' : onRailway ? (volume ? 'persistent' : 'temporary') : 'local disk';
+  if (storage === 'temporary') console.error('WARNING: no Railway volume is attached. Accounts, journeys and notification sign-ups are wiped on every redeploy. Attach a volume to this service.');
+  const db = open(dbFile);
   const lib = createLibrary(db, opts.content || path.join(dist, 'wellwise-content.json'));
   const adminToken = opts.adminToken ?? process.env.WELLWISE_ADMIN_TOKEN ?? '';
   const oa = oauth.setup(db);
@@ -72,7 +78,7 @@ function createApp(opts = {}) {
     whatsapp: u.phone ? '•••• ' + u.phone.slice(-4) : null, calendar: !!u.calendar_url, calendarSynced: u.calendar_synced || null,
     agent: !!u.agent_key, email: u.inbound && process.env.WELLWISE_INBOUND_DOMAIN ? `${u.inbound}@${process.env.WELLWISE_INBOUND_DOMAIN}` : null, location: u.lat != null,
   });
-  const features = () => ({ photo: llm.enabled(), whatsapp: wa.enabled(), whatsappNumber: wa.env().number || null, email: !!process.env.WELLWISE_INBOUND_DOMAIN, server: true });
+  const features = () => ({ photo: llm.enabled(), whatsapp: wa.enabled(), whatsappNumber: wa.env().number || null, email: !!process.env.WELLWISE_INBOUND_DOMAIN, server: true, storage });
   const tipOut = t => t && { id: t.id, title: t.title, action: t.action, why: t.why, caution: t.caution, category: t.category, grade: t.grade, familiarity: t.familiarity, sources: t.sources, url: tipUrl(t.id) };
 
   /* Save a tip to someone's inbox, and send it on WhatsApp when that is their channel. */
@@ -348,7 +354,7 @@ function createApp(opts = {}) {
         if (p === '/api/push') {
           if (m === 'GET') return send(res, 200, { key: push.publicKey(), devices: push.count(u.id) });
           const b = await json(req);
-          if (m === 'POST') { if (!push.save(u.id, b.subscription)) return fail(res, 400, 'That subscription is not valid'); push.notify(u.id, { title: 'Notifications are on', body: 'Your Wellwise tips will arrive here.', url: '/', tag: 'welcome' }).catch(() => {}); return send(res, 200, { ok: true, devices: push.count(u.id) }) }
+          if (m === 'POST') { const saved = push.save(u.id, b.subscription); if (!saved) return fail(res, 400, 'That subscription is not valid'); if (saved.isNew && !b.quiet) push.notify(u.id, { title: 'Notifications are on', body: 'Your Wellwise tips will arrive here.', url: '/', tag: 'welcome' }).catch(() => {}); return send(res, 200, { ok: true, devices: push.count(u.id) }) }
           if (m === 'DELETE') { push.remove(u.id, b.endpoint); return send(res, 200, { ok: true, devices: push.count(u.id) }) }
         }
         if (m === 'GET' && p === '/api/agents') return send(res, 200, { mcp: baseUrl + '/mcp', connected: oa.connected(u.id).map(c => ({ id: c.client_id, name: c.name, since: c.since })) });
@@ -412,7 +418,7 @@ function createApp(opts = {}) {
         if (!isAdmin(req)) return fail(res, 401, adminToken ? 'Wrong admin token' : 'Set WELLWISE_ADMIN_TOKEN on the server to use the admin console');
         const c = lib.current();
         if (m === 'GET' && p === '/api/admin/status') return send(res, 200, { stats: db.stats(), feedback: { bySource: db.feedbackBySource(), byTip: db.feedbackByTip().map(r => ({ ...r, title: c.byId[r.tip]?.title })) }, reach: reach(c), packs: db.packs().map(x => ({ id: x.id, name: x.name, at: x.at, tips: x.body.tips.length })), contentVersion: c.contentVersion,
-          integrations: { push: push.total(), claude: llm.enabled() ? llm.MODEL : null, whatsapp: wa.enabled(), whatsappWebhook: !!wa.env().verify, whatsappTemplate: wa.env().template || null, email: !!process.env.WELLWISE_INBOUND_DOMAIN, publicUrl: baseUrl } });
+          integrations: { storage, push: push.total(), claude: llm.enabled() ? llm.MODEL : null, whatsapp: wa.enabled(), whatsappWebhook: !!wa.env().verify, whatsappTemplate: wa.env().template || null, email: !!process.env.WELLWISE_INBOUND_DOMAIN, publicUrl: baseUrl } });
         if (m === 'POST' && p === '/api/admin/packs/check') return send(res, 200, lib.validate(await json(req)));
         if (m === 'POST' && p === '/api/admin/packs') { const b = await json(req), r = lib.validate(b); if (r.errors.length) return send(res, 400, r); db.savePack('pk-' + db.id(4), b.pack || 'Pack', { tips: r.tips, edges: r.edges }); lib.invalidate(); return send(res, 200, { ok: true, added: r.tips.length }) }
         let pm; if (m === 'DELETE' && (pm = p.match(/^\/api\/admin\/packs\/(pk-[a-f0-9]+)$/))) { db.deletePack(pm[1]); lib.invalidate(); return send(res, 200, { ok: true }) }

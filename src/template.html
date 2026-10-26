@@ -215,7 +215,16 @@ const standalone=()=>(window.matchMedia&&matchMedia('(display-mode: standalone)'
 let installEvt=null;
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installEvt=e;render()});
 function b64ToU8(s){const p='='.repeat((4-s.length%4)%4),b=atob((s+p).replace(/-/g,'+').replace(/_/g,'/'));return Uint8Array.from(b,c=>c.charCodeAt(0))}
-async function checkPush(){if(!API.on||!PUSH_OK())return;try{const reg=await navigator.serviceWorker.ready;const sub=await reg.pushManager.getSubscription();API.pushOn=!!sub&&Notification.permission==='granted';render()}catch(e){}}
+const u8ToB64=u=>btoa(String.fromCharCode(...new Uint8Array(u))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+/* Each time Wellwise opens, this device re-registers for notifications. If the server's key changed, it signs up again with the new one. No prompt: permission was already given. */
+async function checkPush(){
+ if(!API.on||!PUSH_OK())return;
+ try{const reg=await navigator.serviceWorker.ready;let sub=await reg.pushManager.getSubscription();
+  if(sub&&Notification.permission==='granted'){const {key}=await api('/api/push');const used=sub.options?.applicationServerKey;
+   if(used&&u8ToB64(used)!==key){await sub.unsubscribe();sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64ToU8(key)})}
+   await api('/api/push',{method:'POST',body:{subscription:sub.toJSON(),quiet:true}})}
+  API.pushOn=!!sub&&Notification.permission==='granted';render()}catch(e){}}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){checkPush();pullInbox()}});
 async function enablePush(){
  if(!PUSH_OK())return;
  const perm=await Notification.requestPermission();

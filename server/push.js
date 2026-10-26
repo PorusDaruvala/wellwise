@@ -18,8 +18,9 @@ function setup(db, { sender, subject } = {}) {
     publicKey: () => keys.publicKey,
     save(uid, sub) {
       if (!sub || typeof sub.endpoint !== 'string' || !/^https:\/\//.test(sub.endpoint) || !sub.keys?.p256dh || !sub.keys?.auth) return false;
+      const known = q('SELECT user_id FROM push_subs WHERE endpoint=?').get(sub.endpoint);
       q('INSERT INTO push_subs VALUES(?,?,?,?) ON CONFLICT(endpoint) DO UPDATE SET user_id=excluded.user_id, sub=excluded.sub').run(sub.endpoint, uid, JSON.stringify({ endpoint: sub.endpoint, keys: sub.keys }), Date.now());
-      return true;
+      return { isNew: !known || known.user_id !== uid };
     },
     remove: (uid, endpoint) => q('DELETE FROM push_subs WHERE user_id=? AND endpoint=?').run(uid, String(endpoint || '')),
     removeAll: uid => q('DELETE FROM push_subs WHERE user_id=?').run(uid),

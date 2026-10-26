@@ -49,7 +49,8 @@ const { privateIp } = require('../server/net.js');
   try {
     const page = await call('GET', '/'); check('serves the app', page.status === 200 && /wellwise/.test(page.data));
     check('serves the manifest with a share target', (await call('GET', '/manifest.webmanifest')).data.share_target?.action === '/share');
-    const me = await call('GET', '/api/me'); check('creates a session', me.status === 200 && !!cookie && me.data.features.whatsapp === true && me.data.features.photo === false);
+    const me = await call('GET', '/api/me'); check('health reports storage', me.data.features.storage === 'memory');
+    check('creates a session', me.status === 200 && !!cookie && me.data.features.whatsapp === true && me.data.features.photo === false);
     await call('PUT', '/api/state', { state: { geo: 'IN', frequency: 'both', channel: 'In the app', seen: {}, updatedAt: 5 } });
     check('saves state', (await call('GET', '/api/me')).data.state.geo === 'IN');
     check('rejects non-JSON writes', (await call('POST', '/api/intake', 'text=x', { 'content-type': 'text/plain' })).status === 415);
@@ -240,6 +241,8 @@ const { privateIp } = require('../server/net.js');
       const sub = { endpoint: 'https://push.example/abc', keys: { p256dh: 'BPx', auth: 'au' } };
       r = await call('POST', '/api/push', { subscription: sub });
       check('device subscribed, with a confirmation', r.data.devices === 1 && pushed.some(x => x.tag === 'welcome' && x.endpoint === sub.endpoint));
+      const w0 = pushed.length; r = await call('POST', '/api/push', { subscription: sub, quiet: true });
+      check('re-registering on open is silent', r.data.devices === 1 && pushed.length === w0);
       const before = pushed.length;
       await app.tick();
       const daily = pushed.slice(before).find(x => x.url && x.url.startsWith('/#tip/'));

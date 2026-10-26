@@ -20,7 +20,7 @@ The repository has a `Dockerfile` and `railway.json`, so Railway builds and star
 1. Push `main` to GitHub.
 2. Sign in at railway.com with GitHub. Choose **New Project → Deploy from GitHub repo**, and pick the Wellwise repository.
 3. Open the service. Under **Settings → Networking**, choose **Generate Domain**. Copy the address, for example `https://wellwise-production.up.railway.app`.
-4. Add a volume to the service, mounted at `/data`. This is where accounts and journeys are kept. Without it, every redeploy wipes them.
+4. Add a volume to the service (any mount path; `/data` is fine). Wellwise finds it through Railway's `RAILWAY_VOLUME_MOUNT_PATH` and keeps accounts, journeys and notification sign-ups there. Without it, every redeploy wipes them: `/api/health` then reports `"storage":"temporary"`, the admin console shows Storage in red, and the server log warns at start.
 5. Under **Variables**, add:
    - `WELLWISE_PUBLIC_URL`: the address from step 3
    - `WELLWISE_ADMIN_TOKEN`: a long random string, for `/admin`
