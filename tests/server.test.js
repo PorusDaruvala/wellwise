@@ -170,6 +170,21 @@ const { privateIp } = require('../server/net.js');
     await call('DELETE', '/api/agents/' + reg.client_id, {});
     check('disconnect revokes access', (await call('POST', '/mcp', { jsonrpc: '2.0', id: 11, method: 'tools/list' }, { 'content-type': 'application/json', authorization: 'Bearer ' + refreshed.access_token, cookie: '' })).status === 401);
 
+    // assistants that send their id in a Basic header, or leave out the redirect address, can finish signing in
+    {
+      r = await call('POST', '/oauth/authorize', approve.toString(), { 'content-type': 'application/x-www-form-urlencoded' });
+      const code3 = new URL(r.headers.get('location')).searchParams.get('code');
+      const basic = 'Basic ' + Buffer.from(reg.client_id + ':').toString('base64');
+      const t3 = await call('POST', '/oauth/token', new URLSearchParams({ grant_type: 'authorization_code', code: code3, code_verifier: verifier }).toString(), { 'content-type': 'application/x-www-form-urlencoded', authorization: basic });
+      check('sign-in finishes with a Basic header and no redirect address', t3.status === 200 && /^wwo_/.test(t3.data.access_token));
+      const reg2 = (await call('POST', '/oauth/register', { client_name: 'Muse', redirect_uris: ['https://muse.ai/oauth/callback'], token_endpoint_auth_method: 'client_secret_basic' })).data;
+      check('assistants that ask for a secret get one', reg2.token_endpoint_auth_method === 'client_secret_basic' && /^wws_/.test(reg2.client_secret));
+      const bad = await call('POST', '/oauth/token', new URLSearchParams({ grant_type: 'authorization_code', code: 'nope', code_verifier: 'x' }).toString(), { 'content-type': 'application/x-www-form-urlencoded' });
+      check('a failed sign-in says why', bad.status === 400 && /Unknown or already used/.test(bad.data.error_description));
+      const log = (await call('GET', '/api/admin/status', undefined, { authorization: 'Bearer admin-secret' })).data.connectors;
+      check('admin sees each connection step', log.some(x => x.step === 'allow' && x.ok) && log.some(x => x.step === 'token' && x.ok) && log.some(x => x.step === 'token' && !x.ok && /Unknown/.test(x.detail)) && log.some(x => x.name === 'Muse' && x.step === 'register'));
+    }
+
     // someone new to Wellwise connects from their assistant with one tap
     {
       const keep = cookie; cookie = '';

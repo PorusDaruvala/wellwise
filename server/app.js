@@ -265,12 +265,17 @@ function createApp(opts = {}) {
 
       /* ---- connector sign-in for AI assistants (OAuth 2.1 + PKCE + dynamic registration) ---- */
       if (m === 'GET' && p.startsWith('/.well-known/oauth-protected-resource')) return send(res, 200, { resource: baseUrl + '/mcp', authorization_servers: [baseUrl], bearer_methods_supported: ['header'], scopes_supported: ['wellwise'], resource_name: 'Wellwise' });
-      if (m === 'GET' && (p.startsWith('/.well-known/oauth-authorization-server') || p.startsWith('/.well-known/openid-configuration'))) return send(res, 200, { issuer: baseUrl, authorization_endpoint: baseUrl + '/oauth/authorize', token_endpoint: baseUrl + '/oauth/token', registration_endpoint: baseUrl + '/oauth/register', response_types_supported: ['code'], grant_types_supported: ['authorization_code', 'refresh_token'], code_challenge_methods_supported: ['S256'], token_endpoint_auth_methods_supported: ['none'], scopes_supported: ['wellwise'] });
+      if (m === 'GET' && (p.startsWith('/.well-known/oauth-authorization-server') || p.startsWith('/.well-known/openid-configuration'))) return send(res, 200, { issuer: baseUrl, authorization_endpoint: baseUrl + '/oauth/authorize', token_endpoint: baseUrl + '/oauth/token', registration_endpoint: baseUrl + '/oauth/register', response_types_supported: ['code'], grant_types_supported: ['authorization_code', 'refresh_token'], code_challenge_methods_supported: ['S256'], token_endpoint_auth_methods_supported: ['none', 'client_secret_basic', 'client_secret_post'], scopes_supported: ['wellwise'] });
       if (m === 'POST' && p === '/oauth/register') { if (limited('reg:' + (req.socket.remoteAddress || ''), 20)) return fail(res, 429, 'Slow down'); const r = oa.register(await formOrJson(req)); return send(res, r.error ? 400 : 201, r) }
-      if (m === 'POST' && p === '/oauth/token') { const r = oa.exchange(await formOrJson(req)); return send(res, r.error ? 400 : 200, r) }
+      if (m === 'POST' && p === '/oauth/token') {
+        const basic = (req.headers.authorization || '').match(/^Basic\s+(.+)$/i), basicId = basic ? decodeURIComponent(Buffer.from(basic[1], 'base64').toString().split(':')[0]) : null;
+        const r = oa.exchange(await formOrJson(req), basicId);
+        return send(res, r.error ? 400 : 200, r);
+      }
       if (p === '/oauth/authorize') {
         const q = m === 'GET' ? Object.fromEntries(url.searchParams) : await formOrJson(req);
         const { client, error } = authCheck(q);
+        if (error) { oa.log(q.client_id, 'authorize', false, error + ' · redirect ' + (q.redirect_uri || '') + ' · method ' + (q.code_challenge_method || '')) }
         if (error) return send(res, 400, oauth.page('Sign-in problem', `<h1>Something is not right</h1><p>${oauth.esc(error)}</p>`), htmlHeaders);
         const u = me(req, res, false);
         if (m === 'POST') {
@@ -283,14 +288,14 @@ function createApp(opts = {}) {
           if (!u && (q.decision === 'new' || q.decision === 'deny')) {
             if (q.csrf !== sign('anon', q.client_id, q.redirect_uri, q.code_challenge)) return send(res, 200, oauth.codePage(client, authHidden(q, null), 'Please try again.'), htmlHeaders);
             const back = new URL(q.redirect_uri);
-            if (q.decision === 'new') { const fresh = db.createUser(); res.setHeader('set-cookie', sessionCookie(req, fresh.token)); back.searchParams.set('code', oa.issueCode(fresh.id, client.id, q.redirect_uri, q.code_challenge)) }
+            if (q.decision === 'new') { const fresh = db.createUser(); res.setHeader('set-cookie', sessionCookie(req, fresh.token)); back.searchParams.set('code', oa.issueCode(fresh.id, client.id, q.redirect_uri, q.code_challenge)); oa.log(client.id, 'allow', true, 'new account → ' + back.origin) }
             else back.searchParams.set('error', 'access_denied');
             if (q.state) back.searchParams.set('state', q.state);
             res.writeHead(302, { location: back.href }); return res.end();
           }
           if (!u || q.csrf !== sign(u.id, q.client_id, q.redirect_uri, q.code_challenge)) return send(res, 200, u ? oauth.approvePage(client, authHidden(q, u.id), 'Please try again.') : oauth.codePage(client, authHidden(q, null)), htmlHeaders);
           const back = new URL(q.redirect_uri);
-          if (q.decision === 'allow') back.searchParams.set('code', oa.issueCode(u.id, client.id, q.redirect_uri, q.code_challenge));
+          if (q.decision === 'allow') { back.searchParams.set('code', oa.issueCode(u.id, client.id, q.redirect_uri, q.code_challenge)); oa.log(client.id, 'allow', true, 'existing account → ' + back.origin) }
           else back.searchParams.set('error', 'access_denied');
           if (q.state) back.searchParams.set('state', q.state);
           res.writeHead(302, { location: back.href }); return res.end();
@@ -375,6 +380,7 @@ function createApp(opts = {}) {
       /* ---- agents: REST and MCP, with a personal key ---- */
       if (p.startsWith('/api/agent/v1/') || p === '/mcp') {
         const u = agentUser(req);
+        if (!u && p === '/mcp' && /^Bearer\s+\S/i.test(req.headers.authorization || '')) oa.log(null, 'mcp', false, 'Access refused: ' + ((req.headers.authorization || '').replace(/^Bearer\s+/i, '').slice(0, 4) || '?') + '… token not recognised or expired');
         if (!u) return send(res, 401, { error: 'Sign in to Wellwise, or send your agent key as: Authorization: Bearer wwk_…' }, { 'www-authenticate': `Bearer resource_metadata="${baseUrl}/.well-known/oauth-protected-resource"` });
         if (limited('ag:' + u.id, 30)) return fail(res, 429, 'Slow down');
         if (p === '/mcp') {
@@ -418,7 +424,7 @@ function createApp(opts = {}) {
         if (!isAdmin(req)) return fail(res, 401, adminToken ? 'Wrong admin token' : 'Set WELLWISE_ADMIN_TOKEN on the server to use the admin console');
         const c = lib.current();
         if (m === 'GET' && p === '/api/admin/status') return send(res, 200, { stats: db.stats(), feedback: { bySource: db.feedbackBySource(), byTip: db.feedbackByTip().map(r => ({ ...r, title: c.byId[r.tip]?.title })) }, reach: reach(c), packs: db.packs().map(x => ({ id: x.id, name: x.name, at: x.at, tips: x.body.tips.length })), contentVersion: c.contentVersion,
-          integrations: { storage, push: push.total(), claude: llm.enabled() ? llm.MODEL : null, whatsapp: wa.enabled(), whatsappWebhook: !!wa.env().verify, whatsappTemplate: wa.env().template || null, email: !!process.env.WELLWISE_INBOUND_DOMAIN, publicUrl: baseUrl } });
+          connectors: oa.recent(), integrations: { storage, push: push.total(), claude: llm.enabled() ? llm.MODEL : null, whatsapp: wa.enabled(), whatsappWebhook: !!wa.env().verify, whatsappTemplate: wa.env().template || null, email: !!process.env.WELLWISE_INBOUND_DOMAIN, publicUrl: baseUrl } });
         if (m === 'POST' && p === '/api/admin/packs/check') return send(res, 200, lib.validate(await json(req)));
         if (m === 'POST' && p === '/api/admin/packs') { const b = await json(req), r = lib.validate(b); if (r.errors.length) return send(res, 400, r); db.savePack('pk-' + db.id(4), b.pack || 'Pack', { tips: r.tips, edges: r.edges }); lib.invalidate(); return send(res, 200, { ok: true, added: r.tips.length }) }
         let pm; if (m === 'DELETE' && (pm = p.match(/^\/api\/admin\/packs\/(pk-[a-f0-9]+)$/))) { db.deletePack(pm[1]); lib.invalidate(); return send(res, 200, { ok: true }) }

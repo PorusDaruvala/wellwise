@@ -15,15 +15,22 @@ function setup(db) {
   db.db.exec(`
   CREATE TABLE IF NOT EXISTS oauth_clients(id TEXT PRIMARY KEY, name TEXT, redirect_uris TEXT NOT NULL, created INTEGER NOT NULL);
   CREATE TABLE IF NOT EXISTS oauth_codes(code TEXT PRIMARY KEY, user_id TEXT NOT NULL, client_id TEXT NOT NULL, redirect_uri TEXT NOT NULL, challenge TEXT NOT NULL, expires INTEGER NOT NULL);
-  CREATE TABLE IF NOT EXISTS oauth_tokens(hash TEXT PRIMARY KEY, user_id TEXT NOT NULL, client_id TEXT NOT NULL, kind TEXT NOT NULL, expires INTEGER NOT NULL, created INTEGER NOT NULL);`);
+  CREATE TABLE IF NOT EXISTS oauth_tokens(hash TEXT PRIMARY KEY, user_id TEXT NOT NULL, client_id TEXT NOT NULL, kind TEXT NOT NULL, expires INTEGER NOT NULL, created INTEGER NOT NULL);
+  CREATE TABLE IF NOT EXISTS connector_log(at INTEGER NOT NULL, client TEXT, step TEXT NOT NULL, ok INTEGER NOT NULL, detail TEXT);`);
   const q = sql => db.db.prepare(sql);
+  const log = (client, step, ok, detail) => { q('INSERT INTO connector_log VALUES(?,?,?,?,?)').run(Date.now(), client || null, step, ok ? 1 : 0, String(detail || '').slice(0, 400)); q('DELETE FROM connector_log WHERE at < ?').run(Date.now() - 14 * 864e5) };
   return {
+    log,
+    recent: (n = 50) => q('SELECT l.at, l.client, c.name, l.step, l.ok, l.detail FROM connector_log l LEFT JOIN oauth_clients c ON c.id=l.client ORDER BY l.at DESC LIMIT ?').all(n),
     register(body) {
       const uris = Array.isArray(body.redirect_uris) ? body.redirect_uris.map(String) : [];
-      if (!uris.length || !uris.every(okRedirect)) return { error: 'invalid_redirect_uri' };
+      if (!uris.length || !uris.every(okRedirect)) { log(null, 'register', false, 'redirect address not allowed: ' + JSON.stringify(body.redirect_uris || null)); return { error: 'invalid_redirect_uri', error_description: 'Redirect addresses must be https (or http on this computer).' } }
       const id = 'wwc_' + db.id(12), name = String(body.client_name || 'AI assistant').slice(0, 60);
       q('INSERT INTO oauth_clients VALUES(?,?,?,?)').run(id, name, JSON.stringify(uris), Date.now());
-      return { client_id: id, client_name: name, redirect_uris: uris, client_id_issued_at: Math.floor(Date.now() / 1000), token_endpoint_auth_method: 'none', grant_types: ['authorization_code', 'refresh_token'], response_types: ['code'] };
+      // Assistants that ask for a client secret get one. PKCE still protects every sign-in, so a secret is accepted but not required.
+      const method = ['client_secret_basic', 'client_secret_post'].includes(body.token_endpoint_auth_method) ? body.token_endpoint_auth_method : 'none';
+      log(id, 'register', true, `${name} · ${uris.join(' ')} · auth ${body.token_endpoint_auth_method || 'none'}`);
+      return { client_id: id, client_name: name, redirect_uris: uris, client_id_issued_at: Math.floor(Date.now() / 1000), token_endpoint_auth_method: method, grant_types: ['authorization_code', 'refresh_token'], response_types: ['code'], ...(method !== 'none' ? { client_secret: 'wws_' + db.id(16), client_secret_expires_at: 0 } : {}) };
     },
     client(id) { const r = q('SELECT * FROM oauth_clients WHERE id=?').get(String(id || '')); return r && { ...r, redirect_uris: JSON.parse(r.redirect_uris) } },
     issueCode(uid, clientId, redirectUri, challenge) { const c = db.id(20); q('INSERT INTO oauth_codes VALUES(?,?,?,?,?,?)').run(c, uid, clientId, redirectUri, challenge, Date.now() + CODE_TTL); return c },
@@ -33,20 +40,30 @@ function setup(db) {
       q('INSERT INTO oauth_tokens VALUES(?,?,?,?,?,?)').run(sha(refresh), uid, clientId, 'refresh', now + REFRESH_TTL, now);
       return { access_token: access, token_type: 'Bearer', expires_in: Math.floor(ACCESS_TTL / 1000), refresh_token: refresh, scope: 'wellwise' };
     },
-    exchange(form) {
+    /* Finishing sign-in. Assistants may send their id in the form or in a Basic header, and may leave out the redirect address. */
+    exchange(form, basicClient) {
+      const clientId = form.client_id || basicClient || null;
+      const fail = (step, why) => { log(clientId, step, false, why); return { error: 'invalid_grant', error_description: why } };
       if (form.grant_type === 'authorization_code') {
         const r = q('SELECT * FROM oauth_codes WHERE code=?').get(String(form.code || ''));
         if (r) q('DELETE FROM oauth_codes WHERE code=?').run(r.code);
-        if (!r || r.expires < Date.now() || r.client_id !== form.client_id || r.redirect_uri !== form.redirect_uri) return { error: 'invalid_grant' };
-        if (b64url(crypto.createHash('sha256').update(String(form.code_verifier || '')).digest()) !== r.challenge) return { error: 'invalid_grant', error_description: 'PKCE check failed' };
+        if (!r) return fail('token', 'Unknown or already used sign-in code');
+        if (r.expires < Date.now()) return fail('token', 'Sign-in code expired (10 minutes)');
+        if (clientId && clientId !== r.client_id) return fail('token', `Code was issued to ${r.client_id}, not ${clientId}`);
+        if (form.redirect_uri && form.redirect_uri !== r.redirect_uri) return fail('token', `Redirect address differs: ${form.redirect_uri} vs ${r.redirect_uri}`);
+        if (b64url(crypto.createHash('sha256').update(String(form.code_verifier || '')).digest()) !== r.challenge) return fail('token', form.code_verifier ? 'PKCE check failed' : 'No code_verifier sent');
+        log(r.client_id, 'token', true, 'access granted');
         return this.tokens(r.user_id, r.client_id);
       }
       if (form.grant_type === 'refresh_token') {
         const h = sha(form.refresh_token || ''), r = q("SELECT * FROM oauth_tokens WHERE hash=? AND kind='refresh'").get(h);
-        if (!r || r.expires < Date.now() || (form.client_id && form.client_id !== r.client_id)) return { error: 'invalid_grant' };
+        if (!r || r.expires < Date.now()) return fail('refresh', 'Unknown or expired refresh token');
+        if (clientId && clientId !== r.client_id) return fail('refresh', 'Refresh token belongs to another assistant');
         q('DELETE FROM oauth_tokens WHERE hash=?').run(h);
+        log(r.client_id, 'refresh', true, '');
         return this.tokens(r.user_id, r.client_id);
       }
+      log(clientId, 'token', false, 'Unsupported grant_type: ' + form.grant_type);
       return { error: 'unsupported_grant_type' };
     },
     userFor(token) { const r = q("SELECT * FROM oauth_tokens WHERE hash=? AND kind='access'").get(sha(token)); return r && r.expires > Date.now() ? r.user_id : null },
