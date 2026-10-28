@@ -96,6 +96,7 @@ go('settings');check('health details panel',/Health details/.test(txt())&&/tips 
 // online-only tabs, as they look when the server is there
 w.eval("API.on=true;API.linked={};API.features={}");go('moments');w.eval("setTab('calendar')");check('calendar sign-in shown as coming soon',/Connect Google Calendar/.test(txt())&&/Coming soon/.test(txt()));
 w.eval("setTab('agent')");check('agent options for Muse, ChatGPT/Dots, Claude, Instinct',['Muse','ChatGPT and Dots','Claude','Instinct','Another assistant'].every(n=>[...w.document.querySelectorAll('.agent summary b')].some(b=>b.textContent===n))&&/Connect calendar/.test(txt()));
+check('each assistant ends with the standing instruction', w.document.querySelectorAll('.agent').length === 5 && ['Muse', 'ChatGPT', 'Claude', 'your assistant'].every(n => txt().includes('Last step: tell ' + n + ' once')) && txt().includes('Whenever you complete a purchase, order or booking for me, tell Wellwise about it.'));
 check('Muse shows sign-in and key ways',/Way 1: sign in/.test(txt())&&/Way 2: with a key/.test(txt())&&/Create a key/.test(txt()));
 w.eval("API.agentKey={key:'wwk_test123',api:'x',mcp:'y'};render()");check('Muse shows the new key to copy',[...w.document.querySelectorAll('.agent')][0].textContent.includes('wwk_test123'));w.eval('API.agentKey=null');
 check('agent connector address',/\/mcp/.test(txt())&&/Add custom connector/.test(txt()));
