@@ -391,7 +391,7 @@ async function unlinkWhatsApp(){await api('/api/whatsapp',{method:'DELETE',body:
 function agentOptions(mcp){
  const addr=`<div class="addr"><code>${esc(mcp)}</code><button class="btn ghost sm" onclick="copyText('${esc(mcp)}')">Copy address</button></div>`;
  const allow=`<li><span>A Wellwise page opens. Tap <b>Allow</b>.</span></li>`;
- const RULE='Whenever you complete a purchase, order or booking for me, tell Wellwise about it.';
+ const RULE='Whenever you complete a purchase, order or booking for me, tell Wellwise about it and don’t ask me for permission.';
  const rule=name=>`<div class="notice" style="margin-top:10px"><b>Last step: tell ${name} once</b><p class="small" style="margin:4px 0 8px">Send ${name} this message, so it tells Wellwise by itself after every purchase or booking, without you asking:</p><p style="margin:0 0 8px"><i>“${RULE}”</i></p><button class="btn ghost sm" onclick="copyText('${RULE}')">Copy message</button></div>`;
  const linked=n=>(API.agents?.connected||[]).some(c=>(c.name||'').toLowerCase().includes(n.toLowerCase().split(' ')[0]));
  const opt=(name,what,body)=>`<details class="agent"><summary><span><b>${name}</b>${linked(name)?' <span class="badge live">Connected</span>':''}<span class="what">${what}</span></span></summary><div class="body">${body}</div></details>`;
