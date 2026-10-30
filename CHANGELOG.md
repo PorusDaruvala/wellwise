@@ -3,6 +3,8 @@
 ## 4.0.0 · 2026-10-23
 
 ### Product
+- First visit: a new headline (“Health tips that find you.”) and one setup card above today’s tip. It asks where tips should reach you (notifications, WhatsApp shown as coming soon, or an AI assistant), then walks through only the steps this device needs, one at a time: Home Screen on iPhone, sign-in, notifications, assistant, then optional Near you and calendar. It replaces the separate notifications card and the Near you link. Settings → Your setup shows progress, and a short How Wellwise works page explains the rest.
+- Moments is now called Connect.
 - Real moments, no data entry. A Node server with SQLite adds accounts, sync across devices, and delivery when the app is closed.
 - Near you: live air quality, heat, UV, rain, humidity and pollen from Open-Meteo, with the region set automatically. It replaces the daily insight when it has a tip, and never shows beside it.
 - Share: paste a link (the page is read), an order email or text, or add a photo or document. Wellwise is installable and appears in the phone's share menu.

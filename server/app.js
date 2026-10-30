@@ -505,7 +505,7 @@ function createApp(opts = {}) {
       return wa.sendText(from, 'You are linked. Send Wellwise a product link, a photo of a label or barcode, an order confirmation, a lab report or a few words about your day, and get one useful tip back.\n\nSend STOP to unlink.');
     }
     const u = db.userByPhone(from);
-    if (!u) return wa.sendText(from, `Hi! To use Wellwise here, open ${baseUrl}, go to Moments → WhatsApp, and tap Link WhatsApp.`);
+    if (!u) return wa.sendText(from, `Hi! To use Wellwise here, open ${baseUrl}, go to Connect → WhatsApp, and tap Link WhatsApp.`);
     db.saveState(u.id, { ...u.state, _server: { ...(u.state._server || {}), waLastInbound: Date.now() } });
     if (/^stop$/i.test(text)) { db.setField(u.id, 'phone', null); return wa.sendText(from, 'Unlinked. You will not get messages from Wellwise here.') }
     if (/^(tip|today|hi|hello)$/i.test(text)) { const t = E.dailyTip(content.live, u.state); await deliver(u, { tip: t, match: null }, 'whatsapp', { moment: 'Asked on WhatsApp', message: 'Your Wellwise tip for today' }); return wa.sendText(from, wa.tipMessage(t, 'Your tip for today:', tipUrl(t.id))) }

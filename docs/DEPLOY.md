@@ -62,17 +62,17 @@ Step by step, with Meta links: [WHATSAPP_SETUP.md](WHATSAPP_SETUP.md). In short:
 3. Set the webhook callback to `<public url>/webhooks/whatsapp`, choose a `WHATSAPP_VERIFY_TOKEN`, and subscribe to `messages`. Set `WHATSAPP_APP_SECRET` so signatures are checked.
 4. To send tips more than 24 hours after someone last wrote, create a utility template with three body parameters (title, action, link) and set `WHATSAPP_TEMPLATE` to its name.
 
-People link their number from Moments → WhatsApp: the app shows a code, they send `LINK 123456`, and from then on anything they send gets a tip back.
+People link their number from Connect → WhatsApp: the app shows a code, they send `LINK 123456`, and from then on anything they send gets a tip back.
 
 ## Email
 
-Use an inbound email service that posts JSON (Postmark's inbound webhook format works as is). Point a domain's MX at it, set `WELLWISE_INBOUND_DOMAIN`, and set the webhook to `<public url>/webhooks/email?secret=<WELLWISE_INBOUND_SECRET>`. Each person gets their own address from Moments → Email.
+Use an inbound email service that posts JSON (Postmark's inbound webhook format works as is). Point a domain's MX at it, set `WELLWISE_INBOUND_DOMAIN`, and set the webhook to `<public url>/webhooks/email?secret=<WELLWISE_INBOUND_SECRET>`. Each person gets their own address from Connect → Email.
 
 ## Agents
 
-**Assistants with connectors (Claude, ChatGPT and others):** people paste `<public url>/mcp` into their assistant as a custom connector. The assistant registers itself, opens a Wellwise approval page, and gets a token when the person chooses Allow (OAuth 2.1 with PKCE and dynamic client registration). If the approval page opens in a browser that has not used Wellwise, it asks for the 6-digit code from Settings → Your data → Use Wellwise on another device. People can disconnect an assistant in Moments → Your agent.
+**Assistants with connectors (Claude, ChatGPT and others):** people paste `<public url>/mcp` into their assistant as a custom connector. The assistant registers itself, opens a Wellwise approval page, and gets a token when the person chooses Allow (OAuth 2.1 with PKCE and dynamic client registration). If the approval page opens in a browser that has not used Wellwise, it asks for the 6-digit code from Settings → Your data → Use Wellwise on another device. People can disconnect an assistant in Connect → Your agent.
 
-**Agents you run yourself:** people create a key in Moments → Your agent. Agents then call:
+**Agents you run yourself:** people create a key in Connect → Your agent. Agents then call:
 
 - REST: `POST /api/agent/v1/moments` with `{"text"|"url"|"event"|"image", "agent": "Name"}` and `Authorization: Bearer wwk_…`
 - MCP (streamable HTTP, JSON responses): `POST /mcp` with the same key. Tools: `wellwise_find_tip`, `wellwise_send_moment`, `wellwise_journey`.

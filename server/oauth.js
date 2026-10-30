@@ -90,14 +90,14 @@ function approvePage(client, hidden, err, uid) {
   <p class="muted">This connects the Wellwise with ID <b>${esc(shortId(uid))}</b>.</p>
   ${err ? `<p class="err">${esc(err)}</p>` : ''}<form method="post" action="/oauth/authorize">${hidden}<div class="row"><button class="btn" name="decision" value="allow">Allow</button><button class="btn ghost" name="decision" value="deny">Cancel</button></div></form>
   <details style="margin-top:18px"><summary class="muted">Not your Wellwise? Use the one on your phone or computer</summary><p class="muted">In your Wellwise, go to <b>Settings → Your data</b>. Check your ID there, tap <b>Use Wellwise on another device</b>, and enter the 6-digit code here.</p><form method="post" action="/oauth/authorize">${hidden}<input class="field" name="device_code" inputmode="numeric" autocomplete="one-time-code" placeholder="6-digit code" required><div class="row"><button class="btn ghost" name="decision" value="code">Use my code</button></div></form></details>
-  <p class="muted">You can disconnect at any time in Wellwise → Moments → Your agent.</p>`);
+  <p class="muted">You can disconnect at any time in Wellwise → Connect → Your agent.</p>`);
 }
 /* Someone new to Wellwise: one tap starts Wellwise and connects the assistant. People who already use Wellwise elsewhere can bring their journey with a code. */
 function codePage(client, hidden, err) {
   return page('Connect', `<h1>Connect ${esc(client.name)} to Wellwise?</h1><p>Wellwise sends you one short, sourced health tip when something in your day makes it useful. ${esc(client.name)} will be able to:</p><ul><li>tell Wellwise about moments in your day, like a purchase or a trip</li><li>get the tip that fits, and save it to your journey</li><li>see which tips you are trying and which are habits</li></ul>
   ${err ? `<p class="err">${esc(err)}</p>` : ''}<form method="post" action="/oauth/authorize">${hidden}<div class="row"><button class="btn" name="decision" value="new">Allow</button><button class="btn ghost" name="decision" value="deny">Cancel</button></div></form>
   <details style="margin-top:18px"><summary class="muted">Already use Wellwise on another device?</summary><p class="muted">In Wellwise there, go to <b>Settings → Your data → Use Wellwise on another device</b>, and enter the 6-digit code here.</p><form method="post" action="/oauth/authorize">${hidden}<input class="field" name="device_code" inputmode="numeric" autocomplete="one-time-code" placeholder="6-digit code" required><div class="row"><button class="btn ghost" name="decision" value="code">Use my code</button></div></form></details>
-  <p class="muted">You can disconnect at any time in Wellwise → Moments → Your agent.</p>`);
+  <p class="muted">You can disconnect at any time in Wellwise → Connect → Your agent.</p>`);
 }
 
 /* Who this Wellwise belongs to, for the Allow page. */
@@ -108,7 +108,7 @@ function signedInPage(client, hidden, u, err) {
   return page('Connect', `<h1>Connect ${esc(client.name)} to your Wellwise?</h1><p class="muted">Signed in as <b>${esc(accountLabel(u))}</b></p><p>${esc(client.name)} will be able to:</p><ul><li>tell Wellwise about moments in your day, like a purchase or a trip</li><li>get the tip that fits, and save it to your journey</li><li>see which tips you are trying and which are habits</li></ul>
   ${err ? `<p class="err">${esc(err)}</p>` : ''}<form method="post" action="/oauth/authorize">${hidden}<div class="row"><button class="btn" name="decision" value="allow">Allow</button><button class="btn ghost" name="decision" value="deny">Cancel</button></div></form>
   <form method="post" action="/oauth/authorize" style="margin-top:14px">${hidden}<button class="btn ghost" name="decision" value="switch">Not you? Use a different account</button></form>
-  <p class="muted">You can disconnect at any time in Wellwise → Moments → Your agent.</p>`);
+  <p class="muted">You can disconnect at any time in Wellwise → Connect → Your agent.</p>`);
 }
 /* Not signed in: sign in first, so the assistant reaches the person's own Wellwise wherever this page opens. */
 function signInPage(client, hidden, opts = {}) {

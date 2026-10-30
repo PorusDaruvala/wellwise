@@ -14,8 +14,8 @@ for(const tab of ['near','share','scan','calendar','prompt','whatsapp','agent'])
 // menu: four places, inbox and settings as icons, the same four in the phone menu
 go('discover');
 const navText=[...w.document.querySelectorAll('#nav .navbtn')].map(b=>b.textContent.replace(/ · \d+/,''));
-check('four main places',navText.join()==='Discover,Moments,Explore,Journey');
-check('phone menu has the same four',[...w.document.querySelectorAll('#tabbar button')].map(b=>b.textContent).join()==='Discover,Moments,Explore,Journey');
+check('four main places',navText.join()==='Discover,Connect,Explore,Journey');
+check('phone menu has the same four',[...w.document.querySelectorAll('#tabbar button')].map(b=>b.textContent).join()==='Discover,Connect,Explore,Journey');
 check('inbox and settings icons',w.document.querySelectorAll('#icons .iconbtn').length===2&&/Settings/.test(w.document.querySelector('#icons').innerHTML));
 w.eval("S.notifications.unshift({id:'n-new',tip:'ww-001',at:Date.now()-1000,message:'Hi',source:'daily',channel:'In the app'});S.inboxSeenAt=0;render()");
 check('unread badge',!!w.document.querySelector('#icons .dot'));
@@ -100,15 +100,27 @@ check('each assistant ends with the standing instruction', w.document.querySelec
 check('Muse shows sign-in and key ways',/Way 1: sign in/.test(txt())&&/Way 2: with a key/.test(txt())&&/Create a key/.test(txt()));
 w.eval("API.agentKey={key:'wwk_test123',api:'x',mcp:'y'};render()");check('Muse shows the new key to copy',[...w.document.querySelectorAll('.agent')][0].textContent.includes('wwk_test123'));w.eval('API.agentKey=null');
 check('agent connector address',/\/mcp/.test(txt())&&/Add custom connector/.test(txt()));
-// daily notifications: the one-tap card on Discover, or Home Screen steps on iPhone
-w.eval("window.PushManager=function(){};window.Notification={permission:'default',requestPermission:async()=>'default'};Object.defineProperty(navigator,'serviceWorker',{value:{ready:new Promise(()=>{}),register:async()=>{}},configurable:true});S.pushAskedAt=0;API.pushOn=false");
-go('discover');check('notifications card',/Turn on notifications/.test(txt()));
-w.eval('laterPush()');check('not now hides it for a while',!/Turn on notifications/.test(txt()));
-w.eval("S.pushAskedAt=0;API.pushOn=true;render()");check('card gone once on',!/Get a useful tip every morning/.test(txt()));
-go('settings');check('notifications switch in settings',/Notifications on this device/.test(txt())&&/Turn off/.test(txt()));
-w.eval("API.pushOn=false;delete window.PushManager;Object.defineProperty(navigator,'userAgent',{value:'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X)',configurable:true});S.pushAskedAt=0");
-go('discover');check('iPhone gets Home Screen steps',/Add to Home Screen/.test(txt())&&/Open as Web App/.test(txt())&&w.document.querySelectorAll('.steps li').length===4);
+// first visit: one setup card, one step at a time
+w.eval("window.PushManager=function(){};window.Notification={permission:'default',requestPermission:async()=>'default'};Object.defineProperty(navigator,'serviceWorker',{value:{ready:new Promise(()=>{}),register:async()=>{}},configurable:true});API.pushOn=false;API.account=null;API.features={...API.features,whatsapp:false,signIn:{email:true}};S.setup={...DEFAULTS.setup}");
+go('discover');check('setup card asks where tips go',/Where should your tips reach you/.test(txt())&&/Health tips that find you/.test(txt()));
+check('setup card sits above today’s tip',w.document.querySelector('.setup')!==null);
+check('WhatsApp shown as coming soon',/WhatsApp\s*Coming soon/.test(txt())&&[...w.document.querySelectorAll('.setup button.pick')].some(b=>b.disabled&&/WhatsApp/.test(b.textContent)));
+check('no separate Near you link in the daily tip',!/Turn on Near you/.test(txt()));
+w.eval("pickWay('push');chooseWays()");check('computer: sign in first',/Sign in/.test(txt())&&/1 of/.test(txt())&&/Send me a code/.test(txt()));
+w.eval("API.account={email:'a@b.c'};render()");check('then notifications',/Turn on notifications/.test(txt())&&/2 of/.test(txt()));
+w.eval("skipSetupStep('push')");check('then optional Near you',/air and weather where you are/.test(txt()));
+w.eval("skipSetupStep('near');skipSetupStep('calendar')");check('done state',/You’re set/.test(txt()));
+w.eval("API.pushOn=true;render()");check('done names where tips go',/as notifications on this phone/.test(txt()));
+w.eval("S.setup.doneSeen=true;render()");check('done card goes after Got it',!/You’re set/.test(txt())&&/also come to you as notifications/.test(txt()));
+go('settings');check('settings shows your setup',/Your setup/.test(txt())&&/Notifications on/.test(txt())&&/Change where tips reach you/.test(txt()));
+check('notifications switch in settings',/Notifications on this device/.test(txt())&&/Turn off/.test(txt()));
+go('how');check('how Wellwise works page',/How Wellwise works/.test(txt())&&/What happens by itself/.test(txt()));
+w.eval("API.pushOn=false;API.account=null;delete window.PushManager;Object.defineProperty(navigator,'userAgent',{value:'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X)',configurable:true});S.setup={...DEFAULTS.setup,pick:['push']};chooseWays()");
+go('discover');check('iPhone gets Home Screen steps only',/Add to Home Screen/.test(txt())&&/Open as Web App/.test(txt())&&w.document.querySelectorAll('.steps li').length===4&&/1 of 1/.test(txt()));
 w.eval("Object.defineProperty(navigator,'userAgent',{value:'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) CriOS/130.0',configurable:true});render()");check('Chrome on iPhone gets its own steps',/address bar at the top/.test(txt()));
+w.eval("Object.defineProperty(navigator,'userAgent',{value:'Mozilla/5.0 (Windows NT 10.0)',configurable:true});S.setup={...DEFAULTS.setup,pick:['assistant']};chooseWays()");check('assistant: sign in, then choose assistant',/Sign in/.test(txt()));
+w.eval("API.account={email:'a@b.c'};render()");check('assistant step leads to Connect',/Choose your assistant/.test(txt()));
+w.eval("closeSetup()");check('finish later hides the card',!/Get set up/.test(txt()));
 go('moments');w.eval("API.agents={mcp:'https://x/mcp',connected:[{id:'wwc_1',name:'Muse',since:Date.now()}]};setTab('agent')");check('connected assistant shown first, with a mark on its option',/✓ Muse/.test(txt())&&/Connect another agent/.test(txt())&&/Connected/.test(w.document.querySelector('.agent summary').textContent));w.eval('API.agents=null');
 w.eval("API.on=false");
 check('travel tips moved',['ww-059','ww-191','ww-196'].every(id=>w.eval(`TIPMAP['${id}'].category`)==='Travel health'));

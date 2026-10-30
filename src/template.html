@@ -162,13 +162,13 @@ const TAPS=['p-cook','p-ate','p-shop','p-desk','p-sleep','p-low','p-tired','p-dr
 const DISCLAIMER='Wellwise shares general health information. It is not a substitute for medical advice. Always check with a certified healthcare provider about your own health.';
 
 const I18N={
- en:{discover:'Discover',moments:'Moments',journey:'My journey',journeyTab:'Journey',explore:'Explore',inbox:'Inbox',settings:'Settings',tryThis:'Try this',why:'Why it matters',considerations:'Keep in mind',timeline:'Typical timeline for this kind of change',localNote:'Local note',willTry:'I’ll try this',trying:'✓ Trying',already:'Already doing',adopted:'✓ Habit',notForMe:'Not for me',open:'Read more →',dailyEyebrow:'Your daily insight',heroTitle:'Learn something useful, right when it matters.',heroSub:'Short, sourced tips, sparked by your day.',useful:'Useful',notUseful:'Not useful'},
- hi:{discover:'खोजें',moments:'पल',journey:'मेरी यात्रा',journeyTab:'यात्रा',explore:'लाइब्रेरी',inbox:'इनबॉक्स',settings:'सेटिंग्स',tryThis:'यह आज़माएँ',why:'यह क्यों ज़रूरी है',considerations:'ध्यान रखें',timeline:'नतीजे कब दिख सकते हैं',localNote:'स्थानीय बात',willTry:'आज़माना है',trying:'✓ आज़मा रहे हैं',already:'पहले से कर रहे हैं',adopted:'✓ आदत बन गई',notForMe:'मेरे लिए नहीं',open:'और पढ़ें →',dailyEyebrow:'आज की जानकारी',heroTitle:'सही समय पर, काम की बात जानें।',heroSub:'आपके दिन से जुड़ी छोटी, भरोसेमंद जानकारियाँ।',useful:'काम का',notUseful:'काम का नहीं'}
+ en:{discover:'Discover',moments:'Connect',journey:'My journey',journeyTab:'Journey',explore:'Explore',inbox:'Inbox',settings:'Settings',tryThis:'Try this',why:'Why it matters',considerations:'Keep in mind',timeline:'Typical timeline for this kind of change',localNote:'Local note',willTry:'I’ll try this',trying:'✓ Trying',already:'Already doing',adopted:'✓ Habit',notForMe:'Not for me',open:'Read more →',dailyEyebrow:'Your daily insight',heroTitle:'Health tips that find you.',heroSub:'One short, sourced tip on your body and mind, when your day makes it useful.',useful:'Useful',notUseful:'Not useful'},
+ hi:{discover:'खोजें',moments:'जोड़ें',journey:'मेरी यात्रा',journeyTab:'यात्रा',explore:'लाइब्रेरी',inbox:'इनबॉक्स',settings:'सेटिंग्स',tryThis:'यह आज़माएँ',why:'यह क्यों ज़रूरी है',considerations:'ध्यान रखें',timeline:'नतीजे कब दिख सकते हैं',localNote:'स्थानीय बात',willTry:'आज़माना है',trying:'✓ आज़मा रहे हैं',already:'पहले से कर रहे हैं',adopted:'✓ आदत बन गई',notForMe:'मेरे लिए नहीं',open:'और पढ़ें →',dailyEyebrow:'आज की जानकारी',heroTitle:'सही समय पर, काम की बात जानें।',heroSub:'आपके दिन से जुड़ी छोटी, भरोसेमंद जानकारियाँ।',useful:'काम का',notUseful:'काम का नहीं'}
 };
 
-const DEFAULTS={geo:'GLOBAL',geoAuto:true,cats:[],age:'',diet:'',lang:'en',statuses:{},statusAt:{},seen:{},source:{},feedback:{},checkins:{},notifications:[],events:[],delivered:{},channel:CHANNELS[0],frequency:'both',discovery:'balanced',offsetDays:0,momentTab:'near',selected:null,shareText:'',nearConsent:false,live:null,inboxSince:0,lastDaily:'',tap:null,intakes:{},tz:'',inboxSeenAt:0,pushAskedAt:0,updatedAt:0};
+const DEFAULTS={geo:'GLOBAL',geoAuto:true,cats:[],age:'',diet:'',lang:'en',statuses:{},statusAt:{},seen:{},source:{},feedback:{},checkins:{},notifications:[],events:[],delivered:{},channel:CHANNELS[0],frequency:'both',discovery:'balanced',offsetDays:0,momentTab:'near',selected:null,shareText:'',nearConsent:false,live:null,inboxSince:0,lastDaily:'',tap:null,intakes:{},tz:'',inboxSeenAt:0,setup:{pick:[],ways:[],chosen:false,skipped:{},dismissed:false,doneSeen:false},updatedAt:0};
 let S;try{S=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){S={}}
-S={...DEFAULTS,...S};
+S={...DEFAULTS,...S};S.setup={...DEFAULTS.setup,...(S.setup||{})};
 if(!CHANNELS.includes(S.channel))S.channel=/whatsapp/i.test(S.channel)?'WhatsApp':CHANNELS[0];
 if(S.momentTab==='environment')S.momentTab='near';
 let searchText='',searchCat='ALL',searchGeo='MINE',searchKind='ALL';
@@ -239,17 +239,79 @@ const IOS_ICON=()=>({share:'<span class="ico" aria-label="Share">'+svg('<path d=
 /* How to put Wellwise on an iPhone Home Screen, for the browser the person is using right now. */
 function iosSteps(){
  const ua=navigator.userAgent,chrome=/CriOS/.test(ua),edge=/EdgiOS/.test(ua),firefox=/FxiOS/.test(ua);
- const open=`<li><span>Open <b>Wellwise</b> from your Home Screen, then tap <b>Turn on notifications</b>.</span></li>`;
+ const open=`<li><span>Open <b>Wellwise</b> from your Home Screen, and finish setting up there.</span></li>`;
  if(chrome||edge)return `<ol class="steps"><li><span>Tap ${IOS_ICON().share} <b>Share</b> in the address bar at the top.</span></li><li><span>Scroll down and tap ${IOS_ICON().add} <b>Add to Home Screen</b>, then <b>Add</b>.</span></li>${open}</ol>`;
  if(firefox)return `<ol class="steps"><li><span>Tap the menu (three lines) at the bottom, then ${IOS_ICON().share} <b>Share</b>.</span></li><li><span>Tap ${IOS_ICON().add} <b>Add to Home Screen</b>, then <b>Add</b>.</span></li>${open}</ol>`;
  return `<ol class="steps"><li><span>Tap ${IOS_ICON().more} next to the address bar, then ${IOS_ICON().share} <b>Share</b>. <span class="muted">On older iPhones, tap ${IOS_ICON().share} at the bottom of the screen.</span></span></li><li><span>Scroll down and tap ${IOS_ICON().add} <b>Add to Home Screen</b>. <span class="muted">Not there? Scroll to the end, tap <b>Edit Actions</b>, and add it.</span></span></li><li><span>Leave <b>Open as Web App</b> on, and tap <b>Add</b>.</span></li>${open}</ol>`}
-function laterPush(){S.pushAskedAt=Date.now();persist();render()}
-function notifyCard(){
- if(!API.on||API.pushOn||(S.pushAskedAt&&Date.now()-S.pushAskedAt<7*DAY))return '';
- const later=`<button class="btn ghost sm" onclick="laterPush()">Not now</button>`;
- if(PUSH_OK())return `<div class="panel spaced"><h3>Get a useful tip every morning</h3><p class="small muted" style="margin-top:0">Turn on notifications once. Your daily tip, and tips for your calendar and the air near you, then arrive by themselves.</p><div class="row"><button class="btn sm" onclick="enablePush()">Turn on notifications</button>${installEvt?`<button class="btn alt sm" onclick="installApp()">Add to home screen</button>`:''}${later}</div></div>`;
- if(isIOS()&&!standalone())return `<div class="panel spaced"><h3>Get a useful tip every morning</h3><p class="small muted" style="margin-top:0">On iPhone, notifications work once Wellwise is on your Home Screen. It takes about 20 seconds:</p>${iosSteps()}<div class="row">${later}</div></div>`;
- return ''}
+/* ---------- first visit: one setup flow, one step at a time ---------- */
+const WAYS={push:'Notifications on this phone',whatsapp:'WhatsApp',assistant:'My AI assistant'};
+const WAY_HINT={push:'A tip each morning, and when the air, your calendar or a purchase makes one useful.',whatsapp:'Tips arrive in WhatsApp, and you can send Wellwise links and photos there.',assistant:'Muse, Claude or ChatGPT shows you a tip when it books or buys something for you.'};
+function pickWay(w){const p=new Set(S.setup.pick);p.has(w)?p.delete(w):p.add(w);S.setup.pick=[...p];persist();render()}
+function chooseWays(){if(!S.setup.pick.length){toast('Choose at least one');return}S.setup.ways=[...S.setup.pick];S.setup.chosen=true;S.setup.skipped={};S.setup.doneSeen=false;persist();if(S.setup.ways.includes('assistant'))loadAgents();render()}
+function skipSetupStep(id){S.setup.skipped={...S.setup.skipped,[id]:true};persist();render()}
+function closeSetup(){S.setup.dismissed=true;persist();render();toast('You can finish setting up any time in Settings')}
+function restartSetup(){S.setup={...DEFAULTS.setup,pick:[...(S.setup.ways||[])]};persist();nav('discover')}
+/* The steps follow from where tips should arrive, in an order that works on this device. */
+function setupSteps(){
+ const ways=S.setup.ways||[],iosBrowser=isIOS()&&!standalone(),steps=[];
+ const push=ways.includes('push'),assistant=ways.includes('assistant'),wa=ways.includes('whatsapp')&&API.features.whatsapp;
+ if(push&&iosBrowser)steps.push({id:'homescreen',done:false});
+ if(push&&!iosBrowser&&installEvt)steps.push({id:'install',done:false,optional:true});
+ if((push||assistant)&&!wa&&!(push&&iosBrowser))steps.push({id:'signin',done:!!API.account||!signInAvailable()});
+ if(wa)steps.push({id:'whatsapp',done:!!API.linked.whatsapp});
+ if(push&&!iosBrowser)steps.push({id:'push',done:!!API.pushOn||!PUSH_OK()});
+ if(assistant)steps.push({id:'assistant',done:!!(API.linked.agent||API.agents?.connected?.length)});
+ if(!(push&&iosBrowser))steps.push({id:'near',done:!!S.nearConsent,optional:true},{id:'calendar',done:!!API.linked.calendar,optional:true});
+ return steps.map(x=>({...x,done:x.done||!!S.setup.skipped[x.id]}));
+}
+function signInBody(){
+ const f=API.features.signIn||{};
+ return SIGN.step==='code'?`<p class="small">We sent a 6-digit code to <b>${esc(SIGN.email)}</b>. It works for 10 minutes.</p><div class="row"><input id="signCode" class="field" style="max-width:180px" inputmode="numeric" autocomplete="one-time-code" placeholder="6-digit code"><button class="btn sm" onclick="verifySignIn()">Sign in</button><button class="btn ghost sm" onclick="SIGN={step:null};render()">Use a different email</button></div>`
+  :SIGN.step==='wa'?`<p class="small">Send this message to <b>${esc(SIGN.number||'Wellwise')}</b> on WhatsApp:</p><p class="metric numeric">SIGNIN ${esc(SIGN.code)}</p>${SIGN.link?`<a class="btn sm" href="${esc(SIGN.link)}" target="_blank" rel="noopener">Open WhatsApp</a>`:''}<p class="small muted">This page moves on by itself once your message arrives.</p>`
+  :`${f.email?`<div class="row"><input id="signEmail" class="field" style="max-width:280px" type="email" autocomplete="email" placeholder="you@example.com"><button class="btn sm" onclick="sendSignInCode()">Send me a code</button></div>`:''}${f.whatsapp?`<div class="row spaced"><button class="btn ${f.email?'ghost':''} sm" onclick="startWaSignIn()">Sign in with WhatsApp</button></div>`:''}`}
+function setupStepBody(id){
+ switch(id){
+  case 'homescreen':return `<h3>Add Wellwise to your Home Screen</h3><p class="small muted" style="margin-top:0">On iPhone, notifications only work from the Home Screen. It takes about 20 seconds.</p>${iosSteps()}`;
+  case 'install':return `<h3>Add Wellwise to your home screen</h3><p class="small muted" style="margin-top:0">It opens like an app, and appears in your share menu so you can send Wellwise any product or link.</p><div class="row"><button class="btn sm" onclick="installApp()">Add to home screen</button></div>`;
+  case 'signin':return `<h3>Sign in</h3><p class="small muted" style="margin-top:0">So your tips, and any assistant you connect, reach the same Wellwise on every device. No password.</p>${signInBody()}`;
+  case 'whatsapp':return `<h3>Sign in with WhatsApp</h3><p class="small muted" style="margin-top:0">One message signs you in and links your number, so tips can arrive there.</p>${SIGN.step==='wa'?signInBody():`<div class="row"><button class="btn sm" onclick="startWaSignIn()">Sign in with WhatsApp</button></div>`}`;
+  case 'push':return `<h3>Turn on notifications</h3><p class="small muted" style="margin-top:0">Your daily tip arrives each morning, and others when the moment fits. Nothing else.</p><div class="row"><button class="btn sm" onclick="enablePush()">Turn on notifications</button></div>`;
+  case 'assistant':return `<h3>Connect your AI assistant</h3><p class="small muted" style="margin-top:0">Muse, Claude or ChatGPT. It takes a couple of minutes, and you only do it once.</p><div class="row"><button class="btn sm" onclick="S.momentTab='agent';persist();nav('moments')">Choose your assistant</button></div>`;
+  case 'near':return `<h3>Tips for the air and weather where you are</h3><p class="small muted" style="margin-top:0">On smoggy, hot or high-UV days, you get a tip that fits. Your location is rounded to about 10 km.</p><div class="row"><button class="btn sm" onclick="useLocation()">Use my location</button></div>`;
+  case 'calendar':return `<h3>Tips before what is in your calendar</h3><p class="small muted" style="margin-top:0">Flights, appointments, blood tests and late nights bring a tip the day before.</p><div class="row"><button class="btn sm" onclick="S.momentTab='calendar';persist();nav('moments')">Connect calendar</button></div>`;
+ }return ''}
+function deliveryWords(){const w=S.setup.ways||[],out=[];if(w.includes('push')&&API.pushOn)out.push('as notifications on this phone');if(w.includes('whatsapp')&&API.linked.whatsapp)out.push('on WhatsApp');if(w.includes('assistant')&&(API.linked.agent||API.agents?.connected?.length))out.push('inside your AI assistant');return out}
+function setupCard(){
+ if(!API.on||S.setup.dismissed)return '';
+ const how=`<a href="#how" class="small">How Wellwise works</a>`;
+ if(!S.setup.chosen){
+  const btn=w=>{const off=w==='whatsapp'&&!API.features.whatsapp,on=S.setup.pick.includes(w);
+   return `<button class="pick ${on?'selected':''}" ${off?'disabled style="opacity:.55;cursor:default"':`onclick="pickWay('${w}')"`}><b>${on?'✓ ':''}${WAYS[w]}</b>${off?' <span class="badge">Coming soon</span>':''}<br><span class="small muted">${WAY_HINT[w]}</span></button>`};
+  return `<div class="panel spaced setup"><div class="row between"><span class="badge live">Get set up</span>${how}</div><h2 style="margin-top:10px">Where should your tips reach you?</h2><p class="small muted" style="margin-top:0">Choose one or more. You won’t need to keep opening Wellwise.</p><div class="grid" style="grid-template-columns:1fr;gap:8px">${['push','whatsapp','assistant'].map(btn).join('')}</div><div class="row spaced"><button class="btn" onclick="chooseWays()" ${S.setup.pick.length?'':'disabled'}>Continue</button><button class="btn ghost sm" onclick="closeSetup()">Skip for now</button></div></div>`}
+ const steps=setupSteps(),todo=steps.filter(x=>!x.done);
+ if(!todo.length){if(S.setup.doneSeen)return '';const w=deliveryWords();
+  return `<div class="panel spaced setup"><span class="badge live">✓ You’re set</span><h2 style="margin-top:10px">Tips will come to you${w.length?' '+w.join(' and '):''}.</h2><p class="small muted">You don’t need to open Wellwise again. Come back whenever you want to read more or see your journey.</p><div class="row"><button class="btn sm" onclick="S.setup.doneSeen=true;persist();render()">Got it</button>${how}</div></div>`}
+ const cur=todo[0],n=steps.indexOf(cur)+1;
+ return `<div class="panel spaced setup"><div class="row between"><span class="badge live">Get set up · ${n} of ${steps.length}</span>${how}</div><div style="margin-top:10px">${setupStepBody(cur.id)}</div><div class="row spaced"><button class="btn ghost sm" onclick="skipSetupStep('${cur.id}')">${cur.optional?'Not now':'Skip this step'}</button><button class="btn ghost sm" onclick="closeSetup()">Finish later</button></div></div>`}
+function setupPanel(){
+ if(!API.on)return '';
+ const ways=S.setup.ways||[];
+ if(!S.setup.chosen)return `<div class="panel spaced"><h2>Your setup</h2><p class="small muted" style="margin-top:0">Choose where your tips reach you, and Wellwise walks you through the rest.</p><button class="btn sm" onclick="restartSetup()">Set up Wellwise</button></div>`;
+ const label={homescreen:'On your Home Screen',install:'On your home screen',signin:'Signed in',whatsapp:'WhatsApp linked',push:'Notifications on',assistant:'Assistant connected',near:'Tips for the air near you',calendar:'Calendar connected'};
+ return `<div class="panel spaced"><h2>Your setup</h2><p class="small muted" style="margin-top:0">Tips reach you through: <b>${ways.map(w=>WAYS[w]).join(', ')}</b></p>${setupSteps().map(x=>`<div class="status"><span>${esc(label[x.id])}</span><span class="small ${x.done&&!S.setup.skipped[x.id]?'':'muted'}">${x.done&&!S.setup.skipped[x.id]?'✓ Done':S.setup.skipped[x.id]?'Skipped':'To do'}</span></div>`).join('')}<div class="row spaced"><button class="btn ghost sm" onclick="restartSetup()">Change where tips reach you</button></div></div>`}
+function how(){return `<p class="small"><a href="#discover">← Discover</a></p>${header('','How Wellwise works','One short, sourced health tip, when your day makes it useful. It comes to you.')}
+ <div class="grid spaced" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+  <div class="card"><div class="eyebrow">1 · It notices a moment</div><p>The air and weather where you are, what is in your calendar, something your AI assistant books or buys for you, or a link or photo you share.</p></div>
+  <div class="card"><div class="eyebrow">2 · It picks one tip</div><p>Each tip is short, practical and backed by a named source, about your body and your mind. If nothing fits well, you get nothing, rather than a forced tip.</p></div>
+  <div class="card"><div class="eyebrow">3 · It comes to you</div><p>As a notification on your phone${API.features.whatsapp?', on WhatsApp':''}, or inside Muse, Claude or ChatGPT. Plus one tip each morning, if you want it.</p></div>
+ </div>
+ <div class="panel spaced"><h2>What happens by itself, and what doesn’t</h2>
+  <div class="status"><span><b>By itself</b><br><span class="small muted">Your daily tip, tips before calendar events, and tips on days with poor air, heat or strong sun, once you have turned these on.</span></span></div>
+  <div class="status"><span><b>When your assistant tells Wellwise</b><br><span class="small muted">Purchases and bookings made by Muse, Claude or ChatGPT. You connect it once, and tell it once to let Wellwise know.</span></span></div>
+  <div class="status"><span><b>When you share something</b><br><span class="small muted">A product link, a photo of a label, a document. Wellwise reads it and finds the tip that fits.</span></span></div>
+ </div>
+ <div class="panel spaced"><h2>Your journey</h2><p>Wellwise keeps a record of what you have learned, what you are trying and what has become a habit, and checks in after 7 and 30 days. You can see it any time in Journey.</p><p class="small muted">${esc(DISCLAIMER)}</p></div>
+ <div class="row spaced"><button class="btn" onclick="${S.setup.chosen?"nav('settings')":"restartSetup()"}">${S.setup.chosen?'See your setup':'Get set up'}</button></div>`}
 
 function pushState(){if(!API.on)return Promise.resolve();const {live,...rest}=S;return api('/api/state',{method:'PUT',body:{state:rest}}).catch(()=>{})}
 
@@ -266,10 +328,7 @@ async function signOut(){if(!confirm('Sign out on this device? Your journey stay
 function accountPanel(){
  if(!API.on||(!API.account&&!signInAvailable()))return '';
  if(API.account)return `<div class="panel spaced"><h2>Your account</h2><div class="status"><span>Signed in as <b>${esc(API.account.email||API.account.phone)}</b><br><span class="small muted">Your journey is the same on every device where you sign in.</span></span><button class="btn ghost sm" onclick="signOut()">Sign out</button></div></div>`;
- const f=API.features.signIn;
- const body=SIGN.step==='code'?`<p class="small">We sent a 6-digit code to <b>${esc(SIGN.email)}</b>. It works for 10 minutes.</p><div class="row"><input id="signCode" class="field" style="max-width:180px" inputmode="numeric" autocomplete="one-time-code" placeholder="6-digit code"><button class="btn sm" onclick="verifySignIn()">Sign in</button><button class="btn ghost sm" onclick="SIGN={step:null};render()">Use a different email</button></div>`
-  :SIGN.step==='wa'?`<p class="small">Send this message to <b>${esc(SIGN.number||'Wellwise')}</b> on WhatsApp:</p><p class="metric numeric">SIGNIN ${esc(SIGN.code)}</p>${SIGN.link?`<a class="btn sm" href="${esc(SIGN.link)}" target="_blank" rel="noopener">Open WhatsApp</a>`:''}<p class="small muted">This page moves on by itself once your message arrives.</p>`
-  :`${f.email?`<div class="row"><input id="signEmail" class="field" style="max-width:280px" type="email" autocomplete="email" placeholder="you@example.com"><button class="btn sm" onclick="sendSignInCode()">Send me a code</button></div>`:''}${f.whatsapp?`<div class="row spaced"><button class="btn ${f.email?'ghost':''} sm" onclick="startWaSignIn()">Sign in with WhatsApp</button></div>`:''}`;
+ const body=signInBody();
  return `<div class="panel spaced"><h2>Your account</h2><p class="small muted" style="margin-top:0">Sign in to keep your Wellwise on all your devices, and so assistants like Muse always connect to it. No password.</p>${body}</div>`}
 async function refreshMe(){try{const me=await api('/api/me');API.linked=me.linked||{};API.features=me.features||{}}catch(e){}}
 /* Tips the server delivered (calendar, near you, WhatsApp, agents, email, daily tips) join the journey here. */
@@ -441,12 +500,15 @@ function discover(){
   hero=`<div class="hero live spaced"><div class="eyebrow">Near you today${S.live.place?' · '+esc(S.live.place):''}</div><h2 style="font-size:29px;margin-top:12px">${esc(lm.m.name)}</h2>${readingBadges(S.live.reading)}<p class="lead">${esc(lm.m.friendly)}</p><h3>${esc(tx(top,'title'))}</h3><p><b>${esc(L('tryThis'))}:</b> ${esc(tx(top,'action'))}</p><div class="row spaced"><button class="btn" onclick="nav('tip/${top.id}')">${esc(L('open'))}</button><button class="btn ghost" ${done?'disabled':''} onclick="saveLive()">${done?'✓ Saved':'Save to my journey'}</button></div><p class="small muted spaced" style="margin-bottom:0">Live from Open-Meteo for your area. Updated ${fmtTime(S.live.at)}.</p></div>`}
  else{const t=dailyTip();
   hero=`<div class="hero spaced"><div class="eyebrow">${esc(L('dailyEyebrow'))} · ${new Date(now()).toLocaleDateString(undefined,{month:'short',day:'numeric'})}</div><h2 style="font-size:29px;margin-top:12px">${esc(tx(t,'title'))}</h2><p class="lead">${esc(tx(t,'why'))}</p><p><b>${esc(L('tryThis'))}:</b> ${esc(tx(t,'action'))}</p><div class="row spaced"><button class="btn" onclick="nav('tip/${t.id}')">${esc(L('open'))}</button><button class="btn ghost" onclick="nav('moments')">Tell us about your day</button></div>
-  ${S.live?`<p class="small muted spaced" style="margin-bottom:0">Nothing stands out in the air or weather${S.live.place?' near '+esc(S.live.place):''} today, so here is your daily tip.</p>`:API.on?`<p class="small spaced" style="margin-bottom:0"><a href="#" onclick="useLocation();return false">Turn on Near you</a> <span class="muted">to get tips for today’s air and weather where you are.</span></p>`:''}</div>`}
+  ${S.live?`<p class="small muted spaced" style="margin-bottom:0">Nothing stands out in the air or weather${S.live.place?' near '+esc(S.live.place):''} today, so here is your daily tip.</p>`:''}</div>`}
  const tm=S.tap&&MOMENTS.find(x=>x.id===S.tap),ttop=tm&&candidates(tm.event).scored[0];
- return `${header('',L('heroTitle'),L('heroSub'))}
+ const sub=S.lang==='hi'?L('heroSub'):`One short, sourced tip on your body and mind, when your day makes it useful: after a purchase, before a flight, on a smoggy morning. It comes to you as a notification${API.features.whatsapp?', on WhatsApp':''} or inside your AI assistant, like Muse, Claude or ChatGPT.`;
+ const reach=deliveryWords();
+ return `${header('',L('heroTitle'),sub)}
  ${due.length?`<div class="sectiontitle"><h2>Quick check-in</h2></div><div class="grid two">${due.slice(0,4).map(d=>{const x=TIPMAP[d.id];return `<div class="card checkin"><span class="small muted">${d.stage} days ago you started</span><h3 style="margin-top:6px">${esc(tx(x,'title'))}</h3><p class="small">How is it going?</p><div class="row"><button class="btn sm" onclick="checkin('${d.id}',${d.stage},'kept')">It’s a habit now</button><button class="btn alt sm" onclick="checkin('${d.id}',${d.stage},'still')">Still trying</button><button class="btn ghost sm" onclick="checkin('${d.id}',${d.stage},'stopped')">I stopped</button></div></div>`}).join('')}</div>`:''}
- ${notifyCard()}
+ ${setupCard()}
  ${hero}
+ ${reach.length?`<p class="small muted" style="margin:8px 4px 0">Tips like this also come to you ${esc(reach.join(' and '))}.</p>`:''}
  <div class="panel spaced"><span class="badge">What happened today?</span><h3 style="margin-top:12px">One tap, one more useful tip</h3><div class="tapgrid">${TAPS.map(id=>{const m=MOMENTS.find(x=>x.id===id);return m?`<button class="btn ${S.tap===id?'':'ghost'} sm" onclick="tapMoment('${id}')">${esc(m.name)}</button>`:''}).join('')}</div>
  ${ttop?`<div class="spaced">${tm.id==='p-low'?supportNotice():''}<p class="small muted" style="margin:0 0 8px">${esc(tm.friendly)}</p>${tipBlock(ttop.t,'saveTap()',S.delivered['tap:'+tm.id+':'+day()])}</div>`:''}</div>
  <div class="sectiontitle"><h2>Your week</h2><button class="btn ghost sm" onclick="nav('journey')">My journey →</button></div>
@@ -536,7 +598,7 @@ function momentPreview(){
 }
 function moments(){
  const agentEvents=S.events.filter(e=>e.source==='agent');
- return `${header('','Tell Wellwise about your day.','Live conditions near you, a link or photo you share, a barcode, your calendar, WhatsApp or your AI agent. Each one can bring a tip that fits.')}
+ return `${header('','Connect Wellwise to your day.','The air near you, your calendar, your AI assistant, and the links, photos and barcodes you share. Each one can bring a tip that fits.')}
  <div class="side spaced">${momentPicker()}${momentPreview()}</div>
  ${agentEvents.length?`<div class="sectiontitle"><h2>One journey across agents</h2></div><div class="panel"><div class="timeline">${agentEvents.slice(0,8).map(e=>`<div class="event"><b>${esc(e.agent||'Agent')}</b> <span class="muted small">· ${fmtTime(e.at)}</span><p style="margin:2px 0"><a href="#tip/${e.tip}">${esc(TIPMAP[e.tip]?.title||e.tip)}</a></p><p class="small muted" style="margin:0">${esc(e.moment)}</p></div>`).join('')}</div></div>`:''}`;
 }
@@ -578,7 +640,7 @@ function inbox(){
  return `${header('','Your tips, delivered your way.','Choose when and where tips reach you.')}
  <div class="side spaced"><div class="panel"><h2>Delivery</h2>
  <label>How often<select class="field" onchange="S.frequency=this.value;persist();render()">${[['off','Off'],['daily','Daily tip only'],['weekly','Weekly tip only'],['contextual','Moments only'],['both','Daily tip and moments']].map(([v,t])=>`<option value="${v}" ${S.frequency===v?'selected':''}>${t}</option>`).join('')}</select></label><div class="gap"></div>
- <label>Where<select class="field" onchange="S.channel=this.value;persist();render()"><option ${S.channel==='In the app'?'selected':''}>In the app</option><option ${S.channel==='WhatsApp'?'selected':''} ${API.linked.whatsapp?'':'disabled'}>WhatsApp${API.linked.whatsapp?'':' (link it in Moments first)'}</option></select></label><div class="gap"></div>
+ <label>Where<select class="field" onchange="S.channel=this.value;persist();render()"><option ${S.channel==='In the app'?'selected':''}>In the app</option><option ${S.channel==='WhatsApp'?'selected':''} ${API.linked.whatsapp?'':'disabled'}>WhatsApp${API.linked.whatsapp?'':' (link it in Connect first)'}</option></select></label><div class="gap"></div>
  <label>Surprise level<select class="field" onchange="S.discovery=this.value;persist();render()">${[['focused','Stick to my interests'],['balanced','Balanced'],['exploratory','Surprise me sometimes']].map(([v,t])=>`<option value="${v}" ${S.discovery===v?'selected':''}>${t}</option>`).join('')}</select></label>
  <div class="notice spaced small">${S.frequency==='off'?'No tips will be sent.':S.frequency==='contextual'?'Tips arrive only when a moment fits: your calendar, the air and weather near you, WhatsApp or your agent.':S.frequency==='weekly'?'One tip each Monday.':S.frequency==='daily'?'One tip each morning.':'One tip each morning, plus tips when a moment fits.'} The surprise level changes which tip a moment brings.</div></div>
  <div class="panel"><h2>Inbox</h2>${S.notifications.length?S.notifications.slice(0,25).map(notifCard).join(''):'<div class="empty">Tips you save, and tips Wellwise sends you, show here.</div>'}</div></div>`}
@@ -587,6 +649,7 @@ function localDaily(){if(API.on||!['daily','both'].includes(S.frequency))return;
 
 function settings(){const ln=API.linked;return `${header('','Make Wellwise yours.','Everything here is optional. You can use Wellwise without sharing anything about your health.')}
  ${accountPanel()}
+ ${setupPanel()}
  <div class="panel spaced"><h2>Region and language</h2><div class="formgrid"><label>Region<select class="field" id="geo"><option value="AUTO" ${S.geoAuto?'selected':''}>Automatic${S.live?.region?' ('+esc(REGIONS[S.live.region])+')':' (from Near you)'}</option>${Object.entries(REGIONS).map(([v,n])=>`<option value="${v}" ${!S.geoAuto&&S.geo===v?'selected':''}>${n}</option>`).join('')}</select></label><label>Language<select class="field" onchange="setLang(this.value)"><option value="en" ${S.lang==='en'?'selected':''}>English</option><option value="hi" ${S.lang==='hi'?'selected':''}>हिंदी (preview)</option></select></label></div>${S.lang==='hi'?`<p class="small muted">Hindi preview: the main labels and ${TIPS.filter(t=>t.hi).length} tips are translated. Other text stays in English for now.</p>`:''}
  <h3 class="spaced">Topics you care about</h3><p class="small muted">Pick none to see everything.</p><div class="checks">${CATS.map(c=>`<label class="check"><input type="checkbox" class="catcheck" value="${esc(c)}" ${S.cats.includes(c)?'checked':''}> ${esc(c)}</label>`).join('')}</div>
  <h3 class="spaced">About you</h3><div class="formgrid"><label>Age range<select id="age" class="field">${['','Under 18','18–29','30–44','45–59','60+'].map(x=>`<option value="${esc(x)}" ${S.age===x?'selected':''}>${x||'Prefer not to say'}</option>`).join('')}</select></label><label>Diet<select id="diet" class="field">${['','Omnivore','Vegetarian','Vegan','Pescatarian','Other'].map(x=>`<option value="${esc(x)}" ${S.diet===x?'selected':''}>${x||'Prefer not to say'}</option>`).join('')}</select></label></div><p class="small muted">Diet changes which tips rise first. For example, “Vegan” brings B12 and fortified-food tips forward.</p>
@@ -619,9 +682,9 @@ function tipPage(t){
 
 async function checkForNewContent(){if(!hosted()||typeof fetch!=='function')return;try{const r=await fetch('wellwise-content.json',{cache:'no-cache'});if(!r.ok)return;const c=await r.json();if(c&&Array.isArray(c.TIPS)&&+c.contentVersion>+CONTENT.contentVersion){CONTENT=c;applyContent(c);render();toast('The library has new tips')}}catch(e){}}
 /* ---------- shell ---------- */
-const NAV=['discover','moments','explore','journey'],PAGES=[...NAV,'inbox','settings'];
+const NAV=['discover','moments','explore','journey'],PAGES=[...NAV,'inbox','settings','how'];
 const svg=d=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
-const ICON={discover:svg('<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/>'),moments:svg('<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/>'),explore:svg('<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>'),journey:svg('<path d="M4 19c4 0 4-6 8-6s4-6 8-6"/><circle cx="4" cy="19" r="1.6"/><circle cx="20" cy="7" r="1.6"/>'),inbox:svg('<path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/>'),settings:svg('<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>')};
+const ICON={discover:svg('<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/>'),moments:svg('<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>'),explore:svg('<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>'),journey:svg('<path d="M4 19c4 0 4-6 8-6s4-6 8-6"/><circle cx="4" cy="19" r="1.6"/><circle cx="20" cy="7" r="1.6"/>'),inbox:svg('<path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/>'),settings:svg('<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>')};
 const navLabel=k=>k==='journey'?L('journeyTab'):L(k);
 const unreadCount=()=>S.notifications.filter(n=>n.at>(S.inboxSeenAt||0)).length;
 function currentPath(){return decodeURIComponent(location.hash.slice(1))||'discover'}
@@ -642,7 +705,7 @@ function render(){
  $('tabbar').innerHTML=NAV.map(k=>`<button class="${here(k)}"${cur(k)} onclick="nav('${k}')">${ICON[k]}<span>${esc(navLabel(k))}</span></button>`).join('');
  $('icons').innerHTML=`<button class="iconbtn ${here('inbox')}"${cur('inbox')} onclick="nav('inbox')" aria-label="${esc(L('inbox'))}${unread?`, ${unread} new`:''}">${ICON.inbox}${unread?`<span class="dot">${Math.min(unread,99)}</span>`:''}</button><button class="iconbtn ${here('settings')}"${cur('settings')} onclick="nav('settings')" aria-label="${esc(L('settings'))}">${ICON.settings}</button>`;
  const t=page==='tip'?TIPMAP[path.slice(4)]:null;
- $('main').innerHTML=page==='tip'?(t?tipPage(t):'<div class="empty">Tip not found.</div>'):{discover,moments,journey,explore,inbox,settings}[page]();
+ $('main').innerHTML=page==='tip'?(t?tipPage(t):'<div class="empty">Tip not found.</div>'):{discover,moments,journey,explore,inbox,settings,how}[page]();
  $('footer').innerHTML=`${esc(DISCLAIMER)}`;
 }
 window.addEventListener('hashchange',()=>{route();window.scrollTo(0,0)});

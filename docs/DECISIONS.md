@@ -79,7 +79,7 @@ One entry per product or technical decision. Add new entries at the bottom. Do n
 ### D-018 · Assistants connect by signing in · 2026-10-23
 **Decision:** AI assistants connect to Wellwise with one address (`/mcp`) and a sign-in approval, using OAuth 2.1 with PKCE and dynamic client registration, as MCP clients expect. Personal keys stay for agents people run themselves.
 **Why:** Copying keys into settings is too much friction for most people.
-**Effect:** People see and disconnect connected assistants in Moments → Your agent. Assistants get the same three tools as keys do.
+**Effect:** People see and disconnect connected assistants in Connect → Your agent. Assistants get the same three tools as keys do.
 
 ### D-019 · Everyone on their own clock · 2026-10-23
 **Decision:** Scheduled tips (daily, weekly, near you) and calendar times follow each person's time zone, sent from their browser.
